@@ -1,7 +1,34 @@
-<html>
-    <head>
-    </head>
-    <body>
-        Github Pages Sample
-    </body>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<title>CodePen - A Pen by  leo</title>
+<style>
+p {
+  font-size: 10px;
+  text-align: center
+}
+</style>
+
+</head>
+<body translate="no">
+<video id="video" onmouseover="showctl(this)" onmouseout="hidectl(this)" 
+poster="videos/a.png?text=video" src="videos/a.mp4" ></video>
+<p>test movie</p>
+
+<video id="video2" onmouseover="showctl(this)" onmouseout="hidectl(this)"
+poster="videos/b.png?text=video" src="videos/b.mp4"></video>
+<p>どーもくんの映像　（Ｃ）ＮＨＫ・ＴＹＯ</p>
+
+
+<script type="text/javascript">
+function showctl(video) {
+   video.setAttribute("controls", "controls");
+}
+function hidectl(video) {
+   video.removeAttribute("controls");
+}
+</script>
+
+</body>
 </html>

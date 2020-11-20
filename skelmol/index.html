@@ -1,0 +1,269 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0045)https://staff.aist.go.jp/yutaka.ueno/molskin/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+		
+		<title>Skeletal Animation for Molecular Models</title>
+	</head>
+
+	<body bgcolor="#ffffff">
+		<h2>Skeletal Animation for Moleuclar Models</h2>
+
+			Skeletal animation allows polygon models of the 3DCG object animate 
+			by means of skeletal bones superimposed into the structure.			
+			<p>
+
+		</p><h3><br>
+					Example1 -- Flexibility of hemoglobin molecule</h3>
+					Conformational change is considered to allow oxgen binding process, as demonstrated in Wikipedia. Thermal fluctuation of hemoglobin molecule is yet to be explored.
+					<br>
+
+					<video src="/skelmol/1a00-0100-test.mp4" autostart="false" controls="">
+					- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - <p>
+					</p><p><i>... sorry, but this movie file needs html5 video</i></p>
+					- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - <p>
+					</p><hr>
+					</video>
+							
+		 <br>	a sample motion file is made with our method on Blender. <br>
+				<a href="/skelmol/data/era400-1a00.bvh">era400-1a00.bvh</a>  --- in BVH format
+			<br>
+
+		<h3><br>
+					Example2 -- Myosin is a molecular motor to generate force in mouscle.</h3>
+					Its body may flactuate when it is ready to make a fource.
+					Recent studies with atomic force microscopy is expected to reveal this motion.
+					<br>
+					
+					<video src="/skelmol/1s5g-0100-test.mp4" autostart="false" controls="">
+					- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - <p>
+					</p><p><i>... sorry, but this movie file needs html5 video</i></p>
+					- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - <p>
+					</p><hr>
+					</video>
+			<br>
+					 <br>	a sample motion file is made with our method on Blender.<br>
+				<a href="/skelmol/data/ela400-1s5g.bvh">era400-1s5g.bvh</a>   --- in BVH format<br>
+
+		<h4>We develop computer programs for molecular modeling</h4>
+		<p>Programs are written in Lua, so download Lua interpreter from 
+		www.lua.org or various repositories. They are experimental implementation
+		that could be refined for a laboratory use, or embedding to the existing programs.
+		They are developed and tested on Linux and Windows platforms, and most probably
+		ok in MacOS.	
+
+
+
+		
+		</p><p> Following movies demonstrate how the models are animated.
+			The method is described in a manuscript:
+			"Skeletal animation for visualizing dynamic molecular shapes of macromolecules" by Yutaka Ueno, Shinya Muraoka and Tetsuo Sato.
+
+			
+		</p><h3><br>
+			1. A normal mode superposition animation</h3>
+
+					<video src="/skelmol/1amy0ela0.mp4" autostart="false" controls="">
+					- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - <p>
+					</p><p><i>... sorry, but this movie file needs html5 video</i></p>
+					- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - <p>
+					</p><hr>
+					</video>
+
+		<p> An animation of the thremal fluctuation of protein molecule is demonstrated. The motion of the atomic model is created from normal mode analysis at ProMode database for the protein data bank
+			(PDB) atomic models. Then our method generates the skeletal bones to animate the molecular model in the format of BVH motion capture file. Using Blender the animation is generated. With the superposition
+			of the normal mode waves gives a typical thermal fluctuation of the protein.  
+		</p><h4>Source code files</h4>
+		<p>	The program convert the simulation result output file into the motion
+			capture file BVH. 
+		</p><blockquote>
+		 <br>
+				<a href="/skelmol/src/ela2cpl3.lua">ela2cpl3.lua</a>  --- The conversion program<br>
+				<a href="/skelmol/data/1amy-atme.tar.gz">1amy-atme.tar.gz</a>  --- a copy of the nomral mode analysis result from PDBelastic web site<br>
+				The formal output file is on the PDBj site<br>
+				https://pdbj.org/promode_data/am/1amy/1amy-results.tgz<br>
+				
+				<a href="/skelmol/data/ela3-1amy.bvh">ela3-1amy.bvh</a>  --- a sample output BVH file<br>
+				<a href="/skelmol/data/ribbon-1amy-chimera.stl">ribbon-1amy-chimera.stl</a>  --- a ribbom model for 1AMY in STL format by UCSF Chimera<br>
+				those files are requried to run the main program.<br>
+				
+				<a href="/skelmol/src/pdbmol.lua">pdbmol.lua</a>  --- PDB parser and molecular data list<br>
+				<a href="/skelmol/src/mslmop.lua">mslmop.lua</a>  --- modulde for matrix rotations<br>
+				<a href="/skelmol/src/fit3p.lua">fit3p.lua</a>  --- module for matrix to fit 2 objects made by 3 nodes coordinates<br>
+
+				<a href="/skelmol/blend279/md300-nmd1.blend">md300-nmd1.blend</a>  --- a sample blender script for this movie<br>	
+				</blockquote>
+
+		<h4>Usage</h4>
+		<p>Among files from the normal mode calculation, only files with extension .flcatmE
+		for all mode are used. Unpack these files in a directory 1amy-result/.
+		There are parameters to modify amplitude or phase shift for combining each mode
+		that could be defined in arrays: amplitude[] and phase[].
+
+		</p>
+				<h4>Descrioton</h4>
+		<p>This program first make a list of group for protein residues
+that is converted to the skeletal bones.
+Then the generated groups have a skeleton bone whose
+geometry is make by averaging atomic coordinates data
+assgined in the group. Then the vector of the bone is also
+calcurated by the sequence of atoms in the group.
+
+The calcuration of the vector of the bone was modified
+at emprical mannar, so that the apperance of the final appearance
+yield a reasonable direction for the given group.
+Since the bone is used only for the visualization handle,
+the precise definition is not needed. Small differences
+in the bone geometry does not really make difference
+in the final animated structure of this method.
+
+Then the groups of residue in the pdb data is converted
+to the BVH skeleton description. Here we take a flat structure
+without a parent relationship between skeleton bone.
+It is useful because the bones are not tightly connected
+in ths grouping method for the protein. In case the all groups chains are connected as sequence of child bones,
+calculation of atomic coordinates becomes complicated that
+is not good approach.
+
+The superposition of wave is applied in the function XYZadd()
+that is saved into the data structure bonedata[].motion[]
+The simple addition with variable amplitude and phase[] shift
+value would also be specified.
+The calculated osscilation vectors are applied to the
+atomic coordinates, then the group are divided into three part
+and these subgroup positions are used to calcculate the
+rigid translation matrix that most well describe the motion
+of atom in the group. Then the matrix is converted into
+Euler angles that will be saved into the BVH file.
+
+are obtained asfor Â&nbsp;by using three segment of the asaved and that will
+be written in the BVH data file.
+
+		</p><h4><br>
+			2. A coarse-grained trajectory of a molecular dynamics simulation</h4>
+
+					<video src="/skelmol/1amy0msk0.mp4" autostart="false" controls="">
+					- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - <p>
+					</p><p><i>... sorry, but this movie file needs html5 video</i></p>
+					- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - <p>
+					</p><hr>
+					</video>					
+		<p> A trajectory data of a molecular dynamics simulation was converted
+			to a motion data set of the skeletal bones. Using the skeletal bones to modify 
+molecular shape depicted in polygon mesh, various kind of the molecular
+			models are able to animated. 
+		</p><h4>Source code files</h4>
+		<p>	The program convert the trajectory PDB file into the motion
+			capture file BVH. 
+		</p><blockquote>
+		 <br>
+				<a href="/skelmol/data/tpm2cpl3.lua">tpma2cpl3.lua</a>  --- The conversion program<br>
+				<a href="/skelmol/data/1amy0_md300.pdb.gz">1amy0_md300.pdb.gz</a>  --- The trajectory file converted into multiple model PDB file<br>
+				<a href="/skelmol/data/1amy-dssp.txt">1amy-dssp.txt</a>  ---DSSP result file for making bones, the secondary structre annotations for each residues<br>
+				<a href="/skelmol/data/tpm-1amy.bvh">tpm-1amy.bvh</a>  --- Output BVH file<br>
+				<a href="/skelmol/data/ribbon-1amy-traj1.stl">ribbon-1amy-traj1.stl</a>  --- a ribbom model for this trajectory conformation<br>
+				the program also requires Lua functions that are loaded from files: pdbmol.lua mslmop.lua fit3p.lua <br>
+				
+				<a href="/skelmol/blend279/md300-tpm3.blend">md300-tpm3.blend</a>  --- a sample blender script for this movie<br>	
+				</blockquote>
+		
+		<p></p>
+		<h4>Usage</h4>
+		<p>Following file names are set: TFILE for the trajectoroy file name, DFILE for the DSSP file, and BFILE for the output BVH file name. Groups are made with maximum residue length MAXLEN. 
+
+		In a rare condition where the 3 atoms are located in a line, the matrix calculations to fit two conformation may fail. They can be avoided by 
+
+		
+		</p><h4><br>
+			3. A reference trajectory by typical Molecular Dynamics</h4>
+
+					<video src="/skelmol/1amy0grm0.mp4" autostart="false" controls="">
+					- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - <p>
+					</p><p><i>... sorry, but this movie file needs html5 video</i></p>
+					- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - <p>
+					</p><hr>
+					</video>
+		<p> An ordinary movie for a trajectory data of a molecular dynamics simulation.
+			The movie was made by UCSF Chimera from GROMACS simulation. This fluctuation motion was used in the previous section, In this movie high frequency vibrational components are included that are not described in the normal mode motions.
+		</p><h4>The simulation data files</h4>
+		<p>	A typical molecular dynamics for a Brownian motion with explicit water
+		molecules were followed according to the GROMACS documentation.
+		</p><blockquote>
+				<a href="/skelmol/src/donvt.sh">donvt.sh</a>  --- GROMACS a typical preparation for a MD simulation found in the official tutorial, <br>
+				where nvt300.mdp and npt300.mdp are identical to the original tutorial.<br>
+				<a href="/skelmol/data/md300f05.mdp">md300f05.mdp</a>  --- GROMACS production run<br>
+				  % gmx grompp -f md300f05.mdp -c 1amy0_npt300.gro -t 1amy0_npt300.cpt -p 1amy0.top -o 1amy0_md300.tpr <br>
+				  % gmx mdrun -v -deffnm 1amy0_md300 -deffnm 1amy0_md300 <br>
+
+				The result files are very large, and available at our institute URL.
+				https://staff.aist.go.jp/yutaka.ueno/molskin <br>
+				<a href="https://staff.aist.go.jp/yutaka.ueno/molskin/1amy0_md300.trr">1amy0_md300.trr</a>  --- 343MBytes, output trajectory file<br>
+				<a href="https://staff.aist.go.jp/yutaka.ueno/molskin/1amy0_md300.tpr">1amy0_md300.tpr</a>  --- the corresponding topology file required to read the trajectory file<br>
+				
+				<br>		
+		</blockquote>
+
+<!--
+		<h4>2. Molecular Dynamics Motion by the Skeletal Animation</h4>
+
+<p>This is a program that runs on Lixinia runtime environment on Windows PCs. Please follow <a HREF="mos-rcg0.html#luxinia">another note in the previous document</A> for using Luxinia. In addition to running from the GUI launcher, the script also be started from the command line prompt of Windows operating system. With all above files saved in a directory named "thedirectory":
+		<blockquote>
+			<p>> C:\Users\guest\Documents\zerobrane\myprograms\Users\admin\Documents\luxinia_v1400\luxinia_con  -p C:\Users\guest\Documents\thedirectory
+		</p <br>
+			</p>
+		</blockquote>
+<ul>
+	<li>loading a PDB file</li>
+		<br>Select the top-left button "Open"
+	<li>loading a script file</li>
+		<br> A script file is also loaded from the same menu as the PDB file. Script files need to have file extension ".mos" that is a Lua language file.
+</ul>
+
+		<h4>3. Implementation notes</h4>
+		<p>	The graphical user interface (GUI) of the program was made by widget set 
+		
+
+		<blockquote>
+		 <br>
+				<a href="mos2rcg/pdb2lhd.lua">pdb2lhd.lua</a>  --- import PDB file<br>
+				<a href="mos2rcg/rds2.lua">rds2.lua</a>  --- make a coarse grained model<br>
+				<a href="mos2rcg/pdbmol.lua">pdbmol.lua</a>  --- utility functions<br>
+				<a href="mos2rcg/pgmsps.lua">pgmsps.lua</a>  --- utility functions<br>
+		</blockquote>
+		</p>
+
+
+		<blockquote>
+
+					<a href="mos2tle/moltled.lua">moltled.lua</a>  --- The startup with initializing and loading other modules
+ <br>
+ 					<a href="mos2tle/ctl_view.lua">ctl_view.lua</a>  --- The 3d view window
+ <br>					
+					<a href="mos2tle/Movie.lua">Movie.lua</a>  --- Movie related functions
+ <br>
+ 					<a href="mos2tle/CreateModel.lua">CreateModel.lua</a>  --- Managing animated models
+ <br>
+					<a href="mos2tle/CreateTL.lua">CreateTL.lua</a>  --- The time line window
+ <br>
+					<a href="mos2tle/odefunc.lua">odefunc.lua</a>  --- the module describing interface to ODE<br>
+					
+					<a href="mos2tle/main.lua">main.lua</a> 	 --- a project file of this program for ZeroBrane development<br>
+
+					<a href="mos2tle/test1.mos">test1.mos</a>  --- A script for the actin and myosin interaction. <br>
+
+					<a href="mos2tle/2mys-rds.lhd">2mys-rds.lhd</a>  --- a working data for the myosin model<br>
+					
+					<a href="mos2tle/traj0.lhd">traj0.lhd</a>  --- a sample trajectory of myosin model<br>
+					
+			</p>
+		</blockquote>
+--->
+
+<h3>Additional developments </h3>
+<p>We are studying the animation method using Blender. Some of the examples are provided from our site.
+                  <a href="https://uenoyt.github.io/blendmb" target="_blank">Blender fo Molecular Biology</a>
+
+</p><p>
+Questions and comments are welcome to uenoyt@ni.aist.go.jp
+</p><hr>
+2019 Dec,24 Yutaka Ueno, AIST
+</body></html>

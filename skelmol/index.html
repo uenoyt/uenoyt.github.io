@@ -132,11 +132,9 @@ The calculated osscilation vectors are applied to the
 atomic coordinates, then the group are divided into three part
 and these subgroup positions are used to calcculate the
 rigid translation matrix that most well describe the motion
-of atom in the group. Then the matrix is converted into
-Euler angles that will be saved into the BVH file.
+of atoms in the group. Then the rotation matrix is converted into
+Euler angles to save in the BVH file.
 
-are obtained asfor Â&nbsp;by using three segment of the asaved and that will
-be written in the BVH data file.
 
 		</p><h4><br>
 			2. A coarse-grained trajectory of a molecular dynamics simulation</h4>
@@ -156,7 +154,7 @@ molecular shape depicted in polygon mesh, various kind of the molecular
 			capture file BVH. 
 		</p><blockquote>
 		 <br>
-				<a href="/skelmol/data/tpm2cpl3.lua">tpma2cpl3.lua</a>  --- The conversion program<br>
+				<a href="/skelmol/src/tpm2cpl3.lua">tpm2cpl3.lua</a>  --- The conversion program<br>
 				<a href="/skelmol/data/1amy0_md300.pdb.gz">1amy0_md300.pdb.gz</a>  --- The trajectory file converted into multiple model PDB file<br>
 				<a href="/skelmol/data/1amy-dssp.txt">1amy-dssp.txt</a>  ---DSSP result file for making bones, the secondary structre annotations for each residues<br>
 				<a href="/skelmol/data/tpm-1amy.bvh">tpm-1amy.bvh</a>  --- Output BVH file<br>
@@ -190,7 +188,7 @@ molecular shape depicted in polygon mesh, various kind of the molecular
 		</p><blockquote>
 				<a href="/skelmol/src/donvt.sh">donvt.sh</a>  --- GROMACS a typical preparation for a MD simulation found in the official tutorial, <br>
 				where nvt300.mdp and npt300.mdp are identical to the original tutorial.<br>
-				<a href="/skelmol/data/md300f05.mdp">md300f05.mdp</a>  --- GROMACS production run<br>
+				<a href="/skelmol/data/md300f05.mdp">md300f05.mdp</a>  --- GROMACS input file for the production run. <br>
 				  % gmx grompp -f md300f05.mdp -c 1amy0_npt300.gro -t 1amy0_npt300.cpt -p 1amy0.top -o 1amy0_md300.tpr <br>
 				  % gmx mdrun -v -deffnm 1amy0_md300 -deffnm 1amy0_md300 <br>
 
@@ -265,5 +263,5 @@ molecular shape depicted in polygon mesh, various kind of the molecular
 </p><p>
 Questions and comments are welcome to uenoyt@ni.aist.go.jp
 </p><hr>
-2019 Dec,24 Yutaka Ueno, AIST
+2020 Nov 20,  Yutaka Ueno, AIST
 </body></html>

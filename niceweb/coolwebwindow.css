@@ -1,5 +1,6 @@
 @charset "UTF-8";
 
+/* style sheet design by @vanilla_beans 2017 */
 
 /* ========BASIC======== */
 html {
@@ -48,12 +49,12 @@ h1,h2,h3,h4,h5,h6 {
 #top {
    width:785px;
    margin:0 auto;
-   background:url("../images/bg_contents_left.gif") 0 0 repeat-y;
+   background:url("../niceweb/bg_contents_left.gif") 0 0 repeat-y;
 }
 
 #wrapper {
    width:785px;
-   background:url("../images/bg_contents_right.gif") 100% 0 repeat-y;
+   background:url("../niceweb/bg_contents_right.gif") 100% 0 repeat-y;
 }
 
 #header {
@@ -70,13 +71,13 @@ h1,h2,h3,h4,h5,h6 {
 
 #menuWrapper {
    float:left;
-   background:url("../images/bg_menu_right.gif") 100% 0 no-repeat;
+   background:url("../niceweb/bg_menu_right.gif") 100% 0 no-repeat;
 }
 
 #menu {
    float:left;
    padding:0 5px;
-   background:url("../images/bg_menu_left.gif") 0 0 no-repeat;
+   background:url("../niceweb/bg_menu_left.gif") 0 0 no-repeat;
 }
 
 #contents {
@@ -110,7 +111,7 @@ h1,h2,h3,h4,h5,h6 {
 #footer {
    clear:both;
    margin:0 10px;
-   background:#0082C6 url("../images/bg_footer_left.gif") 0 0 no-repeat;
+   background:#0082C6 url("../niceweb/bg_footer_left.gif") 0 0 no-repeat;
 }
 /** **/
 
@@ -181,7 +182,7 @@ h1,h2,h3,h4,h5,h6 {
    font-size:15px;
    font-weight:bold;
    border-top:2px solid #0088D0;
-   background:url("../images/bg_main_h2.gif") 0 100% repeat-x;
+   background:url("../niceweb/bg_main_h2.gif") 0 100% repeat-x;
 }
 
 #main h3 {
@@ -189,7 +190,7 @@ h1,h2,h3,h4,h5,h6 {
    padding-left:12px;
    font-size:15px;
    font-weight:bold;
-   background:url("../images/bg_main_h3.gif") 0 50% no-repeat;
+   background:url("../niceweb/bg_main_h3.gif") 0 50% no-repeat;
 }
 
 #main h4 {
@@ -206,11 +207,12 @@ h1,h2,h3,h4,h5,h6 {
    color:#0088D0;
    border-bottom:2px solid #0088D0;
 }
-
+  /* gray thin line is added */
 #main h6 {
    margin-bottom:2px;
    font-size:13px;
    color:#0088D0;
+   border-bottom:1px solid #a0a0a0;
 }
 
 #main p {
@@ -281,7 +283,7 @@ h1,h2,h3,h4,h5,h6 {
    font-weight:bold;
    color:#fff;
    border:1px solid #426D9C;
-   background:url("../images/bg_sub_h2.gif") 0 50% no-repeat;
+   background:url("../niceweb/bg_sub_h2.gif") 0 50% no-repeat;
 }
 
 #sub ul {
@@ -293,13 +295,13 @@ h1,h2,h3,h4,h5,h6 {
    padding:5px 0 5px 0;
    line-height:1.4;
    list-style:none;
-   background:url("../images/bg_dotline.gif") 0 100% repeat-x;
+   background:url("../niceweb/bg_dotline.gif") 0 100% repeat-x;
 }
 
 #sub li a {
    display:block;
    padding-left:14px;
-   background:url("../images/bg_sub_list.gif") 0 5px no-repeat;
+   background:url("../niceweb/bg_sub_list.gif") 0 5px no-repeat;
 }
 
 
@@ -311,7 +313,7 @@ h1,h2,h3,h4,h5,h6 {
 
 #pageTop a {
    padding-left:8px;
-   background:url("../images/bg_pagetop.gif") 0 50% no-repeat;
+   background:url("../niceweb/bg_pagetop.gif") 0 50% no-repeat;
 }
 
 
@@ -320,7 +322,7 @@ h1,h2,h3,h4,h5,h6 {
    margin:0 0 10px 0;
    padding:10px 0 0 0;
    text-align:right;
-   background:url("../images/bg_dotline.gif") 0 0 repeat-x;
+   background:url("../niceweb/bg_dotline.gif") 0 0 repeat-x;
 }
 
 #footMenu li {
@@ -331,7 +333,7 @@ h1,h2,h3,h4,h5,h6 {
 
 #footMenu li a {
    padding-left:10px;
-   background: url("../images/bg_footmenu.gif") 0 50% no-repeat;
+   background: url("../niceweb/bg_footmenu.gif") 0 50% no-repeat;
 }
 
 
@@ -342,5 +344,5 @@ h1,h2,h3,h4,h5,h6 {
    font-size:11px;
    color:#fff;
    text-align:center;
-   background:url("../images/bg_footer_right.gif") 100% 0 no-repeat;
+   background:url("../niceweb/bg_footer_right.gif") 100% 0 no-repeat;
 }

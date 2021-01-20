@@ -1,34 +1,30 @@
 <!DOCTYPE html>
-<!-- target Github Pages  uenoyt.github.io/abam/ -->
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html >
+<head>
+<meta charset="UTF-8">
 
-  <!-- Basic Page Needs
+  <!-- target Github Pages  uenoyt.github.io/abam/ -->
+  <!-- ccs dir name is ../niceweb/  -->
+  <!-- 
+  <base href="" /> -->
+
+  <!-- The page title
    -->
   
-  <title>Mesoschale Modeling of Biomolecules</title>
-  <meta name="description" content="">
-  <meta name="author" content="">
+  <title>Mesoscale Modeling of Biomolecules</title>
+  <meta name="description" content="Mesoscale modeling of Biomolecules">
+  <meta name="author" content="Yutaka Ueno, AIST">
 
   <!-- Mobile Specific Metas -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- FONT -->
-
   <!-- CSS   -->
-  <!--  not used <link rel="stylesheet" href="XXXXXccs/normalize.css"> -->
-  <link rel="stylesheet" href="/abam/skeleton.css">
-  <link rel="stylesheet" href="/abam/custom.css">
+  <link rel="stylesheet" href="../niceweb/skeleton.css">
+  <link rel="stylesheet" href="../niceweb/custom.css">
+  <link rel="stylesheet" href="../niceweb/coolwebwindow.css" type="text/css">
 
-  <link rel="stylesheet" href="/abam/coolwebwindow.css" type="text/css">
-<!--  <script type="text/javascript" src="js/jquery.js"></script>
--->
-<!--  <script type="text/javascript" src="js/common.js"></script>
--->
-  <!-- Scripts
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
- -->
-
-  <link rel="icon" type="image/png" href="/abam/small-airc.png">
+  <!-- the icon for this page -->
+  <link rel="icon" type="../niceweb/png" href="../niceweb/small-airc.png">
 
 </head>
 
@@ -38,237 +34,256 @@
 <div class="container" id="main">
 
 <!-- navigation menu bar may be used here -->
+<!-- use Skeleton formatting -->
 
-    <!-- Why use Skeleton -->
     <div class="section">
       <p> </p>
       <h3 class="docs-header">MESOSCALE MODELING OF BIOMOLECULES</h3>
       <p>
       In order to edit a supramolecular structure composed of multiple biopolymers with computer software, the polygon mesh model is the useful modeling object describing shape of molecules with a size of several nano maters. We may also expect the rigid body dynamics calculation can be applied using general-purpose 3D CG software. Here, our example of using Blender, a 3D CG animation software is demonstrated. Please note the illustrated motions are not determined experimentaly by biologist, but are predictions. They will be tools for understanding biological discussions. Blender is free software, and we are developing numbers of script file for Blender. Please download these scripts to modify and exchange the model, so that we might help biologist to construct biologically correct animations based on structural studies for proteins and biological macromoleculesby exchanging and improving Blender scripts.
       </p>
-<!-- -->
     </div>  <!-- section  -->
 
 
-<!--ONE --------------------------------------------  -->
+
+<!--the 1st video --------------------------------------------  -->
     <div class="example">
-      <h2 class="docs-header">MODELING FOR STRUCTURAL STUDIES OF ARTIFICIAL MUSCLES</h2>
-      <p>
-      
-      
-	<!--  -->
-      </p><div class="row example">
-        <a class="example-screenshot-wrapper">
-         <video width="320" heigh="180" poster="/abam/net35-w320.png" loop="" controls="" preload="">
-                <source src="/abam/net35-w320.mp4" type="video/mp4">
-                <p>video in html5 is not working</p>
+      <h2 class="docs-header">MODELING FOR STRUCTURAL STUDIES OF ARTIFICIAL MUSCLES</h2> 
+	    <!-- just space  --><p></p>
+      <div class="row">
+        <div class="example-screenshot-wrapper">
+          <video  loop="" controls="" preload=""
+                  poster="net35-w320.png">
+              <source src="net35-w320.mp4" type="video/mp4" >
+                  <p>...video in html5 is not working</p>
                 </video>
-        </a>
-        <div class="one-half offset-by-one-half column">
+        <div >&emsp; [ HD video ]
+          　<a href="net35-h500.mp4">net35-h500.mp4</a>
+        </div>
+      </div>
+
+      <div class="one-half offset-by-one-half column">
           <!--OMIT SUBTITLE <h5 class="example-header">imaging</h5> -->
-          <p class="example-description">
-            The artificial muscle reported by Hokkaido University and Kansai University demonstrated a possible actuator material using microtubules and kinesin. Fluorescent molecules have been introduced into the microtubules to facilitate observation with an optical microscope. In order to construct a detailed 3D model a conforcal laser scanning microscope (CLSM) was used at a resolution approaching super resolution. The arrangement of microtubules, which is a cylindrical structure, was visualized, and we attempted to construct a three-dimensional model of microtubules.
+        <p class="example-description">
+          The artificial muscle reported by Hokkaido University and Kansai University demonstrated a possible actuator material using microtubules and kinesin. Fluorescent molecules have been introduced into the microtubules to facilitate observation with an optical microscope. In order to construct a detailed 3D model a conforcal laser scanning microscope (CLSM) was used at a resolution approaching super resolution. </p>
+                  <!--OMIT LIST ITEMS   -->
+                  <!--		  <p></p>  -- space  -->
+                  <!--		  <p>. </p>    -- space -->
+        </div>　<!-- one-half -->
+      </div>  <!-- row --> 
+          The arrangement of microtubules, which is an assembly of the filament microtubles , was visualized, and we attempted to construct a three-dimensional model of microtubules.
           
-          <!--OMIT LIST ITEMS
-            -->
-<!--		  </p><p></p>  -- space  -->
-<!--		  <p>. </p>    -- space -->
-
-        </p></div>　<!-- one-half -->
-      </div> 　<!-- row example -->  
-
-    <p></p><p>
-               A mesh model by cylinders of microtubule that fits the three-dimensional volume of the observed microtubule are constructed. The three-dimensional volume data are convert the iso-surface polygon mesh model by ImageJ software. Then, the cylinder objects are fitted into the volume using Blender.  Two areas, a dense area and a surface area that represents the overall volume, were created and saved with export STL.
-
-
     </p>
-      <!-- the 2nd movie/file/desc -->
-      <div class="row example">
-        <a class="example-screenshot-wrapper">
-         <video width="320" heigh="180" poster="/abam/fitmap7-w320.png" loop="" controls="" preload="">
-                <source src="/abam/fitmap7-w320.mp4" type="video/mp4">
+<!-- the 2nd movie/file/desc -->
+      <div class="row">
+        <div class="example-screenshot-wrapper">
+         <video width="320" height="180" poster="fitmap7-w320.png" loop="" controls="" preload="">
+                <source src="fitmap7-w320.mp4" type="video/mp4">
                 <p>video in html5 is not working</p>
                 </video>
-        </a>
+        <div >&emsp; [ HD video ]
+          　<a href="fitmap7-hd.mp4">fitmtmap7-hd.mp4</a> 
+        </div>
+        </div>
         
 
         <div class="one-half offset-by-one-half column">
-          To find a nice fit of cylinder models for the observed iso-surface mesh object a semi-transparent display was useful overlaying the structure. As a result, many filaments had a length of about 4 µm, and filaments of about 7.5 µm were observed. The size will differ depending on the condition of the specimen.
+          To find a nice fit of cylinder models for the observed iso-surface mesh object a wireframe display was useful overlaying the structure. As a result, many filaments had a length of about 4 µm, and filaments of about 7.5 µm were observed. The size will differ depending on the condition of the specimen. A mesh structure model by cylinders of microtubule that fits the three-dimensional volume of the observed microtubule are constructed. 
 
 
-          <h5 class="example-header">FILES</h5>
+          <h6 class="example-header">FILES</h6>
           <p class="example-description">
                </p><dl>
-                  <dt>blender script <a href="/abam/fitmtmap7.blend">fitmtmap7.blend</a></dt>
-<!--
-                  <dd>ミオシンフィラメント<a href="emd1950s50bone.stl">emd1950s50bone.stl</a> </dd>
-                  <dd>アクチンフィラメント <a href="fa.stl">fa.stl</a></dd>
-                  <dd>ミオシン <a href="2mys.stl">2mys.stl</a></dd>
--->
-               <dt>saved media　<a href="/abam/fitmtmap7-hd.mp4">fitmpmap7-hd.mp4</a></dt>
+                  <dt>blender script <a href="fitmtmap7.blend">fitmtmap7.blend</a></dt>
+
                </dl>
-      <p></p>
+        </div>　<!-- one-half -->
+      </div> 　<!-- row -->  
+      <p class="example-description">
+        The three-dimensional volume data are convert the iso-surface polygon mesh model by ImageJ software. Then, the cylinder objects are fitted into the volume using Blender.  Two areas, a dense area and a surface area that represents the overall volume, were created and saved in STL format file.
+      </p>
+
+      <!-- simple images -->
+      <div class="row">
+        <div class="example-screenshot-wrapper"  >
+        <a href="fitmtmap8-map.png" target="_blank">
+        <img src="fitmtmap8-map.png" width="400"  align="top" >
+        </a>
+
+          <div class="example-description">
+          Using ImageJ the volume data are converted to a 8 bit/pixel ZStack, then on "Plugins / 3D Viewer" window, "Display Surface" command generates the isosurface data at a threshold value. Surfaces at two different threshold were exported and imported into Blender.
+          </div>
+        </div>
+
+        <div class="one-half offset-by-one-half column">
+          <a href="fitmtmap8-mdl.png" target="_blank">
+          <img src="fitmtmap8-mdl.png" width="400"  align="top" >
+          </a>
+          <div class="example-description">
+          Cylinders are assigned to fit the 3D volue density. Radius of the cylinder was 500nm that was about 3 pixels width on the isosurface map at 120 nm mesh. This resolution would be a limit of the light microscopy. The actual microtubule radius 25 nm would becomes a thin line on this figure.
+          </div>
 
         </div>　<!-- one-half -->
-      </div> 　<!-- row example -->  
+      </div> 　<!-- row -->  
+      <div class="row">
+        <div class="example-screenshot-wrapper"  >
+          <a href="fitmtmap8-all.png" target="_blank">
+          <img src="fitmtmap8-all.png" width="400"  align="bottom" >
+          </a>
+          <div class="example-description">
+          Isosurface and cylinder models are superimposed in Blender. 
+          </div>
+        </div>
+        <div class="one-half offset-by-one-half column">
+          Using the layer function in Blender, or collection function in Blender version 2.8, isosurface maps and cylinder models can be superimporsed interactively, so the fitness of the model was examined. The transparency rendering for cylinder as shown in this figure takes several seconds on a standard PC, but interactive rendering without transparency would be useful in a modeling study.
 
-      <p class="example-description">
-    </p><p>
-              In Blender, the model represented by a cylinder or polygon can be used as a rigid body to simulate the movement when a force is applied by the physical calculation function. The action of kinesin molecule was introduced to the model of microtubules represented by the arrangement of cylinders, and the force to pull the microtubules was applied.
+        </div>　<!-- one-half -->
+                　<p>. </p>          　<p>. </p> 
+      </div> 　<!-- row -->  
+         　<p>. </p>  
+    <p class="example-description">
+      In Blender, the model represented by a cylinder or polygon can be used as a rigid body to simulate the movement when a force is applied by the physical calculation function. The action of kinesin molecule was introduced to the model of microtubules represented by the arrangement of cylinders, and the force to pull the microtubules was applied.
     </p>
-
-      <!-- the 3rd movie/file/desc -->
-      <div class="row example">
-        <a class="example-screenshot-wrapper">
-         <video width="320" heigh="180" poster="/abam/mtpull10a-w320.png" loop="" controls="" preload="">
-                <source src="/abam/mtpull10a-w320.mp4" type="video/mp4">
+<!-- the 3rd movie/file/desc -->
+      <div class="row">
+        <div class="example-screenshot-wrapper">
+         <video width="320"  poster="mtpull13a-w640.png" loop="" controls="" preload="">
+                <source src="mtpull13a-w640.mp4" type="video/mp4">
                 <p>video in html5 is not working</p>
                 </video>
-        </a>
-        
-
+        <div >&emsp; [ HD video ]
+          　<a href="mtpull13a-hd.mp4">mtpull10a.mp4</a> 
+        </div>
+        </div>
         <div class="one-half offset-by-one-half column">
           Using two microtubule filaments a basic contractile elemment is considered. These filaments are pulled by introduced kinesin multimer complex. Polarity of microtubule filaments are supposed to oposite direction. In this model a kinesin multimer complex has two arms where the motor primitive is assigned to slide on the microtubule filaments. Thus, four arms of kinesin multimer complex used in the real experiment will work in the same way.
 
 
-          <h5 class="example-header">FILES</h5>
+          <h6 class="example-header">FILES</h6>
           <p class="example-description">
                </p><dl>
                
-                  <dt>blender script for a contractile element with two filaments <a href="/abam/mtpull10a.blend">mtpull10a.blend</a></dt>
-<!--
-                  <dd>ミオシンフィラメント<a href="emd1950s50bone.stl">emd1950s50bone.stl</a> </dd>
-                  <dd>アクチンフィラメント <a href="fa.stl">fa.stl</a></dd>
-                  <dd>ミオシン <a href="2mys.stl">2mys.stl</a></dd>
--->
-               <dt>saved media　<a href="/abam/mtpull10a.mp4">mtpull10a.mp4</a></dt>
+                  <dt>blender script for a contractile element with two filaments <a href="mtpull13a.blend">mtpull10a.blend</a></dt>
+
+               
                </dl>
-      <p></p>
-
-
         </div>　<!-- one-half -->
-      </div> 　<!-- row example -->  
+      </div> 　<!-- row -->  
 
       <!-- the 4th movie/file/desc -->
-      <div class="row example">
-        <a class="example-screenshot-wrapper">
-         <video width="320" heigh="180" poster="/abam/kinosu-w320.png" loop="" controls="" preload="">
-                <source src="/abam/kinosu-w320.mp4" type="video/mp4">
+      <div class="row">
+        <div class="example-screenshot-wrapper">
+         <video width="320"  poster="kinosu14-w640.png" loop="" controls="" preload="">
+                <source src="kinosu14-w640.mp4" type="video/mp4">
                 <p>video in html5 is not working</p>
                 </video>
-        </a>
+        <div >&emsp; [ HD video ]
+          　<a href="kinosu14-hd.mp4">kinosu-hd.mp4</a> 
+        </div>
+        </div>
         
 
         <div class="one-half offset-by-one-half column">
-          Furthermore, by connecting multiple microtubules and arranging three motion models, a contraction motion was made with the same structure as the artificial muscle gel. This is an example model to understand how the whole mesh structure is contracted by the motion of kinesin mmultimer complex.
+          Furthermore, by connecting multiple microtubules and arranging three motion models, a contraction motion was made with the similar structure as the observed artificial muscle gel. This is an example model to understand how the whole mesh structure is contracted by the motion of kinesin mmultimer complex.
 
-          <h5 class="example-header">FILES</h5>
+          <h6 class="example-header">FILES</h6>
           <p class="example-description">
                </p><dl>
-                  <dt>blender script <a href="/abam/kinosu09f.blend">kinosu09f.blend</a></dt>
-                 
-<!--
-                  <dd>ミオシンフィラメント<a href="emd1950s50bone.stl">emd1950s50bone.stl</a> </dd>
-                  <dd>アクチンフィラメント <a href="fa.stl">fa.stl</a></dd>
-                  <dd>ミオシン <a href="2mys.stl">2mys.stl</a></dd>
--->
-               <dt>saved media　<a href="/abam/kinosu-hd.mp4">kinosu-hd.mp4</a></dt>
+                  <dt>blender script <a href="kinosu14.blend">kinosu14.blend</a></dt>
+
                </dl>
-      <p></p>
-
-
+                <p></p>
         </div>　<!-- one-half -->
-      </div> 　<!-- row example -->  
+      </div> 　<!-- row -->  
 
 
       <p class="example-description">
 	  </p><p>
-               Research and development of protein-based actuators is still underway, and in the solution of various problems such as control of contraction and relaxation and stabilization of materials, it will be used as a tool to promote discussion of molecular structure improvement based on structure.
+          Research and development of protein-based actuators is still underway, and in the solution of various problems such as control of contraction and relaxation and stabilization of materials, it will be used as a tool to promote discussion of molecular structure improvement based on structure.
 		</p>
     </div>
 	<!-- end of section  -->
 
 
-<!--ONE --------------------------------------------  -->
+<!--4th video --------------------------------------------  -->
     <div class="example">
       <h2 class="docs-header">CONSTRUCTION OF SKELETAL MUSCLE FILAMENT MODEL</h2>
       <p>
-        The muscle filaments that make up skeletal muscle are arranged in a hexagonal lattice, and are known to have a unique arrangement in vertebrates. Further, when the muscle contracts, the lattice spacing becomes shorter corresponding to the extension of the muscle cell. Here, we attempted to confirm the intermolecular interaction between actin and myosin on the model by reconstructing the structure of the filament lattice, which was not dealt with in the conventional sarcomeric shortening model. Facilitated the creation of a model that was also contracted. I tried to utilize the particle function of Blender. In order to nest two particle models, one is a particle model with leaves on the branches of the tree, and the other is a particle model of the trunk with multiple branches. Apply the particle instance modifier to the upper part of the branches, and use the Use Modifier in the particle panel. Turn on Stack. The total number of myosin heads generated from the branches is the total number.
+        The muscle filaments that make up skeletal muscle are arranged in a hexagonal lattice.  It is known that vertebrate muscle has a unique layout of thick and thin filaments compared to the other spices. On muscle contraction, the lattice spacing becomes wider according to the shorting of the muscle cell. This model was made to investigate the intermolecular interaction between actin and myosin of each filaments in the sarcomere model by reconstructing the structure of the filament lattice that accompanies lattice spacing change. The particle system facility in Blender was applied using low resolution polygon models of actin and myosin molecules. Basically the particle system in blender provide multiple child objects grow on a parent object, and we nested additional particle system objects nested to the children object, i.e, one is a particle model with leaves on the branches of the tree, and the other is a particle model of the trunk with multiple branches. 
       </p>
       
-	<!--  -->
-      <div class="row example">
-        <a class="example-screenshot-wrapper">
-        <video width="320" heigh="180" poster="/abam/skelathb-w320.png" loop="" controls="" preload="">
-                <source src="/abam/skelathb-w320.mp4" type="video/mp4">
-                <p>video in html5 is not working</p>
+      <div class="row">
+        <div class="example-screenshot-wrapper">
+          <video  
+                    poster="skelathb-w320.png" loop="" controls="" preload="">
+                <source src="skelathb-w320.mp4" type="video/mp4">
+                    <p>video in html5 is not working</p>
                 </video>
-        </a>
+          <div >&emsp; [ HD video ]
+          　<a href="skelathb-hd.mp4">skelathb-hd.mp4</a> 
+        </div>
+        </div> 
         <div class="one-half offset-by-one-half column">
-          <h5 class="example-header">FILES</h5>
+          There is a simple shorting animation made with two keyframe motions on the myosin filamnts that sliding into the actin filament lattice. Both lattice spacings were also modified by keyframes. To check the molecular interactions between the filament, camera zooming is nessesary that is also programed by the keyframe.
+          <h6 class="example-header">FILES</h6>
           <p class="example-description">
                </p><dl>
-               <dt>blender scirpt <a href="/abam/skelathb.blend">
+               <dt>blender scirpt <a href="skelathb.blend">
                					skelathb.blend</a></dt>
-               <dt>saved media　<a href="/abam/skelathb-hd.mp4">
-               					skelathb-hd.mp4</a></dt>
-		  <p></p>
 		  <!--　<p>. </p>  -- space -->
-		  		  <p>. </p>  <!-- space -->
-
         </dl></div>　<!-- one-half -->
-      </div> 　<!-- row example -->  
+      </div> 　<!-- row -->  
 
       <p class="example-description">
-	  </p><p>
-If you use the Group function of blender, you can register and reuse the parts that consist of multiple objects, so you can build a similar model with the Gorup function. A script can be used to copy or place multiple objects, or the objects created with particles can be converted into ordinary objects. A script is used to change the attributes of multiple objects.
+        There are ways to layout duplicated objects in Blender. For example, Group function allows us to register and reuse the parts that consist of multiple objects, we can build a similar model with the Gorup function. In addition, a python script can be used to copy or place multiple objects, or the objects created with particles can be converted into ordinary objects. Using script is also useful to change the attributes of multiple objects at once and animate them.
+        We also tried to construct a much detailed sarcomere model using python script that is avalable upon request before release. 
 		</p>
     </div>
 	<!-- end of section  -->
-<!--ONE --------------------------------------------  -->
-<!--ONE --------------------------------------------  -->
+<!--5th video --------------------------------------------  -->
     <div class="example">
       <h2 class="docs-header">PREDICTION OF SMOOTH MUSCLE FILAMENT MODEL</h2>
       <p>
-        Since smooth muscle does not have a sarcomere structure, its detailed structure is not so clear, but a hypothesis has been proposed for the contraction mechanism. We tried to create a model based on the hypothesis that the unit structure of contraction is composed of actin from the textbook explanation. We created a state in which this unit structure constitutes a network connected to a mesh centered on a mass known as a dens body. And it was illustrated that the contraction of the whole network is given by shortening the unit structure. I created a unit structure with the Group function of Blender, created a mesh structure with armature so that it could be given an action, and pasted multiple unit structures registered with Group. Since the myosin filament was created in the same manner as the skeletal muscle, it has the same movement as the neighbor, but it is not synchronized, and it is expected that the sliding length of the filament is not fixed.
+        Since smooth muscle does not have a sarcomere structure, its detailed structure would be experimentally explored in near future. In order to discuss various force generation mechanisms of biomolecules, we tried to predict a filament model of smooth muscle based on literature. A unit structure of contraction is composed of actin filaments from the textbook explanation. This unit structures will be linked together to form the filament network and the portion connecting filaments would becomes a dens body in the smooth muscle. The contraction of the whole network were possible by shortening of the unit structure. 
       </p>
       
   <!--  -->
-      <div class="row example">
-        <a class="example-screenshot-wrapper">
-        <video width="320" heigh="180" poster="/abam/smm17-w320.png" loop="" controls="" preload="">
-                <source src="/abam/smm17-w320.mp4" type="video/mp4">
+      <div class="row">
+        <div class="example-screenshot-wrapper">
+        <video width="320" height="180" poster="smm17-w320.png" loop="" controls="" preload="">
+                <source src="smm17-w320.mp4" type="video/mp4">
                 <p>video in html5 is not working</p>
                 </video>
-        </a>
+          <div >&emsp; [ HD video ]
+          　<a href="smm17-b6m.mp4">smm17-b6m.mp4</a> 
+          </div>
+        </div> 
         <div class="one-half offset-by-one-half column">
-          <h5 class="example-header">FILES</h5>
+          The unit structure of smooth muscle was made with the Group function of Blender, and duplicated sometime to form the network structure. Using armature shortning of the unit structure was introduced. The myosin molecules are also added using the particle system function of Blender on the surface of thick filament. It could also applied some motion of myosin heads on contraction, however we are not successfuly applied with physics simulation function in Blender.
+          <h6 class="example-header">FILES</h6>
           <p class="example-description">
                </p><dl>
-               <dt>blender script <a href="/abam/smm19c.blend">
+               <dt>blender script <a href="smm19c.blend">
                         smm19c.blend</a></dt>
-               <dt>saved media　<a href="/abam/smm17-b6m.mp4">
-                        smm17-b6m.mp4</a></dt>
-      <p></p>
+
+
       <!--　<p>. </p>  -- space -->
-            <p>. </p>  <!-- space -->
 
         </dl></div>　<!-- one-half -->
-      </div> 　<!-- row example -->  
+      </div> 　<!-- row -->  
 
-      <p class="example-description">
-    </p><p>
-Structural studies of smooth muscles are explained in various textbooks, mainly by pioneering reports by electron microscopes, but with the recent development of fluorescence microscopy, the visualization of muscle filaments in smooth muscle cells provides new insights. It is being obtained, and it is expected that the detailed structure will be revealed.
+    <p class="example-description">
+      Structural studies of smooth muscles are explained in various textbooks, mainly by pioneering reports by electron microscopes, but with the recent development of fluorescence microscopy, the visualization of muscle filaments in smooth muscle cells provides new insights. It is being obtained, and it is expected that the detailed structure will be revealed.
     </p>
     </div>
   <!-- end of section  -->
 
-<!-- -------------------------------------------------- -->
+<!-- end of note -------------------------------------------------- -->
       <div>  <!-- misc note  -->
                <h2>blender memorundom</h2>
                <h4>particle method for dynamic motion</h4>
                <p>
-			         Although it is a function to generate multiple shape models, the general-purpose functions for creating human models are the main functions, so in such molecular model creation, it is often not possible to create the desired model even when trying to proceed with the manual. It was efficient to improve the already created script. There is also an addon that makes it easy to create tree branches and leaves, so there is room for use. In the Rotation panel, you can specify the method of changing the orientation of the object to be generated, but since it shakes randomly, you will be searching for a good value for appearance.
+			         The particle system works for variety of subjects for different subjects to make an object model with duplicated child objects, this general-purpose functions are not always applicable for our purpose. It is often diffucult to create the desired model even when trying to proceed with the manual. So modifying the already created script is good strategy. For example, there is also an addon that makes it easy to create tree branches and leaves, so we may try that. In particular, the Rotation panel, we can specify the method of changing the orientation of the object to be generated, but since it shakes randomly, you will be searching for a good value for appearance.
                </p>
                <h4>adapting latest Blender 2.8</h4>
                <p>
@@ -291,22 +306,22 @@ Structural studies of smooth muscles are explained in various textbooks, mainly 
                </dl>
 				<h4>Acknowledgements</h4>
 				<dt>This research was obtained as a result of "Research and development of molecular artificial muscle" (July 2016-February 2020) commissioned by the New Energy and Industrial Technology Development Organization (NEDO) of the National Research and Development Agency.
-The animation was created with the cooperation of Seiyuki Kobayashi and Yuji Fujioka who participated in the research project. The design template by CoolWebWindow and the layout by getstekeleton were used to create the home page.
+        The animation was created with the cooperation of Seiyuki Kobayashi and Yuji Fujioka who participated in the research project. The design template by CoolWebWindow ( by vanilla_beans, a Japanese freelance ) and the layout by getstekeleton ( Dave Gamache, github.com/dhg/Skeleton ) were used to create the home page.
 
         <h4>References</h4>
         <dt>Artificla smooth muscle:</dt>
-                    Kento Matsuda, Arif Md. Rashedul Kabir, Naohide Akamatsu, Ai Saito, Shumpei IshikawaTsuyoshi Matsuyama, Oliver Ditzer, Md. Sirajul Islam, Yuichi Ohya, Kazuki Sada, Akihiko Konagaya, Akinori Kuzuya, Akira Kakugo, "Artificial Smooth Muscle Model Composed of Hierarchically Ordered Microtubule Asters Mediated by DNA Origami Nanostructures", <a href="https://doi.org/10.1021/acs.nanolett.9b01201">Nano Lett. 2019, 19, 6, 3933-3938 </a>
+          Kento Matsuda, Arif Md. Rashedul Kabir, Naohide Akamatsu, Ai Saito, Shumpei IshikawaTsuyoshi Matsuyama, Oliver Ditzer, Md. Sirajul Islam, Yuichi Ohya, Kazuki Sada, Akihiko Konagaya, Akinori Kuzuya, Akira Kakugo, "Artificial Smooth Muscle Model Composed of Hierarchically Ordered Microtubule Asters Mediated by DNA Origami Nanostructures",
+          <a href="https://doi.org/10.1021/acs.nanolett.9b01201">Nano Lett. 2019, 19, 6, 3933-3938 </a>
        
 
        <dt>Modeling study:</dt>
-Yutaka Ueno, Kento Matsuda, Kaoru Katoh, Akinori Kuzuya, Akira Kakugo and Akihiko Konagaya,
-"Modeling a Microtubule Filaments Mesh Structure from Confocal Microscopy Imaging",
-<a href="https://doi.org/10.3390/mi11090844">Micromachines 2020, 11, 844 </a>
+          Yutaka Ueno, Kento Matsuda, Kaoru Katoh, Akinori Kuzuya, Akira Kakugo and Akihiko Konagaya,"Modeling a Microtubule Filaments Mesh Structure from Confocal Microscopy Imaging",
+          <a href="https://doi.org/10.3390/mi11090844">Micromachines 2020, 11, 844 </a>
         
 <!-- author -->
-               <dl>
-                  <dt>questions and comment are welcome to 　uenoyt@ni.aist.go.jp</dt>
-                  <dd>National Institute of Advanced Industrial Science and Technology Yutaka Ueno April 2020 </dd>
+            <dl>
+              <dt>questions and comment are welcome to 　uenoyt(at)ni.aist.go.jp</dt>
+              <dd>National Institute of Advanced Industrial Science and Technology Yutaka Ueno January 2021 </dd>
                </dl>
             </dt></div><!-- /misc note  -->
          </div><!-- /#main -->

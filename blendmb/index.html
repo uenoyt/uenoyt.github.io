@@ -338,18 +338,18 @@ The ribbon model from the PDB data 1AMY is saved as STL polygon mesh format, and
               <h3>Working on thousands of objects</h3>
               <p>
               Most frequently, more than thousands of objects makes Blender unhappy.
-              Extra main memory or GPU card may not help. Typically an atomic model of protein molecule in ball and stick or VDW sphere model are slow in Bioblender also. It seems that python data processing took substantial CPU times, however once the data is loaded from file, rendering speed becomes reasonably compromising. Using ribom model was really useful, so ribbon models created by Chimera is recomended. It seems that data structure is favarable to Blender. For example, a hemoglobin molecule PDB 1A00 consist of 4000 atoms would be heavy one, but its ribbon model with ~280,000 triangle mesh surface was very lightweight using 28MBytes memory, actually it makes only several objects in python.
-              The sphere primitive is actually constructed by polyhedron, using tetragonal polyhedron for sphere may help.
+              Extra main memory or GPU card may not help. Typically an atomic model of protein molecule in ball-and-stick or VDW sphere model are slow in Bioblender also. It seems that python data processing took substantial CPU times, however once the data is loaded from file, rendering speed becomes reasonable. So ribbon models created by Chimera would be recommended. It seems that data structure is favorable to Blender. For example, a hemoglobin molecule PDB 1A00 consist of 4,000 atoms would be heavy one, but its ribbon model with ~280,000 triangle mesh surface was very lightweight using 28 MBytes memory, actually it makes only several objects in python.
+              The sphere primitive is actually constructed by polyhedron, using a octahedron or icosahedron may help.
  </p>
 
               <h3>Moving an object on a curved path</h3>
               <p>
-              Among ways to do this, two methods with "object modifier" were found to be useful in molecular graphics, 1) FollowCurve or 2) Deform-Curve modifiers. The first one does not deform the moving object. At first the moving object is placed on a x-axis and a linear motion along x-axis is crated. Then the x-axis is transformed into the target curved path, NURB or BESIE by assigning "object modifier" to the moving object. New x-coordinates on the curve are automatically set and changing the x coordinates of the moving object at desired position using "G"-key motion command. The y and z values changes to the ovject causes unexpected deforms.
+              Among ways to do this, two methods with "object modifier" were found to be useful in molecular graphics, 1) FollowCurve or 2) Deform-Curve modifiers. The first one does not deform the moving object. At first the moving object is placed on a x-axis and a linear motion along x-axis is crated. Then the x-axis is transformed into the target curved path, either Nurbs or Bezier by assigning "object modifier" to the moving object. New x-coordinate on the curve is assigned on the curve, and changing the x coordinates of the moving object at desired position using "G"-key motion command. The y and z values changes to the object causes unexpected deforms.
 
             </p>
               <h3>The camera works</h3>
               <p>
-              Using avobe method to move camera on a path would be useful for the camera works. rotation of camera is very often nessesary to get correct viewing angle. After selecting the camera object, "G"-key motion and "R"-key rotation operation were useful.
+              Using above method to move camera on a path would be useful for the camera works. rotation of camera is very often necessary to get correct viewing angle. After selecting the camera object, "G"-key motion and "R"-key rotation operation were useful.
 
             </p>
 <!--ONE --------------------------------------------                
@@ -390,8 +390,8 @@ The atomic models for the active site conformations of alpha-amylase were from E
 
 <!-- author -->
                <dl>
-                  <dt>Questions and comments are sent via mail: uenoyt(at)ni.aist.go.jp</dt>
-                  <dd>Yutaka Ueno, AIST 2021 January</dd>
+                  <dt>Questions and comments are sent via mail : uenoyt(at)ni.aist.go.jp</dt>
+                  <dd>Yutaka Ueno, AIST 2020 November</dd>
                </dl>
             </dt></div><!-- /misc note  -->
          </div><!-- /#main -->

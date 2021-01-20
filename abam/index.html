@@ -25,7 +25,14 @@
 
   <!-- the icon for this page -->
   <link rel="icon" type="../niceweb/png" href="../niceweb/small-airc.png">
-
+	
+  <!-- hide "fulscreen" button on chrome, webkit -->
+  <style type="text/css">
+    video::-webkit-media-controls-fullscreen-button {
+    display: none;
+  }
+  </style>
+	
 </head>
 
 <body class="code-snippets-visible">

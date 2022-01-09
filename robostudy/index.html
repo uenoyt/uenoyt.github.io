@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta charset="UTF-8">
+
+  <!-- Basic Page Needs
+   -->
+  
+  <title>Robot Simulator related Study</title>
+  <meta name="description" content="Robot Simulator related Study">
+  <meta name="author" content="Yutaka Ueno">
+
+  <!-- Mobile Specific Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT -->
+
+  <!-- CSS   -->
+  <!--  not used <link rel="stylesheet" href="XXXXXccs/normalize.css"> -->
+  <link rel="stylesheet" href="../niceweb/skeleton.css">
+  <link rel="stylesheet" href="../niceweb/custom.css">
+
+  <link rel="stylesheet" href="../niceweb/coolwebwindow.css" type="text/css">
+
+  <!-- set an icon on the browser tab -->
+  <link rel="icon" type="../niceweb/png" href="../niceweb/cbrcAsmall.jpg">
+
+  <!-- hide "fulscreen" button on chrome, webkit -->
+<style type="text/css">
+  video::-webkit-media-controls-fullscreen-button {
+    display: none;
+}
+</style>
+
+</head>
+
+<body class="code-snippets-visible">
+
+  <!-- Primary Page Layout  -->
+<div class="container" id="main">
+
+<!-- navigation menu bar may be used here -->
+
+    <!-- intro -->
+    <div class="section">
+      <p> </p>
+      <h3 class="docs-header">Blender for Robot Simulator</h3>
+      <p>
+      Since Blender works for 3DCG and animation, robot simulation studies benefit from its functionalities.
+      Here we used Blender as a prototyping environment for the robot arm motion trajectory simulator. We appreciate
+      development of Phobos, MORSE and ROS providing providing useful code and data for our study.
+
+      </p>
+      Recent laboratory automation projects in life science involves teaching robots to do biological experiments at 
+      laboratory bench. We are studying software tools to teach biological experiment.
+      
+      <p>
+        <!---
+       <a href="https://staff.aist.go.jp/yutaka.ueno/roostudy/dnnb.html">Japanese page </a> 
+       is also provided by our research institute URL https://staff.aist.go.jp/yutaka.ueno/blend/animc.html 
+       --->
+<!-- -->
+    </p></div>  <!-- section  -->
+
+<!--ONE --------------------------------------------  -->
+    <div class="example">
+      <h2 class="docs-header">A Basic Robot Arm Modeling</h2>
+      <p> Describing and animating a robot arm is a good example of 3DCG modeling and animation in Blender.
+        This is a basic model of dual-arm industrial robot by Yaskawa. The polygon model of the 
+        chain of arm model connected by joint was constructed. These arms were controled by armature bone
+        in blender, that describe the kinematic chain model. Since these joints rotates on a single axis
+        appropriate setting was applied. Finary, the inverse kinematics allows motions of robot arm
+        in the kertesian coordinates by moving the end of the arm.
+
+
+        The 3DCG model of many robots are available on ROS software distribution free of charge under the ROS license.
+        using Phobos add-on to Blender (version 2.79) 
+
+
+
+      </p>
+      
+    <!--  -->
+      <div class="row example">
+        <a class="example-screenshot-wrapper">
+        <video  poster="a12sample.png" width=400 loop="" controls="" preload="">
+<source src="a12sample.mp4" type="video/mp4">
+<p>sorry, html5 video will be here on a recent browser</p>
+</video>
+        </a>
+        <div class="one-half offset-by-one-half column">
+        A model for Yaskawa dual-arm robot SDA10F was build using polygon models and
+        robot description data in URDF format available from ROS repository. The joint
+        relationship was described as an Armature primitive in Blender, that allows
+        rotation of the arm joints.
+        The first basic operation is rotate each joints to move the arm. In "Pose Mode"
+        in Blender, just change the bone angles of this Armature.
+          <h5 class="example-header">file</h5>
+          <p class="example-description">
+               </p><dl>
+               <dt>blender script : <a href="blender279/a12sample.blend">
+                                a12sample.blend</a></dt>
+               <dt>exported GLTF static model　: <a href="data/a12simple.gltf">
+                                a12sample.gltf</a></dt>
+          <p></p>
+          There is also web browser based 3d model viewers. An example 
+          using <a href="mdlv-1.html">google-model-viewer is here</a>
+          but it may only works on current PC and Mac.
+          <!--　<p>. </p>  -- space -->
+                  <p>. </p>  <!-- space -->
+
+        </dl></div>　<!-- one-half -->
+      </div> 　<!-- row example -->  
+      This short movie demonstrates how the inverse kinematics (IK) works in this model.
+      The orange sphere is the IK target for the robot arm to follow. By changing this target
+      location or rotation, the chain of the arm follows by rotating joints.
+      Therefore, it is possible to set the seriese of pose stored as the keyframes in a timeline,
+      the motions will be described as an animation.
+
+      <p class="example-description">
+      </p><p>
+        </p>
+    </div>
+    <!-- end of section  -->
+<!--ONE --------------------------------------------  -->
+
+
+<!--ONE --------------------------------------------  -->
+
+
+    <div class="example">
+      <h2 class="docs-header">Applying motion capture data to a dual-arm robot</h2>
+        Here we are trying to apply a motion capture data of desk work by human into a dual-arm robot.
+        A robot and a model of human are superimporsed on the desk work and a robot will imitate motion of this
+        human model that is provided by motion capture data. This would be a style for teaching a robot.
+        This is an virtual studio of the direact teaching for industrial robot where a transparent human provide a motion
+        that is replicated by a dual-arm robot.
+        On working with more motion capture data for dual-arm robots, the method with IK was not enough because the arm
+        easily colide with the other arm or torso. To obtain a good motion path avoiding collision a novel algorithm is demanding.
+        This is an approach with rigid body physics simulation to generate path without collision as reported
+        at ISAROB 2022 conference proceedings.
+
+
+      </p>
+      
+	<!--  -->
+      <div class="row example">
+        <a class="example-screenshot-wrapper">
+         <video width="400" poster="batter-h360.png" loop="" controls="" preload="">
+<source src="batter-h360.mp4" type="video/mp4">
+<p>sorry, html5 video will be here on a recent browser</p>
+</video>
+        </a>
+        <div class="one-half offset-by-one-half column">
+          <h5 class="example-header">file</h5>
+          <p class="example-description">
+               </p><dl>
+                  <dt>blender script for simulation : <a href="blender279/cmusim7913batter.blend">cmusim7913batter.blend</a></dt>
+
+                  <dt>blender script to fix joint angles : <a href="blender279/cmuam7913batter.blend">cmuam7913batter.blend</a></dt>
+
+                  <dt>generated robot trajectory in BVH : <a href="data/cmuam7913batter-d1.bvh">cmuam7913batter-j.bvh</a> </dd>
+                  <dd>a 3D model in GLTF <a href="data/cmu7913batter-d.gltf">cmu7913batter-d.gltf</a></dd>
+                  <dd>sample rendering <a href="cmu7913batter-r1.mp4">cmu7913batter-r1.mp4</a></dd>
+
+               </dl>
+		  <p></p>
+		  <p>. </p>  <!-- space -->
+          Using a cylinder primitives describing the chains of arm that also defines collision barrier, a simulation to follow
+          the target human motion provide a good motion trajectory of robot arms.
+        </div>　<!-- one-half -->
+      </div> 　<!-- row example -->  
+
+      <p class="example-description">
+	  </p><p>
+      <p>Ninin-baori is a traditional japanese commedic act by two persons, one takes a meal with another blind person's arms on his back.
+		</p>
+    </div>
+	<!-- end of section  -->
+
+<!--ONE --------------------------------------------  -->
+
+
+    <div class="example">
+      <h2 class="docs-header">Transfer Motions of Laboratory Biologist to a Robot</h2>
+        The robot simulation method was applied to simulate motions of biologist taken by a motion capture system.
+        The motion capture data were recorded with OptiTrack multi camera system.
+        There are ongoing studies on skillful motions by biologist found in the motion capture data.
+        we are studying a good motions to a robot.
+        For working on the motion capture data, the tracker position data have to be editted properly, so that
+        the generated trajectory can be followed by a robot.
+
+
+      </p>
+      
+    <!--  -->
+      <div class="row example">
+        <a class="example-screenshot-wrapper">
+         <video width="400" poster="mwpswing1-h360.png" loop="" controls="" preload="">
+<source src="mwpswing1-h360.mp4" type="video/mp4">
+<p>sorry, html5 video will be here on a recent browser</p>
+</video>
+        </a>
+        <div class="one-half offset-by-one-half column">
+          <h5 class="example-header">file</h5>
+          <p class="example-description">
+               </p><dl>
+                  <dd>sample rendering <a href="mwpswing1-r1.mp4">mwpswing1-r1.mp4</a></dd>
+
+                  <dd>sample rendering <a href="mwpmedia1-r1.mp4">mwpmedia1-r1.mp4</a></dd>
+
+               </dl>
+          <p></p>
+          <p>. </p>  <!-- space -->
+         
+        </div>　<!-- one-half -->
+      </div> 　<!-- row example -->  
+
+      <p class="example-description">
+      </p><p>
+      <p> We also working on applying generated motion to the real robot.
+        </p>
+    </div>
+    <!-- end of section  -->
+
+
+
+<!-- -------------------------------------------------- -->
+      <div>  <!-- misc note  -->
+              <h2>Tips for Blender</h2>
+
+              <h3>Stable physics simulation</h3>
+              <p>
+              Building a robot arm with rigid body object connected by hinge
+ </p>
+
+              <h3>Damping parameter</h3>
+              <p>
+                Both locational and rotational damping is provided at the physics panel at values between 0 to 1, which 
+                was visually effective around 0.9.
+            </p>
+              <h3>The hinge rotational limit</h3>
+              <p>
+                Sometimes this constraint value is violated due to extra force applied to this primitive. It may overrun, i.e. rotate more than 360 degree.
+                This might be decreased by increasing physics simulation precision, however these phenomena tend to persist.
+            </p>
+<!--ONE --------------------------------------------                
+-->
+
+              　<h3>Collision detection</h3>
+                <p>
+                A collision sensor was deprecated after Blender 2.8, so there are no easy way to know when Bullet simulator detects collision.
+                A python code to test collision usign BVHTree Utilities, a Blender API will be implemented.
+               </p>
+
+               <!---
+                  <dt>Combining mpeg files </dt>
+                  <dd>ffmpeg -i one.mpeg -i two.mpg join.mpg</dd>
+                  <dt>Making a movie of 3 seconds still image</dt>
+                  <dd>ffmpeg -loop_input -i one.png -t 3 -f mpeg2video -qscale 1 one.mpg</dd>
+                  <dt>Size conversion, 640x400 at bit rate 6M</dt>
+                  <dd>ffmpeg -i one.mpg -s 640x400 -b 6000k resized.mpg</dd>
+                  <dt>portable mpeg4 320x180</dt>
+                  <dd>ffmpeg  -i one.mpg -y -strict experimental -acodec aac -ac 2 -vcodec libx264 -pix_fmt yuv420p  -preset slow -profile:v baseline -s 320x180  one.mp4 </dd>
+               --->
+
+               <h2>Others</h2>
+ 
+               <h4>Working Environment</h4>
+               <dl>
+                  <dt>blender</dt>
+                  <dd>ver 2.79b, 2014, windows7 64bit</dd>
+                  <dd>ver 2.93, 2021, windows7 64bit</dd>
+                  <dt>PC</dt>
+                  <dd>windows10 64bit, core-i7-3770S (3.10GHz) 8GB, Nvidia GeForce GTX 1050Ti</dd>
+               </dl>
+				<h4>Acknowledgments</h4>
+				<dt>This work was supported by a </dt>
+				<dt> The web site was made using a design-template by CoolWebWindow, and getskelton.com for layout management to the smart phones.
+
+                 
+
+
+<!-- author -->
+               <dl>
+                  <dt>Questions and comments are sent to : uenoyt&#64;&#110;&#105;.&#97;&#105;&#115;&#116;.&#103;&#111;&#46;&#106;&#112;</dt>
+                  <dd>Yutaka Ueno, AIST 2021 December</dd>
+               </dl>
+            </dt></div><!-- /misc note  -->
+         </div><!-- /#main -->
+    <!-- container ------------------------------  -->
+<!-- End Document  -->
+
+
+</body></html>

@@ -204,9 +204,9 @@
           <h5 class="example-header">file</h5>
           <p class="example-description">
                </p><dl>
-                  <dd>sample rendering <a href="mwpswing1-r1.mp4">mwpswing1-r1.mp4</a></dd>
+                  <dd>sample rendering for a plate shaking format in cell culture experiment. <a href="mwpswing1-r1.mp4">mwpswing1-r1.mp4</a></dd>
 
-                  <dd>sample rendering <a href="mwpmedia1-r1.mp4">mwpmedia1-r1.mp4</a></dd>
+                  <dd>sample rendering for a pipetting cell culture medium to a well plate. <a href="mwpmedia1-r1.mp4">mwpmedia1-r1.mp4</a></dd>
 
                </dl>
           <p></p>
@@ -217,7 +217,7 @@
 
       <p class="example-description">
       </p><p>
-      <p> We also working on applying generated motion to the real robot.
+      <p>A project to apply generated motion to the real robot is under way considering robot hardware and mechanics.
         </p>
     </div>
     <!-- end of section  -->
@@ -235,24 +235,24 @@
 
               <h3>Damping parameter</h3>
               <p>
-                Both locational and rotational damping is provided at the physics panel at values between 0 to 1, which 
+                Both locational and rotational damping is provided at Physics tab at values between 0 to 1, which 
                 was visually effective around 0.9.
              </p>
               <h3>The hinge rotational limit</h3>
               <p>
-                Sometimes this constraint value is violated due to extra force applied to this primitive. It may overrun, i.e. rotate more than 360 degree.
-                This might be decreased by increasing physics simulation precision, however these phenomena tend to persist.
+                Sometimes a physics constraint is violated due to extra force applied to the primitive. The joint angle value may overrun, i.e. rotate more than 360 degree.
+                This might be decreased by increasing physics simulation precision, however these phenomena tends to persist.
              </p>
               <h3>Resetting physics simulation cache</h3>
               <p>
-                After parameter change on Blender GUI, physics simulation is cleared and recalculated by "Free All Bake" and "Bake All Dynamics" buttons in "Ridid Body Cache" tab on the "Property" panel.
-                Sometimes parameters are not updated somehow, and needed to full reset. In such a case, a temporary change
-                to one of these constraint flags "enable" is applied and recalculate a small part of simulation by the "Play" button. Then recover proper constraint flag will do a deep reset.
+                After parameter changes on Blender GUI, physics simulation is cleared and recalculated by "Free All Bake" and "Bake All Dynamics" buttons in "Ridid Body Cache" tab on the "Property" panel.
+                Sometimes parameters are not updated somehow, however full reset fails. As a workaround for such a case a temporary change
+                to one of these constraint flags "enable" is applied and recalculate a small part of simulation by the "Play" button. Then recover proper constraint flag will do a full reset.
               </p>
               <h3>Collision detection</h3>
               <p>
-                A collision sensor was deprecated after Blender 2.8, so there is no easy way to know when Bullet simulator detects collision.
-                A python code to test collision using BVHTree Utilities, a Blender API will be implemented.
+                A collision sensor was deprecated after Blender 2.8, so there is no easy way to know when Bullet simulator detects collision. Obstacles in the scene will be thrown out on a collision.
+                A python code to test collision would be implemented using BVHTree Utilities in a Blender API.
               </p>
 
 <!--ONE --------------------------------------------    -->
@@ -272,14 +272,14 @@
                <h4>Working Environment</h4>
                <dl>
                   <dt>blender</dt>
-                  <dd>ver 2.79b, 2014, windows7 64bit</dd>
-                  <dd>ver 2.93, 2021, windows7 64bit</dd>
+                  <dd>ver 2.79b, 2014, windows10 64bit</dd>
+                  <dd>ver 2.93, 2021, windows10 64bit</dd>
                   <dt>PC</dt>
                   <dd>windows10 64bit, core-i7-3770S (3.10GHz) 8GB, Nvidia GeForce GTX 1050Ti</dd>
                </dl>
 				<h4>Acknowledgments</h4>
-				<dt>This work was supported by a </dt>
-				<dt> The web site was made using a design-template by CoolWebWindow, and getskelton.com for layout management to the smart phones.
+				<dt>This work was supported by JST-Mirai Program Grant Number JPMJMI20G7, Japan.</dt>
+				<dt>The web site was made using a design-template by CoolWebWindow, and getskelton.com for layout management to the smart phones.
 
                  
 

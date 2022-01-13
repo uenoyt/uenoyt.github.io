@@ -6,8 +6,8 @@
   <!-- Basic Page Needs
    -->
   
-  <title>Robot Simulator related Study</title>
-  <meta name="description" content="Robot Simulator related Study">
+  <title>Robot Simulation Study</title>
+  <meta name="description" content="Robot Simulation Study">
   <meta name="author" content="Yutaka Ueno">
 
   <!-- Mobile Specific Metas -->
@@ -104,7 +104,7 @@
                                 a12sample.gltf</a></dt>
           <p></p>
           There is also web browser based 3d model viewers. An example 
-          using <a href="mdlv-1.html">google-model-viewer is here</a>
+          using <a href="mdlv-1.html" target="_blank" rel="noopener noreferrer">google-model-viewer is here</a>
           but it may only works on current PC and Mac.
           <!--　<p>. </p>  -- space -->
                   <p>. </p>  <!-- space -->
@@ -137,7 +137,7 @@
         that is replicated by a dual-arm robot.
         On working with more motion capture data for dual-arm robots, the method with IK was not enough because the arm
         easily colide with the other arm or torso. To obtain a good motion path avoiding collision a novel algorithm is demanding.
-        This is an approach with rigid body physics simulation to generate path without collision as reported
+        This approach utilizes rigid body physics simulation to generate path without collision as reported
         at ISAROB 2022 conference proceedings.
 
 
@@ -173,7 +173,7 @@
 
       <p class="example-description">
 	  </p><p>
-      <p>Ninin-baori is a traditional japanese commedic act by two persons, one takes a meal with another blind person's arms on his back.
+      <p>This simulation looks like a Ninin-baori. It is a traditional japanese commedic act by two persons, one takes a meal with another blind person's arms on his back.
 		</p>
     </div>
 	<!-- end of section  -->
@@ -229,31 +229,35 @@
       <div>  <!-- misc note  -->
               <h2>Tips for Blender</h2>
 
-              <h3>Stable physics simulation</h3>
-              <p>
-              Building a robot arm with rigid body object connected by hinge
- </p>
+            <p>
+              Working on a robot arm model with rigid body object connected by hinge sometimes need parameter tuning.
+
+            </p>
 
               <h3>Damping parameter</h3>
               <p>
                 Both locational and rotational damping is provided at the physics panel at values between 0 to 1, which 
                 was visually effective around 0.9.
-            </p>
+             </p>
               <h3>The hinge rotational limit</h3>
               <p>
                 Sometimes this constraint value is violated due to extra force applied to this primitive. It may overrun, i.e. rotate more than 360 degree.
                 This might be decreased by increasing physics simulation precision, however these phenomena tend to persist.
-            </p>
-<!--ONE --------------------------------------------                
--->
-
-              　<h3>Collision detection</h3>
-                <p>
+             </p>
+              <h3>Reset physics simulation cache</h3>
+              <p>
+                After parameter change on Blender GUI, physics simulation is cleard and rebaked by "Free All Bake" and "Bake All Dynamics" buttons in "Ridig Body Cache" tab on the "Property" panel.
+                Sometimes parameters are not updated somehow, and needed to full reset. In such a case, a temprarly change
+                to one of these constraint flags "enable" and recalculate a small part of simulation by the "Play" button. Then recover proper constraint flag will do a deep reset.
+              </p>
+              <h3>Collision detection</h3>
+              <p>
                 A collision sensor was deprecated after Blender 2.8, so there are no easy way to know when Bullet simulator detects collision.
                 A python code to test collision usign BVHTree Utilities, a Blender API will be implemented.
-               </p>
+              </p>
 
-               <!---
+<!--ONE --------------------------------------------    -->
+<!---
                   <dt>Combining mpeg files </dt>
                   <dd>ffmpeg -i one.mpeg -i two.mpg join.mpg</dd>
                   <dt>Making a movie of 3 seconds still image</dt>

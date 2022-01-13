@@ -48,7 +48,7 @@
       <p>
       Since Blender works for 3DCG and animation, robot simulation studies benefit from its functionalities.
       Here we used Blender as a prototyping environment for the robot arm motion trajectory simulator. We appreciate
-      development of Phobos, MORSE and ROS providing providing useful code and data for our study.
+      development of Phobos, MORSE and ROS providing useful code and data for our study.
 
       </p>
       Recent laboratory automation projects in life science involves teaching robots to do biological experiments at 
@@ -67,10 +67,10 @@
       <h2 class="docs-header">A Basic Robot Arm Modeling</h2>
       <p> Describing and animating a robot arm is a good example of 3DCG modeling and animation in Blender.
         This is a basic model of dual-arm industrial robot by Yaskawa. The polygon model of the 
-        chain of arm model connected by joint was constructed. These arms were controled by armature bone
+        chain of arm model connected by joint was constructed. These arms were controlled by armature bone
         in blender, that describe the kinematic chain model. Since these joints rotates on a single axis
-        appropriate setting was applied. Finary, the inverse kinematics allows motions of robot arm
-        in the kertesian coordinates by moving the end of the arm.
+        appropriate setting was applied. Finally, the inverse kinematics allows motions of robot arm
+        in the Cartesian coordinates by moving the end of the arm.
 
 
         The 3DCG model of many robots are available on ROS software distribution free of charge under the ROS license.
@@ -114,7 +114,7 @@
       This short movie demonstrates how the inverse kinematics (IK) works in this model.
       The orange sphere is the IK target for the robot arm to follow. By changing this target
       location or rotation, the chain of the arm follows by rotating joints.
-      Therefore, it is possible to set the seriese of pose stored as the keyframes in a timeline,
+      Therefore, it is possible to set the series of pose stored as the keyframes in a timeline,
       the motions will be described as an animation.
 
       <p class="example-description">
@@ -131,12 +131,12 @@
     <div class="example">
       <h2 class="docs-header">Applying motion capture data to a dual-arm robot</h2>
         Here we are trying to apply a motion capture data of desk work by human into a dual-arm robot.
-        A robot and a model of human are superimporsed on the desk work and a robot will imitate motion of this
+        A robot and a model of human are superimposed on the desk work and a robot will imitate motion of this
         human model that is provided by motion capture data. This would be a style for teaching a robot.
-        This is an virtual studio of the direact teaching for industrial robot where a transparent human provide a motion
+        This is an virtual studio of the direct teaching for industrial robot where a transparent human provide a motion
         that is replicated by a dual-arm robot.
         On working with more motion capture data for dual-arm robots, the method with IK was not enough because the arm
-        easily colide with the other arm or torso. To obtain a good motion path avoiding collision a novel algorithm is demanding.
+        easily collide with the other arm or torso. To obtain a good motion path avoiding collision a novel algorithm is demanding.
         This approach utilizes rigid body physics simulation to generate path without collision as reported
         at ISAROB 2022 conference proceedings.
 
@@ -173,7 +173,7 @@
 
       <p class="example-description">
 	  </p><p>
-      <p>This simulation looks like a Ninin-baori. It is a traditional japanese commedic act by two persons, one takes a meal with another blind person's arms on his back.
+      <p>This simulation looks like a Ninin-baori. It is a traditional Japanese comedic act by two persons, one takes a meal with another blind person's arms on his back.
 		</p>
     </div>
 	<!-- end of section  -->
@@ -186,10 +186,9 @@
         The robot simulation method was applied to simulate motions of biologist taken by a motion capture system.
         The motion capture data were recorded with OptiTrack multi camera system.
         There are ongoing studies on skillful motions by biologist found in the motion capture data.
-        we are studying a good motions to a robot.
+        This data was obtained in a project studying a good motions to a robot.
         For working on the motion capture data, the tracker position data have to be editted properly, so that
         the generated trajectory can be followed by a robot.
-
 
       </p>
       
@@ -244,16 +243,16 @@
                 Sometimes this constraint value is violated due to extra force applied to this primitive. It may overrun, i.e. rotate more than 360 degree.
                 This might be decreased by increasing physics simulation precision, however these phenomena tend to persist.
              </p>
-              <h3>Reset physics simulation cache</h3>
+              <h3>Resetting physics simulation cache</h3>
               <p>
-                After parameter change on Blender GUI, physics simulation is cleard and rebaked by "Free All Bake" and "Bake All Dynamics" buttons in "Ridig Body Cache" tab on the "Property" panel.
-                Sometimes parameters are not updated somehow, and needed to full reset. In such a case, a temprarly change
-                to one of these constraint flags "enable" and recalculate a small part of simulation by the "Play" button. Then recover proper constraint flag will do a deep reset.
+                After parameter change on Blender GUI, physics simulation is cleared and recalculated by "Free All Bake" and "Bake All Dynamics" buttons in "Ridid Body Cache" tab on the "Property" panel.
+                Sometimes parameters are not updated somehow, and needed to full reset. In such a case, a temporary change
+                to one of these constraint flags "enable" is applied and recalculate a small part of simulation by the "Play" button. Then recover proper constraint flag will do a deep reset.
               </p>
               <h3>Collision detection</h3>
               <p>
                 A collision sensor was deprecated after Blender 2.8, so there are no easy way to know when Bullet simulator detects collision.
-                A python code to test collision usign BVHTree Utilities, a Blender API will be implemented.
+                A python code to test collision using BVHTree Utilities, a Blender API will be implemented.
               </p>
 
 <!--ONE --------------------------------------------    -->

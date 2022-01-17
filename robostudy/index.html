@@ -69,12 +69,12 @@
         This is a basic model of dual-arm industrial robot by Yaskawa. The polygon model of the 
         chain of arm model connected by joint was constructed. These arms were controlled by armature bone
         in blender, that describe the kinematic chain model. Since these joints rotates on a single axis
-        appropriate setting was applied. Finally, the inverse kinematics allows motions of robot arm
+        appropriate setting was applied. Moreover, the inverse kinematics allows motions of robot arm
         in the Cartesian coordinates by moving the end of the arm.
 
 
-        The 3DCG model of many robots are available on ROS software distribution free of charge under the ROS license.
-        using Phobos add-on to Blender (version 2.79) 
+        The 3DCG model of many robots are available on ROS software distribution under an open source license.
+        The following models were imported to Blender (version 2.79) using Phobos add-on to Blenderwas used for this study.
 
 
 
@@ -100,7 +100,7 @@
                </p><dl>
                <dt>blender script : <a href="blender279/a12sample.blend">
                                 a12sample.blend</a></dt>
-               <dt>exported GLTF static model　: <a href="data/a12simple.gltf">
+               <dt>exported GLTF static model　: <a href="data/a12sample.gltf" download="a12sample.gltf">
                                 a12sample.gltf</a></dt>
           <p></p>
           There is also web browser based 3d model viewers. An example 
@@ -159,8 +159,8 @@
 
                   <dt>blender script to fix joint angles : <a href="blender279/cmuam7913batter.blend">cmuam7913batter.blend</a></dt>
 
-                  <dt>generated robot trajectory in BVH : <a href="data/cmuam7913batter-d1.bvh">cmuam7913batter-j.bvh</a> </dd>
-                  <dd>a 3D model in GLTF <a href="data/cmu7913batter-d.gltf">cmu7913batter-d.gltf</a></dd>
+                  <dt>generated robot trajectory in BVH : <a href="data/cmuam7913batter-d1.bvh" download>cmuam7913batter-j.bvh</a> </dd>
+                  <dd>a 3D model in GLTF <a href="data/cmu7913batter-d.gltf" download>cmu7913batter-d.gltf</a></dd>
                   <dd>sample rendering <a href="cmu7913batter-r1.mp4">cmu7913batter-r1.mp4</a></dd>
 
                </dl>
@@ -229,7 +229,7 @@
               <h2>Tips for Blender</h2>
 
             <p>
-              Working on a robot arm model with rigid body object connected by hinge sometimes need parameter tuning.
+              Working on a robot arm model with rigid body objects connections needs parameter tuning.
 
             </p>
 
@@ -251,7 +251,7 @@
               </p>
               <h3>Collision detection</h3>
               <p>
-                A collision sensor was deprecated after Blender 2.8, so there is no easy way to know when Bullet simulator detects collision. Obstacles in the scene will be thrown out on a collision.
+                A collision sensor was deprecated in the Game mode after Blender 2.8, so there is no easy way to know when Bullet simulator detects collision. Obstacles in the scene will be thrown out on a collision.
                 A python code to test collision would be implemented using BVHTree Utilities in a Blender API.
               </p>
 
@@ -267,7 +267,7 @@
                   <dd>ffmpeg  -i one.mpg -y -strict experimental -acodec aac -ac 2 -vcodec libx264 -pix_fmt yuv420p  -preset slow -profile:v baseline -s 320x180  one.mp4 </dd>
                --->
 
-               <h2>Others</h2>
+               <h2></h2>
  
                <h4>Working Environment</h4>
                <dl>
@@ -278,7 +278,7 @@
                   <dd>windows10 64bit, core-i7-3770S (3.10GHz) 8GB, Nvidia GeForce GTX 1050Ti</dd>
                </dl>
 				<h4>Acknowledgments</h4>
-				<dt>This work was supported by JST-Mirai Program Grant Number JPMJMI20G7, Japan.</dt>
+				<dt>The motion capture data used here is a work by Dr.Totai Mitsuyama, Dr.Natsuki Miyata, Dr.Shungo Adachi, and Mr.Katsumasa Segawa and laboratory members supported by JST-Mirai Program Grant Number JPMJMI20G7, Japan.</dt>
 				<dt>The web site was made using a design-template by CoolWebWindow, and getskelton.com for layout management to the smart phones.
 
                  
@@ -286,7 +286,7 @@
 
 <!-- author -->
                <dl>
-                  <dt>Questions and comments are sent to : uenoyt&#64;&#110;&#105;.&#97;&#105;&#115;&#116;.&#103;&#111;&#46;&#106;&#112;</dt>
+                  <dt>Questions and comments can be sent to : uenoyt&#64;&#110;&#105;.&#97;&#105;&#115;&#116;.&#103;&#111;&#46;&#106;&#112;</dt>
                   <dd>Yutaka Ueno, AIST 2021 December</dd>
                </dl>
             </dt></div><!-- /misc note  -->

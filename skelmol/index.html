@@ -6,7 +6,7 @@
 	</head>
 
 	<body bgcolor="#ffffff">
-		<h2>Skeletal Animation for Moleuclar Models</h2>
+		<h2>Skeletal Animation for Molecular Models</h2>
 
 			Skeletal animation allows polygon models of the 3DCG object animate 
 			by means of skeletal bones superimposed into the structure.			
@@ -29,8 +29,8 @@
 			<br>
 
 		<h3><br>
-					Example2 -- Myosin is a molecular motor to generate force in mouscle.</h3>
-					Its body may flactuate when it is ready to make a fource.
+					Example2 -- Myosin is a molecular motor to generate force in muscle.</h3>
+					Its body may fluctuate when it is ready to make a force.
 					Recent studies with atomic force microscopy is expected to reveal this motion.
 					<br>
 					
@@ -69,7 +69,7 @@
 					</p><hr>
 					</video>
 
-		<p> An animation of the thremal fluctuation of protein molecule is demonstrated. The motion of the atomic model is created from normal mode analysis at ProMode database for the protein data bank
+		<p> An animation of the thermal fluctuation of protein molecule is demonstrated. The motion of the atomic model is created from normal mode analysis at ProMode database for the protein data bank
 			(PDB) atomic models. Then our method generates the skeletal bones to animate the molecular model in the format of BVH motion capture file. Using Blender the animation is generated. With the superposition
 			of the normal mode waves gives a typical thermal fluctuation of the protein.  
 		</p><h4>Source code files</h4>
@@ -87,7 +87,7 @@
 				those files are requried to run the main program.<br>
 				
 				<a href="/skelmol/src/pdbmol.lua">pdbmol.lua</a>  --- PDB parser and molecular data list<br>
-				<a href="/skelmol/src/mslmop.lua">mslmop.lua</a>  --- modulde for matrix rotations<br>
+				<a href="/skelmol/src/mslmop.lua">mslmop.lua</a>  --- a module for matrix rotations<br>
 				<a href="/skelmol/src/fit3p.lua">fit3p.lua</a>  --- module for matrix to fit 2 objects made by 3 nodes coordinates<br>
 
 				<a href="/skelmol/blend279/md300-nmd1.blend">md300-nmd1.blend</a>  --- a sample blender script for this movie<br>	
@@ -105,18 +105,18 @@
 that is converted to the skeletal bones.
 Then the generated groups have a skeleton bone whose
 geometry is make by averaging atomic coordinates data
-assgined in the group. Then the vector of the bone is also
-calcurated by the sequence of atoms in the group.
+assigned in the group. Then the vector of the bone is also
+calculated by the sequence of atoms in the group.
 
-The calcuration of the vector of the bone was modified
-at emprical mannar, so that the apperance of the final appearance
+The calculation of the vector of the bone was modified
+at empirical manner, so that the appearance of the final appearance
 yield a reasonable direction for the given group.
 Since the bone is used only for the visualization handle,
 the precise definition is not needed. Small differences
 in the bone geometry does not really make difference
 in the final animated structure of this method.
 
-Then the groups of residue in the pdb data is converted
+Then the groups of residue in the PDB data is converted
 to the BVH skeleton description. Here we take a flat structure
 without a parent relationship between skeleton bone.
 It is useful because the bones are not tightly connected
@@ -128,9 +128,9 @@ The superposition of wave is applied in the function XYZadd()
 that is saved into the data structure bonedata[].motion[]
 The simple addition with variable amplitude and phase[] shift
 value would also be specified.
-The calculated osscilation vectors are applied to the
+The calculated oscillation vectors are applied to the
 atomic coordinates, then the group are divided into three part
-and these subgroup positions are used to calcculate the
+and these subgroup positions are used to calculate the
 rigid translation matrix that most well describe the motion
 of atoms in the group. Then the rotation matrix is converted into
 Euler angles to save in the BVH file.
@@ -166,7 +166,7 @@ molecular shape depicted in polygon mesh, various kind of the molecular
 		
 		<p></p>
 		<h4>Usage</h4>
-		<p>Following file names are set: TFILE for the trajectoroy file name, DFILE for the DSSP file, and BFILE for the output BVH file name. Groups are made with maximum residue length MAXLEN. 
+		<p>Following file names are set: TFILE for the trajectory file name, DFILE for the DSSP file, and BFILE for the output BVH file name. Groups are made with maximum residue length MAXLEN. 
 
 		In a rare condition where the 3 atoms are located in a line, the matrix calculations to fit two conformation may fail. They can be avoided by 
 
@@ -200,68 +200,58 @@ molecular shape depicted in polygon mesh, various kind of the molecular
 				<br>		
 		</blockquote>
 
-<!--
-		<h4>2. Molecular Dynamics Motion by the Skeletal Animation</h4>
+		</p><h4><br>
+			4. A demonstration of protein structural change on binding the ligand</h4>
 
-<p>This is a program that runs on Lixinia runtime environment on Windows PCs. Please follow <a HREF="mos-rcg0.html#luxinia">another note in the previous document</A> for using Luxinia. In addition to running from the GUI launcher, the script also be started from the command line prompt of Windows operating system. With all above files saved in a directory named "thedirectory":
-		<blockquote>
-			<p>> C:\Users\guest\Documents\zerobrane\myprograms\Users\admin\Documents\luxinia_v1400\luxinia_con  -p C:\Users\guest\Documents\thedirectory
-		</p <br>
-			</p>
+					<video src="/skelmol/pscdb-481t72" autostart="false" controls="">
+					- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - <p>
+					</p><p><i>... sorry, but this movie file needs html5 video</i></p>
+					- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - <p>
+					</p><hr>
+					</video>
+		<p> Using the database for protein structural change collected from PDB protein structure database,
+			An animation for the structural change on ligand binding is demonstrated. The protein motions are studied at Nagoya
+			University, Protein Structural Change Database (PSCDB) at  <a href="https://idp1.force.cs.is.nagoya-u.ac.jp/pscdb/">https://idp1.force.cs.is.nagoya-u.ac.jp/pscdb/</a>
+
+
+		</p><h4>The Data processing</h4>
+		<p>	Two conformation of the protein are available from PDB. There are PDB files for the ligand free state and ligand bound state.
+			These atomic coordinates are differently obtained from x-ray crystallography where these amino acid sequences are not always same
+			because crystallography experiment may success only on one state from a certain species. Therefore, sequences are aligned
+			to fit the atomic model of the proteins at different amino acid sequence.
+			Let us focus on the ligand bound state of the protein, that will release the ligand and conformation will be changed
+			that should fit to the ligand free state of the protein. While PSCDB provides morphing coordinates for the ligand free
+			state, we here obtained that for ligand bound state. Therefore, we renumber the sequence of PDBs for the morphing and ligand free stats that meet to the
+			ligand bound state. Among 50 morpihng models
+			calculated on the server, files for models at indices 1,10,20,30,40,49 was used. The chain names are renamed as A and B for the biological unit, 
+			and L for the ligand molecules.
+		</p><blockquote>
+				<a href="/skelmol/src/mofpsc2.lua">mofpsc2.lua</a>  --- fix residue numbers for the morphing motion results <br>
+
+				<a href="/skelmol/data/pb0481m.zip">pb0481m.zip</a>  --- converted PDB files<br>
+
+				<a href="/skelmol/src/propdb2bvh7e7.lua">propdb2bvh7e7.lua</a>  --- make a BVH file from the sequence of PDB files <br>
+				<br>
+				<a href="/skelmol/data/pr7e7-1bbu.bvh">pr7e7-1bbu.bvh</a>  --- generated BVH file<br>
+
+				<a href="/skelmol/blend279/pscdb-481-t72.zip">pscdb-481-t72.blend</a>  --- a sample blender script for this movie (zip compressed)<br>	
+				
+				<br>		
 		</blockquote>
-<ul>
-	<li>loading a PDB file</li>
-		<br>Select the top-left button "Open"
-	<li>loading a script file</li>
-		<br> A script file is also loaded from the same menu as the PDB file. Script files need to have file extension ".mos" that is a Lua language file.
-</ul>
-
-		<h4>3. Implementation notes</h4>
-		<p>	The graphical user interface (GUI) of the program was made by widget set 
-		
-
-		<blockquote>
-		 <br>
-				<a href="mos2rcg/pdb2lhd.lua">pdb2lhd.lua</a>  --- import PDB file<br>
-				<a href="mos2rcg/rds2.lua">rds2.lua</a>  --- make a coarse grained model<br>
-				<a href="mos2rcg/pdbmol.lua">pdbmol.lua</a>  --- utility functions<br>
-				<a href="mos2rcg/pgmsps.lua">pgmsps.lua</a>  --- utility functions<br>
-		</blockquote>
-		</p>
 
 
-		<blockquote>
 
-					<a href="mos2tle/moltled.lua">moltled.lua</a>  --- The startup with initializing and loading other modules
- <br>
- 					<a href="mos2tle/ctl_view.lua">ctl_view.lua</a>  --- The 3d view window
- <br>					
-					<a href="mos2tle/Movie.lua">Movie.lua</a>  --- Movie related functions
- <br>
- 					<a href="mos2tle/CreateModel.lua">CreateModel.lua</a>  --- Managing animated models
- <br>
-					<a href="mos2tle/CreateTL.lua">CreateTL.lua</a>  --- The time line window
- <br>
-					<a href="mos2tle/odefunc.lua">odefunc.lua</a>  --- the module describing interface to ODE<br>
-					
-					<a href="mos2tle/main.lua">main.lua</a> 	 --- a project file of this program for ZeroBrane development<br>
 
-					<a href="mos2tle/test1.mos">test1.mos</a>  --- A script for the actin and myosin interaction. <br>
 
-					<a href="mos2tle/2mys-rds.lhd">2mys-rds.lhd</a>  --- a working data for the myosin model<br>
-					
-					<a href="mos2tle/traj0.lhd">traj0.lhd</a>  --- a sample trajectory of myosin model<br>
-					
-			</p>
-		</blockquote>
---->
+<!--- --->
 
-<h3>Additional developments </h3>
-<p>We are studying the animation method using Blender. Some of the examples are provided from our site.
+<h3>Related developments </h3>
+<p>We are studying the animation method using Blender for molecular biology. Some of the examples are provided from our site.
                   <a href="https://uenoyt.github.io/blendmb" target="_blank">Blender fo Molecular Biology</a>
 
 </p><p>
-Questions and comments are welcome to uenoyt@ni.aist.go.jp
+Questions and comments are welcome to yutaka.ueno@aist.go.jp
 </p><hr>
-2020 Nov 20,  Yutaka Ueno, AIST
+2022 Sep,26 Yutaka Ueno, AIST
 </body></html>
+

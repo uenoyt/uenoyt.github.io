@@ -1,0 +1,5177 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+
+<!--Converted with jLaTeX2HTML 99.1 release + JA patch 3.0 (September 15, 1999)
+patched version by:  Kenshi Muto, Debian Project.
+LaTeX2HTML 99.1 release (March 30, 1999),
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>プログラミング言語 Lua 4.0 レファレンスマニュアル</TITLE>
+<META NAME="description" CONTENT="プログラミング言語 Lua 4.0 レファレンスマニュアル">
+<META NAME="keywords" CONTENT="all">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-2022-jp">
+<META NAME="Generator" CONTENT="jLaTeX2HTML v99.1 release + JA patch 3.0">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<!LINK REL="STYLESHEET" HREF="all.css">
+
+</HEAD>
+
+<BODY >
+<H1 ALIGN="CENTER">プログラミング言語 Lua 4.0 レファレンスマニュアル</H1>
+<P ALIGN="CENTER"><STRONG>Roberto Ierusalimschy, Luiz Henrique de Figueiredo, Waldemar Celes</STRONG></P>
+<P ALIGN="CENTER"><STRONG>2000年10月31日</STRONG></P>
+
+<P>
+<P>
+Copyright &copy; 1994-2000 TeCGraf, PUC-Rio. All rights reserved.
+<P>
+日本語訳　池田　徹志、上野　豊*　　2001年4月4日
+<P>
+*) 訳に関する問い合わせは、ueno@etl.go.jp 産業技術総合研究所まで
+<P>
+<P>
+<A NAME="1"></A>
+<H1><A NAME="SECTION00010000000000000000">
+1. はじめに</A>
+</H1>
+
+<P>
+Luaは汎用の処理記述型のプログラミングを支援するために設計された拡張プ
+ログラム言語である．Luaは軽くかつ強力な構築言語が必要なプログラムのた
+めに作られた．
+
+<P>
+LuaはライブラリとしてC言語で実装されている．拡張言語となるために，Lua
+には main() プログラムをもっていない．すなわち，ホストとなる主プログラ
+ムに<I> 組み込まれる</I>，<I> 組み込み</I>プログラムとなる．主プログラムは
+Luaによって書かれたプログラムを実行するための関数を呼ぶことができ，Lua
+で記述されたデータの読み書きができ，C 言語の関数を Lua から呼べる様に
+登録することができる．C 言語の関数を利用すれば，様々な領域の広い問題に
+対処するため Lua の機能を拡張でき，文法的な枠組みを共有する一群の拡張
+言語を作ってゆくことができる．
+
+<P>
+Lua は自由に配布されるソフトウェアであり，著作権に関する文書に書かれて
+いるように，無保証で提供される．この文書に書かれた内容の実装は下記の
+URLから<I> 取得する事ができる</I>．
+
+<P>
+ 
+<PRE>
+
+   http://www.tecgraf.puc-rio.br/lua/
+   ftp://ftp.tecgraf.puc-rio.br/pub/lua/lua.tar.gz
+</PRE>
+
+<P>
+ 
+他のレファレンスマニュアルと同様に，この文書も無味乾燥である．Lua の設
+計の背景にある議論については，以下の文献を参照されたい．これらの文献も
+上記の URL から得ることができる．
+
+<P>
+
+<UL>
+<LI>R. Ierusalimschy, L. H. de Figueiredo, and W. Celes. Lua-an
+  extensible extension language. Software:
+  <I> Practice &amp; Experience</I> <B> 26</B> #6 (1996) 635-652.</LI>
+<LI>L. H. de Figueiredo, R. Ierusalimschy, and W. Celes. The design
+  and implementation of a language for extending applications.
+  <I> Proceedings of XXI Brazilian Seminar on Software and Hardware</I>
+  (1994) 273-283.</LI>
+<LI>L. H. de Figueiredo, R. Ierusalimschy, and W. Celes. Lua: an
+  extensible embedded language. <I> Dr. Dobb's Journal</I> <B> 21</B> #12
+  (Dec 1996) 26-33.</LI>
+</UL>
+<A NAME="2"></A>
+<H1><A NAME="SECTION00020000000000000000">
+2. 動作環境とチャンク</A>
+</H1>
+
+<P>
+Luaではすべての式は一つの<I> 大域環境 (global environment)</I>で実行され
+る<A NAME="tex2html1"
+ HREF="footnode.html#foot37"><SUP>1</SUP></A>．
+この環境は Luaを組み込んでいるプログラムが <TT> lua_open()</TT>を呼び
+出して初期化を行ってから <TT> lua_close()</TT> を呼ぶか，プログラムが終了
+するまでの間有効である．必要に応じて，複数の独立した大域環境を使い分け
+ることも可能である(<A HREF="#5.1">5</A>節参照)．
+
+<P>
+ 
+大域環境は Lua のプログラムまたは Lua を組み込んでいるプログラムから操
+作することができる．Lua を実装しているライブラリの API 関数を使うこと
+で，組み込んでいるプログラムからも大域変数を読み書きできる．
+
+<P>
+Lua では大域変数を宣言する必要はない．明示的に局所変数と定義しない限り
+大域変数になる(<A HREF="#4.5.6">4.5.5</A>節参照)．最初の代入が行われるまでは変数の値は 
+<B> nil</B> である(この値は変えることも可能である．<A HREF="#4.8">4.7</A>節参照)．
+大域変数の名前と値を管理するのに特定のテーブルが用いられる
+(テーブルの説明は<A HREF="#3">2</A>節参照)．
+
+<P>
+Luaの実行単位は<I> チャンク</I>と呼ばれる．チャンクは逐次的に実行される文
+の系列である．文の最後にはセミコロンがあっても良い．
+
+<P>
+ 
+<PRE>
+
+       chunk ::= {stat [';'}]
+</PRE>
+
+<P>
+ 
+文に関しては <A HREF="#4.4">4.3</A>節 で解説する(上記は拡張 BNF 記法で書かれている．
+<I> {a}</I> は 0 回以上の <I> a</I> の繰り返し，<I> [a]</I> は <I> a</I> の
+任意の出現，<I> a+</I> は 1 回以上の <I> a</I> の繰り返しである)．
+
+<P>
+ 
+チャンクはファイルまたは Lua を組み込むプログラム中の文字列の形で保存
+される．チャンクが実行されるときは，まずすべてのプログラムは事前コンパ
+イルされて仮想マシン用のバイトコードに変換される．次に仮想マシンをシミュ
+レートしてバイトコードを逐次的に実行する．チャンクの行った大域環境に対
+する変更は，そのチャンクの実行が終わったあとも保たれる．
+
+<P>
+ 
+チャンクを事前コンパイルしたものをバイナリ形式でファイルに保存すること
+もできる．詳細は <TT> luac</TT> プログラムを参照せよ．Lua は自動的にファイ
+ル形式を認識するので，バイナリ形式の Lua プログラムはテキスト形式のも
+のと相互に交換可能である．
+<A NAME="3"></A>
+<H1><A NAME="SECTION00030000000000000000">
+3. 型とタグ</A>
+</H1>
+
+<P>
+Luaは<I> 動的に型付けを行う言語</I>であり，変数は型を持たないで，値が型を
+持っている．したがって，変数の型を定義することはない．全ての値は型を持っ
+ており，さらに<I> タグ</I>を持つ．
+
+<P>
+Luaでは6つの基本的な型として，<I> nil</I>，<I> 数値</I>，<I> 文字列</I>，
+<I> 関数</I>，<I> ユーザデータ</I> がある．nil 型は <B> nil</B> という値の型で
+あり，<B> nil</B> は他のどの値とも異なる性質を持つ．
+<I> 数値</I>は実数(倍精度浮動小数点)である．
+<I> 文字列</I>は任意の 8 ビットの文字の系列であり，埋め込まれたゼロ
+(<TT><code>\0</code></TT>) (embedded zeros) を含んでも良い(<A HREF="#4.1">4</A>節参照)．
+
+<P>
+ 
+関数は変数に保存することができ，他の関数の引数として与えることができ，
+結果として返したりすることができるので，いわゆるファーストクラスの値
+(first class values) と考えられる．Lua では Lua 言語で書かれた関数だけ
+でなく C 言語で書かれた関数も呼ぶことができ(操作することもできる)，そ
+れらはタグによって識別されている．すなわち，Lua 言語で書かれた関数はす
+べて同じタグを持ち，C 言語で書かれた関数のもつタグとは異なっている．
+<TT> tag</TT> 関数は指定された値のタグを返す(<A HREF="#6.1">6</A>節参照)．
+
+<P>
+ 
+<I> ユーザデータ</I>型は任意の C 言語内のポインタを Lua の変数として扱う
+ために使われる．これは C 言語におけるvoid * に対応し，代入と等価性の判
+定の他には Lua での演算は定義されていない．しかし，<I> タグ関数</I>を使う
+ことによってプログラマはユーザデータの値に対する演算を定義することがで
+きる(<A HREF="#4.8">4.7</A>節参照).
+
+<P>
+ 
+<I> テーブル</I>型は連想配列を実現したもので，数値だけでなく <B> nil</B> を
+除く他の任意の値でインデクスできる配列である．
+したがって通常の配列の他に，シンボル表，集合，レコード，グラフ，木構造
+等を表現できる．テーブルは Lua における主要なデータ構造である．
+
+<P>
+ 
+レコードを表現するには，フィールドの名前をインデクスとして使う．Luaで
+は，<TT> a.name</TT> という表現は <TT> a["name"]</TT> と等価である．また，Lua
+では関数がファーストクラスの値なので，関数をテーブルの要素にすることも
+できる．また <TT> t:f(x)</TT> という表現は <TT> t.f(t,x)</TT> と等価であり，こ
+れはテーブル <TT> t</TT> 中の <TT> f</TT> をテーブルそれ自体を最初の引数にして
+呼ぶことである(<A HREF="#4.5.9">4.5.8</A>節参照)．
+
+<P>
+ 
+テーブルは Lua 中の<I> オブジェクト</I>であり，値ではないことに注意された
+い．変数はテーブルへの<I> 参照</I>を値として持つことはできるが，テーブル
+それ自体を持つことはできない．
+値を代入したり，関数にパラメータとして渡したり，返り値として渡したりす
+るのは，常にテーブルへの参照が対象であり，その時にテーブルの複製が発
+生することはない．またテーブルは必ず明示的に作成して使用する
+(<A HREF="#4.5.7">4.5.6</A>節参照)．
+
+<P>
+ 
+<I> nil</I>型，<I> 数値</I>型，<I> 文字列</I>型はそれぞれ別のタグを持っており，
+各型の値は事前に定義された同一のタグを持っている．前述の通り<I> 関数</I>
+型の値には 2 種類のタグがあり，Lua の関数なのか C言語の関数なのかによっ
+て異なる．<I> ユーザデータ</I>型と<I> テーブル</I>型の変数は，プログラマが
+任意のタグを割り当てることもできる(<A HREF="#4.8">4.7</A>節参照)．<TT> tag</TT> 関数は指
+定された値のタグを返す．タグは <TT> newtag</TT> 関数によって作成され，<TT> 
+  settag</TT> 関数によってテーブルのタグを変更できる(<A HREF="#6.1">6</A>節参照)．ユー
+ザデータ型の値のタグは，C言語側からのみ設定することができる(<A HREF="#5.7">5.6</A>節
+参照)．タグは，主にあるイベントが発生したときにどうするかを選択するた
+めに使われるが，それは<I> タグ関数</I>とよばれ，Lua 言語の機能を拡張する
+ための仕組みである(<A HREF="#4.8">4.7</A>節参照)．
+
+<P>
+ 
+<A NAME="4"></A>
+<H1><A NAME="SECTION00040000000000000000">
+4. Lua 言語</A>
+</H1>
+
+<P>
+ 
+この節では Lua の字句，構文，機能について説明する．
+
+<P>
+ 
+<A NAME="4.1"></A>
+<H2><A NAME="SECTION00041000000000000000">
+4.1 字句使用の慣習</A>
+</H2>
+
+<P>
+Lua の<I> 識別子</I>は他の言語と同様に，アルファベットと数字と下線の任意
+の系列であり１文字目が数字でないものとする．他の言語と異なる点は，アル
+ファベットの定義が設定されているロカール (locale) に従うことである．現
+在のロカールでアルファベットと見なされる文字は識別子に使うことができる．
+以下の語は<I> 予約語</I>であり，識別子として使うことはできない．
+
+<P>
+ 
+<PRE>
+
+       and       break     do        else      elseif
+       end       for       function  if        in
+       local     nil       not       or        repeat
+       return    then      until     while
+</PRE>
+
+<P>
+Lua は大文字と小文字を区別する．<TT> and</TT> は予約語であるが，<TT> And</TT>
+や <TT> and</TT> (ロカールに依存する)の2つは区別され，識別子として使う
+ことができる．Lua の慣習として，下線で始まる大文字の識別子(<TT> _INPUT</TT>
+など)は内部変数用に予約されている．
+他の語としては次のものがある．
+
+<P>
+ 
+<PRE>
+
+       ~=    &lt;=    &gt;=    &lt;     &gt;     ==    =     +     -     *     /     
+       (     )     {     }     [     ]     ;     ,     .     ..    ...
+</PRE>
+
+<P>
+ 
+<I> 文字列</I>は 2 つの対応する <TT> '</TT> や <TT> "</TT> で囲まれることもあり，
+以下に示す C 言語のような特殊文字を含んでも良い．
+
+<P>
+ 
+<PRE>
+
+       \a  ベル
+       \b  一文字後退
+       \f  フォームフィード
+       \n  改行
+       \r  復帰
+       \t  水平タブ
+       \v  垂直タブ
+       \\  バックスラッシュ
+       \"  ２重引用符
+       \'  １重引用符
+       \改行  (これはバックスラッシュの後で実際に改行したもの．文字列に改行が入る)
+</PRE>
+
+<P>
+ 
+`<I> ddd</I>' を 3 桁以下の 10 進数として，<I><code>`\ddd'</code></I> のようなエスケー
+プシーケンスで文字を表しても良い．
+Lua の文字列はどのような 8 ビットの値を含んでいても良い．
+埋め込まれたゼロを指定するときは <TT><code></code></TT> とする．
+
+<P>
+ 
+文字列は対応する <TT> [[..]]</TT> で囲んだ文字で与えることもできる．
+この形式は何行かに渡ってもよく， エスケープシーケンスが含まれていても
+解釈されない．この形式は，プログラムの一部や引用記号を含む文字列を定義
+するのに便利である．
+例えば，アスキー文字コードが用いられている場合には，以下の３つは等価な
+文字列リテラルである．
+
+<P>
+ 
+<PRE>
+
+        1) "alo\n123\""
+        2) '\97lo\10\04923"'
+        3) [[alo
+           123"]]
+</PRE>
+
+<P>
+ 
+<I> コメント</I>は <TT> -</TT> の出現後改行までであるが，文字列中に含まれる
+場合を除く．また，チャンクの最初の行が <TT> #</TT> で始まる場合にはコメン
+トとして解釈される．これは Lua を Unix システム上でスクリプトのインタ
+プリタとして用いる際に有効な機能である(<A HREF="#8">7.4</A>節参照)．
+
+<P>
+ 
+<I> 数値定数</I>は，小数部や指数部があっても良い．数値定数の例を以下に示す．
+
+<P>
+ 
+<PRE>
+
+       3     3.0     3.1416  314.16e-2   0.31416E1
+</PRE>
+
+<P>
+ 
+<A NAME="4.2"></A>
+<H2><A NAME="SECTION00042000000000000000">
+4.2 自動的な型変換</A>
+</H2>
+
+<P>
+Lua では実行時の型変換が自動的に行われることがある．算術演算が文字列に
+対して行われた時は，適当な規則に従って文字を数値に変換を試みる．逆に，
+文字列があるべきところに数値がある場合には，数値は適当な形式で文字列に
+変換される．用いられる変換の形式は，数値から文字列へ変換した後に文字列
+から数値へ変換した場合に，<I> 完全に</I>一致するように選択される．そのた
+め，数値を文字列に変換した場合に，見やすい表現にならないこともある．数
+値から文字列への変換形式を厳密に指定するには，<TT> format</TT> 関数を用いる
+(<A HREF="#6.2">6.1</A>節参照)．
+
+<P>
+ 
+<A NAME="4.3"></A>
+<H2><A NAME="SECTION00043000000000000000">
+4.3 調整</A>
+</H2>
+
+<P>
+Lua の関数は一般に複数の値を返す．型宣言が無いため，(システムは)関数が
+呼ばれたときには，関数の引数の数や返り値の数は不明である．したがって値
+のリストの長さは，必要に応じて実行時に <I> 調整</I> される．値のリストが
+必要より長い場合は，残りの値は捨てられる．短い場合は，必要なだけ 
+<B> nil</B> が加えられる．この調整は多重代入(multiple assignments)
+(<A HREF="#4.4.2">4.4.1</A>節参照)や関数呼び出し(<A HREF="#4.5.8">4.5.7</A>節参照)で生じる．
+
+<P>
+Lua では関数は複数の値を返すことができる．型宣言が無いために，ある関数
+の呼び出しで必要な引数の数や返り値の数を，システムは知ることができない．
+そのため，値のリストは実行時に<I> 調整</I>されて必要な長さにされることが
+ある．必要以上の個数の値がある場合には，余分な値は捨てられる．必要な数
+だけ値が無い場合には，必要なだけ <B> nil</B> で埋められる．
+調整は複数値の代入(<A HREF="#4.4.2">4.4.1</A>節参照)や関数呼び出し(<A HREF="#4.5.8">4.5.7</A>節参照)で行われる．
+
+<P>
+ 
+<A NAME="4.4"></A>
+<H2><A NAME="SECTION00044000000000000000">
+4.4 文</A>
+</H2>
+
+<P>
+Lua では Pascal や C と同様に，代入，制御構造，関数呼び出しといった文
+が用いられる．その他，テーブルの生成(<A HREF="#4.5.7">4.5.6</A>節参照)や，局所変数の宣
+言(<A HREF="#4.4.6">4.4.5</A>節参照)といった文も用いられる．
+
+<P>
+ 
+<A NAME="4.4.1"></A>
+<H3><A NAME="SECTION00044100000000000000">
+4.4.1 ブロック</A>
+</H3>
+
+<P>
+ 
+ブロックは文の系列である．構文的には，ブロックはチャンクと等価である．
+
+<P>
+ 
+<PRE>
+
+       block ::= chunk
+</PRE>
+
+<P>
+ 
+ブロックの境界を明示することもできる．
+
+<P>
+ 
+<PRE>
+
+       stat ::= do block end
+</PRE>
+
+<P>
+ 
+明示されたブロックは局所変数の有効領域を規定するのに用いることができる．
+(<A HREF="#4.4.6">4.4.5</A>節参照)．また，<B> return</B> 文や <B> break</B> 文を他のブロッ
+クの途中に入れるためにも利用できる．
+
+<P>
+ 
+<A NAME="4.4.2"></A>
+<H3><A NAME="SECTION00044200000000000000">
+4.4.2 代入</A>
+</H3>
+
+<P>
+Lua では多重代入が可能である．構文的には代入の左辺が変数の系列で，右辺
+が式の系列である．各辺の要素はコンマで区切る．
+
+<P>
+ 
+<PRE>
+
+       stat ::= varlist1 `=' explist1
+       varlist1 ::= var {`,' var}
+</PRE>
+
+<P>
+ 
+代入文では右辺の値と左辺の添字がすべて評価された後に，代入が行われる．
+以下の例では，
+
+<P>
+ 
+<PRE>
+
+       i = 3
+       i, a[i] = 4, 20
+</PRE>
+
+<P>
+ 
+<TT> a[3]</TT> に 20 が代入され，<TT> a[4]</TT> には影響を与えない．
+<TT> a[i]</TT> の <TT> i</TT> は 4 が代入される前に評価されるからである．
+
+<P>
+ 
+多重代入は2つの値を入れ替えるのに用いることができる．
+
+<P>
+ 
+<PRE>
+
+       x, y = y, x
+</PRE>
+
+<P>
+ 
+多重代入の(右辺と左辺の)系列は長さが異っても良い．代入の前に，値の系
+列は変数の系列の長さに合わせて調整される(<A HREF="#4.3">4.2</A>節参照)．
+
+<P>
+ 
+名前の単独の出現は大域変数，局所変数，引数を表す．
+
+<P>
+ 
+<PRE>
+
+       var ::= name
+</PRE>
+
+<P>
+ 
+角括弧は表のインデクスを表す．
+
+<P>
+ 
+<PRE>
+
+       var ::= varorfunc `[' exp1 `]'
+       varorfunc ::= var | functioncall
+</PRE>
+
+<P>
+ 
+<I> varorfunc</I> はテーブル型の値であり，<I> exp1</I> で示されるフィール
+ドの値が得られる．
+
+<P>
+ 
+<TT> var.NAME</TT> の形式は，<TT> var["NAME"]</TT> と等価である．
+
+<P>
+ 
+<PRE>
+
+       var ::= varorfunc `.' name
+</PRE>
+
+<P>
+ 
+大域変数やインデクスづけされた変数に対して代入や評価を行う時の効果は，
+タグ関数によって変化させることができる(<A HREF="#4.8">4.7</A>節参照)．実際，<TT> x</TT>を
+大域変数としたとき，<TT> x = val</TT> と <TT> setglobal("x",val)</TT> は等価で
+あり，<TT> t[i] = val</TT> と <TT> settable_event(t,i,val)</TT> は等価である．
+詳細は <A HREF="#4.8">4.7</A>節 を参照せよ(<TT> setglobal</TT> 関数は基本ライブラリで定義
+されている．<TT> settable_event</TT> 関数は説明の都合上用いた)．
+
+<P>
+ 
+<A NAME="4.4.3"></A>
+<H3><A NAME="SECTION00044300000000000000">
+4.4.3 制御構造</A>
+</H3>
+
+<P>
+ 
+<B> if</B>，<B> while</B>，<B> repeat</B> は通常の意味を持ち，類似の形式で用
+いられる．
+
+<P>
+ 
+<PRE>
+
+       stat ::= while exp1 do block end
+       stat ::= repeat block until exp1
+       stat ::= if exp1 then block {elseif exp1 then block} [else block] end
+</PRE>
+
+<P>
+ 
+制御構造中の条件式 <I> exp1</I> は何らかの値を返す．<B> nil</B> 以外の全て
+の値は真と解釈され，<B> nil</B> だけが偽と解釈される．
+
+<P>
+ 
+<B> return</B> 文は関数やチャンクから値を返すのに用いられる．関数やチャ
+ンクは複数の値を返すことも可能なため，return 文の形式は以下のようにな
+る．
+
+<P>
+ 
+<PRE>
+
+       stat ::= return [explist1]
+</PRE>
+
+<P>
+ 
+<B> break</B> 文はループの実行を終了し，ループの次の文に制御を移す．
+
+<P>
+ 
+<PRE>
+
+       stat ::= break
+</PRE>
+
+<P>
+ 
+<B> break</B> は最も内側のループ(<B> while</B>，<B> repeat</B>，<B> for</B>)を
+終了する．
+
+<P>
+ 
+<I> 注意</I>: 構文的な理由から，<B> return</B> と <B> break</B> は，ブロック
+の最後の文でなければならない．<B> return</B> や <B> break</B> をループの途
+中に書く必要がある場合には，`<TT> do return end</TT>' のように明示的に内部
+ブロックを用いる必要がある．このようにすれば，<TT> return</TT> はブロック
+の最後の文になる．
+
+<P>
+ 
+<A NAME="4.4.4"></A>
+<H3><A NAME="SECTION00044400000000000000">
+4.4.4 for文</A>
+</H3>
+
+<P>
+ 
+<B> for</B> 文には，数値用とテーブル用に応じて２種類の形式がある．
+
+<P>
+ 
+数値用の <B> for</B> 文は次のような形式である．
+
+<P>
+ 
+<PRE>
+
+       stat ::= for name `=' exp1 `,' exp1 [`,' exp1] do block end
+</PRE>
+
+<P>
+ 
+以下の <B> for</B> 文は，
+
+<P>
+ 
+<PRE>
+
+       for var = e1 ,e2, e3 do block end
+</PRE>
+
+<P>
+ 
+次の記述と等価である．
+
+<P>
+ 
+<PRE>
+
+   do
+     local var, _limit, _step = tonumber(e1), tonumber(e2), tonumber(e3)
+     if not (var and _limit and _step) then error() end
+     while (_step&gt;0 and var&lt;=_limit) or (_step&lt;=0 and var&gt;=_limit) do
+       block
+       var = var+_step
+     end
+   end
+</PRE>
+
+<P>
+ 
+ここで，以下の点に注意せよ．
+
+<P>
+
+<UL>
+<LI><TT> _limit</TT> と <TT> _step</TT> は説明の都合上用いたものであり，
+  そのような変数を参照できるわけではない．</LI>
+<LI>ループの内部で <TT> var</TT> に値を代入した場合の振舞いは<I> 不定</I>である．</LI>
+<LI>3番目の式(step)が無い場合には，1 が用いられる．</LI>
+<LI>limit と step の値は，ループに入る前に１回だけ評価される．</LI>
+<LI>変数 <TT> var</TT> は局所的であり，<B> for</B> 文を抜けた後に参照する
+  ことはできない．</LI>
+<LI><B> for</B> 文を抜けるのに<B> break</B>文を用いることができる．
+  その後で <TT> var</TT> の値が必要な場合には，あらかじめ他の変数に代入し
+  ておく必要がある．</LI>
+</UL>
+
+<P>
+ 
+テーブル用の <B> for</B> 文は，与えられたテーブル中の全ての 
+(index,value) に対して繰り返しを行う．形式は以下のようになる．
+
+<P>
+ 
+<PRE>
+
+       stat ::= for name `,' name in exp1 do block end
+</PRE>
+
+<P>
+ 
+以下の <B> for</B> 文は，
+
+<P>
+ 
+<PRE>
+
+       for index, value in exp do block end
+</PRE>
+
+<P>
+ 
+次の記述と等価である．
+
+<P>
+ 
+<PRE>
+
+       do
+         local _t = exp
+         local index, value = next(t, nil)
+         while index do
+           block
+           index, value = next(t, index)
+         end
+       end
+</PRE>
+
+<P>
+ 
+ここで，以下の点に注意せよ．
+
+<P>
+
+<UL>
+<LI><TT> _t</TT> 説明の都合上用いたものであり，そのような変数を参照でき
+  るわけではない．</LI>
+<LI>ループの内部で <TT> index</TT> に値を代入した場合の振舞いは<I> 不定</I>
+  である．</LI>
+<LI>ループの内部でテーブル <TT> _t</TT> を変更した場合の振舞いは
+    <I> 不定</I>である．</LI>
+<LI>変数 <TT> index</TT> と <TT> value</TT> は局所的であり，<B> for</B>文を抜
+  けた後に参照することはできない．</LI>
+<LI><B> for</B>文を抜けるのに<B> break</B>文を用いることができる．
+  <TT> index</TT> や <TT> var</TT> の値が必要な場合には，あらかじめ他の変数に
+  代入しておく必要がある．</LI>
+<LI>テーブル中の要素の選ばれる順番は不定であり，
+  <I> 数値のインデクスでも同様</I>である．数値の順に要素を選びたい場合に
+  は，数値用の <TT> for</TT> 文を用いよ．</LI>
+</UL>
+
+<P>
+ 
+<A NAME="4.4.5"></A>
+<H3><A NAME="SECTION00044500000000000000">
+4.4.5 返り値を使わない関数呼び出し</A>
+</H3>
+
+<P>
+ 
+関数呼び出しは副効果があるため，関数呼び出しは返り値を用いずに文として
+実行できる．
+
+<P>
+ 
+<PRE>
+
+       stat ::= functioncall
+</PRE>
+
+<P>
+ 
+この場合には，返り値は捨てられる．関数呼び出しは <A HREF="#4.5.8">4.5.7</A>節 で説明する．
+
+<P>
+ 
+<A NAME="4.4.6"></A>
+<H3><A NAME="SECTION00044600000000000000">
+4.4.6 局所変数の定義</A>
+</H3>
+
+<P>
+ 
+局所変数はブロック内の任意の場所で宣言できる．宣言には初期値を与えても
+良い．
+
+<P>
+ 
+<PRE>
+
+       stat ::= local declist [init]
+       declist ::= name {`,' name}
+       init ::= `=' explist1
+</PRE>
+
+<P>
+ 
+初期値の代入は多重代入と同様の機能を持つ．初期値がない場合には，変数
+は <B> nil</B> で初期化される．
+
+<P>
+ 
+チャンクもブロックであるので，明示的にブロックを用いなくても局所変数を
+定義できる．局所変数の有効範囲は宣言の<I> 後</I>からブロックの最後までで
+ある．よって <TT> local print=print</TT> という記述は <TT> print</TT> という名
+前の局所変数を宣言し，同名の<I> 大域変数</I>の値を初期値とすることになる．
+
+<P>
+ 
+<A NAME="4.5"></A>
+<H2><A NAME="SECTION00045000000000000000">
+4.5 式</A>
+</H2>
+
+<P>
+ 
+<A NAME="4.5.1"></A>
+<H3><A NAME="SECTION00045100000000000000">
+4.5.1 基本的な式</A>
+</H3>
+
+<P>
+Lua での基本的な式には，以下のようなものがある．
+
+<P>
+ 
+<PRE>
+
+       exp ::= `(' exp `)'
+       exp ::= nil
+       exp ::= number
+       exp ::= literal
+       exp ::= var
+       exp ::= upvalue
+       exp ::= function
+       exp ::= functioncall
+       exp ::= tableconstructor
+</PRE>
+
+<P>
+ 
+数値(数値定数)と文字列リテラルは <A HREF="#4.1">4</A>節，
+変数は <A HREF="#4.4.2">4.4.1</A>節，
+上位値(upvalue)は<A HREF="#4.6">4.5.9</A>節，
+関数の定義(<I> 関数</I>)は <A HREF="#4.5.9">4.5.8</A>節，
+関数呼び出しは <A HREF="#4.5.8">4.5.7</A>節，
+テーブルの生成関数は <A HREF="#4.5.7">4.5.6</A>節 で説明する．
+
+<P>
+ 
+大域変数 <TT> x</TT> の参照は <TT> getglobal("x")</TT> と等価である．添字を伴う
+変数の参照 t[i] は <TT> gettable_event(t,i)</TT> と等価である．これらの関
+数の記述は <A HREF="#4.8">4.7</A>節 を参照せよ．(関数 <TT> getglobal</TT> は基本ライブラ
+リ中で定義されている．関数 <TT> gettable_event</TT> は説明のために用いた)．
+
+<P>
+ 
+非終端記号 <I> exp1</I> は，式によって返される値(一般には値のリスト)が１
+つの値に調整されることを示す．
+
+<P>
+ 
+<PRE>
+
+       exp1 ::= exp
+</PRE>
+
+<P>
+ 
+<A NAME="4.5.2"></A>
+<H3><A NAME="SECTION00045200000000000000">
+4.5.2 算術演算子</A>
+</H3>
+
+<P>
+Lua の算術演算子には次のものがある．
+
+<P>
+ 
+<PRE>
+
+       +  加算
+       -  減算
+       *  積算
+       /  除算
+       ^  べき乗
+       単項の -
+</PRE>
+
+<P>
+ 
+演算の対象が数値，または数値に変換可能な文字列(<A HREF="#4.2">4.1</A>節参照)の場合
+には，べき乗以外は通常の演算が行われる．他の場合は，適切なタグ関数が呼
+ばれる(<A HREF="#4.8">4.7</A>節参照)．べき乗の場合は常にタグ関数が呼ばれる．
+標準数学ライブラリは数値に対するタグ関数を再定義しており，べき乗も通常
+の演算が行われる．
+
+<P>
+ 
+<A NAME="4.5.3"></A>
+<H3><A NAME="SECTION00045300000000000000">
+4.5.3 関係演算子</A>
+</H3>
+
+<P>
+Lua の関係演算子には次のものがある．
+
+<P>
+ 
+<PRE>
+
+       ==    ~=    &lt;     &gt;     &lt;=    &gt;=
+</PRE>
+
+<P>
+ 
+これらの演算子は，結果が偽の場合 <B> nil</B> を返し，真の場合 <B> nil</B>
+でない値を返す．
+
+<P>
+ 
+等値演算子 (<TT> ==</TT>) は，はじめに引数のタグを比較する．両者が異なる場
+合には <B> nil</B> を返し，等しい場合には値が比較される．数値や文字列は
+通常の方法で比較される．テーブル，ユーザデータ，関数は参照が比較され，
+<I> 同一</I>の対象である場合のみ等しいとされる．<TT> &nbsp;=</TT> 演算子は
+等値演算子 (<TT> ==</TT>) の否定である．
+
+<P>
+ 
+注意 <A HREF="#4.2">4.1</A>節の変換規則は，等値演算子による比較の時には
+ul適用されない．
+したがって，"0"==0 は<I> 偽</I>となり，<TT> t[0]</TT> と <TT> t["0"]</TT> はテー
+ブルの他の要素を表す．
+
+<P>
+ 
+演算子の作用する順序は以下のようになる．両方の引数が数値の場合，数値と
+して比較される．次に両方の引数が文字列の場合，辞書順で比較される．他の
+場合には，"lt" タグメソッドが呼ばれる(<A HREF="#4.8">4.7</A>節参照)．
+
+<P>
+ 
+<A NAME="4.5.4"></A>
+<H3><A NAME="SECTION00045400000000000000">
+4.5.4 論理演算子</A>
+</H3>
+
+<P>
+Luaの論理演算子は以下の３つである．
+
+<P>
+ 
+<PRE>
+
+       and   or    not
+</PRE>
+
+<P>
+ 
+制御構造と同様に，論理演算子は <B> nil</B> を偽，他の値を真とと解釈する．
+
+<P>
+ 
+連言演算子 <TT> and</TT> は，１つ目の引数が <B> nil</B> の時 <B> nil</B> を返
+す．そうでなければ２つ目の引数を返す．選言演算子 <TT> or</TT> は，１つ目の
+引数が <B> nil</B> と異なれば１つ目の引数を返す．そうでなければ２つ目の
+引数を返す．<TT> and</TT>と<TT> or</TT>は短絡評価を行うため，２つ目の引数は必
+要な時にのみ評価される．
+
+<P>
+Lua には論理演算子を使った便利な慣用表現がいくつかある．
+
+<P>
+ 
+<PRE>
+
+       x = x or v
+</PRE>
+
+<P>
+ 
+これは次と等価である．
+
+<P>
+ 
+<PRE>
+
+       if x == nil then x = v end
+</PRE>
+
+<P>
+ 
+<TT> x</TT> が定義されていない場合は <TT> v</TT> が代入される．また，
+
+<P>
+ 
+<PRE>
+
+       x = a and b or c
+</PRE>
+
+<P>
+ 
+は，<TT> x = (a and b) or c</TT> と解釈され，これは，
+
+<P>
+ 
+<PRE>
+
+       if a then x = b else x = c end
+</PRE>
+
+<P>
+ 
+と等しい．ただし <TT> b</TT> は <B> nil</B> であってはならない．
+
+<P>
+ 
+<A NAME="4.5.5"></A>
+<H3><A NAME="SECTION00045500000000000000">
+4.5.5 連結演算子</A>
+</H3>
+
+<P>
+ 
+文字列を連結する演算子は２つのピリオド(` ..')で表される．
+両方の引数が文字列または数値の場合には，<A HREF="#4.2">4.1</A>節の規則に従い文字列に
+変換される．他の場合には，``concat'' タグメソッドが呼ばれる(<A HREF="#4.8">4.7</A>節
+参照)．
+
+<P>
+ 
+<A NAME="4.5.6"></A>
+<H3><A NAME="SECTION00045600000000000000">
+4.5.6 演算子の優先順位</A>
+</H3>
+
+<P>
+Lua の演算子の優先順位を，順位の低い順に示す．
+
+<P>
+ 
+<PRE>
+
+       and   or
+       &lt;     &gt;     &lt;=    &gt;=    ~=    ==
+       ..
+       +     -
+       *     /
+       not   - (unary)
+       ^
+</PRE>
+
+<P>
+ 
+二項演算子は左から右の順で結合されるが，<TT><code>^</code></TT> (べき乗)は右から左の
+順である．
+
+<P>
+ 
+注意: 事前コンパイラは最適化のため，通常の演算結果に影響を与えない場合
+には，結合則を満たす演算子 (<TT> ..</TT> や <TT> +</TT> 等) の評価順序を入れ替
+えることがある．しかし，これらの演算子に結合則を満たさないタグ関数を設
+定した場合には，最適化によって演算結果が変化することがある．
+
+<P>
+ 
+<A NAME="4.5.7"></A>
+<H3><A NAME="SECTION00045700000000000000">
+4.5.7 テーブル生成子</A>
+</H3>
+
+<P>
+ 
+テーブル生成子はテーブルを作成する式であり，評価されるたびに新しいテー
+ブルを生成する．生成子で空のテーブルを生成したり，テーブル内の要素の初
+期値を与えてテーブルを生成したりすることができる．テーブル生成子の一般
+的な構文は以下のようになる．
+
+<P>
+ 
+<PRE>
+
+       tableconstructor ::= `{' fieldlist `}'
+       fieldlist ::= lfieldlist | ffieldlist | lfieldlist `;' ffieldlist | ffieldlist `;' lfieldlist
+       lfieldlist ::= [lfieldlist1]
+       ffieldlist ::= [ffieldlist1]
+</PRE>
+
+<P>
+ 
+<I> lfieldlist1</I> はリストを初期化するのに用いられる．
+
+<P>
+ 
+<PRE>
+
+       lfieldlist1 ::= exp {`,' exp} [`,']
+</PRE>
+
+<P>
+ 
+リスト中の要素には１から始まり連続する数値のインデクスが与えられる．
+例えば，
+
+<P>
+ 
+<PRE>
+
+       a = {"v1", "v2", 34}
+</PRE>
+
+<P>
+ 
+は，以下と等価である．
+
+<P>
+ 
+<PRE>
+
+       do
+         local temp = {}
+         temp[1] = "v1"
+         temp[2] = "v2"
+         temp[3] = 34
+         a = temp
+       end
+</PRE>
+
+<P>
+ 
+<I> ffieldlist1</I> はテーブルの他の要素を初期化するのに用いる．
+
+<P>
+ 
+<PRE>
+
+       ffieldlist1 ::= ffield {`,' ffield} [`,']
+       ffield ::= `[' exp `]' `=' exp | name `=' exp
+</PRE>
+
+<P>
+ 
+例えば，
+
+<P>
+ 
+<PRE>
+
+       a = {[f(k)] = g(y), x = 1, y = 3, [0] = b+c}
+</PRE>
+
+<P>
+ 
+は，以下と等価である．
+
+<P>
+ 
+<PRE>
+
+       do
+         local temp = {}
+         temp[f(k)] = g(y)
+         temp.x = 1    -- or temp["x"] = 1
+         temp.y = 3    -- or temp["y"] = 3
+         temp[0] = b+c
+         a = temp
+       end
+</PRE>
+
+<P>
+ 
+<TT> {x = 1, y = 4}</TT> という式は，<TT> {["x"] = 1, ["y"] = 4}</TT>
+と等価である．
+
+<P>
+ 
+どちらの初期化の記法も，最後の要素の後にコンマをつけて良い．また，セミ
+コロンで区切ることで，両方の記法を同一の生成子内で用いることができる．
+
+<P>
+ 
+<PRE>
+
+       x = {;}
+       x = {"a", "b",}
+       x = {type="list"; "a", "b"}
+       x = {f(0), f(1), f(2),; n=3,}
+</PRE>
+
+<P>
+ 
+<A NAME="4.5.8"></A>
+<H3><A NAME="SECTION00045800000000000000">
+4.5.8 関数呼び出し</A>
+</H3>
+
+<P>
+Luaの関数呼び出しは，次の形式で行う．
+
+<P>
+ 
+<PRE>
+
+       functioncall ::= varorfunc args
+</PRE>
+
+<P>
+ 
+はじめに，<I> varorfunc</I> が評価され，<I> 関数</I>型の場合は指定された引
+数で関数が呼ばれる．他の場合には <I> varorfunc</I> の値を１番目の引数，
+２番目以降を指定された引数として，"function" タグ関数が呼ばれる．
+
+<P>
+ 
+以下の形式は，関数を呼ぶのに用いられる．
+
+<P>
+ 
+<PRE>
+
+       functioncall ::= varorfunc `:' args
+</PRE>
+
+<P>
+ 
+<TT> v:name(...)</TT> という記法は，<TT> v.name(v, ...)</TT> と等価である．た
+だし <TT> v</TT> は一度しか評価されない．
+
+<P>
+ 
+引数は次のような形式である．
+
+<P>
+ 
+<PRE>
+
+       args ::= `(' [explist1] `)'
+       args ::= tableconstructor
+       args ::= literal
+       explist1 ::= {exp1 `,'} exp
+</PRE>
+
+<P>
+ 
+すべての引数は呼び出し前に評価される．
+k引数リストが新しく生成されるテーブルのみの場合，
+<TT> f{...}</TT> は <TT> f({...})</TT> と等価である．
+また引数が単一の文字列リテラルの場合，
+<TT> f `...'</TT> は <TT> f(`...')</TT> と等価である．
+<TT> f "..."</TT> や <TT> f[[...]]</TT>についても同様である．
+
+<P>
+ 
+関数は複数の値を返す場合があるため(<A HREF="#4.4.3">4.4.2</A>節参照)，返り値の数は利用
+する前に調整される(<A HREF="#4.3">4.2</A>節参照)．関数が返り値を用いない形式で呼ばれ
+た場合(<A HREF="#4.4.5">4.4.4</A>節)，返り値のリストは長さ 0 に調整され，全ての返り値は
+捨てられる．返り値が１つ必要な環境で関数が呼ばれた場合には(文法的には
+非終端記号  <I> exp1</I>  と表される)，返り値のリストは長さ 1 に調整され，
+はじめの要素以外は捨てられる．返り値が複数許容される環境で呼ばれた場合
+には，(文法的には非終端記号  <I> exp</I> と表される) 調整は行われない．
+複数の返り値が許容される環境は，代入文の左辺の最後の要素，引数リスト，
+<B> return</B> 文だけである．以下に例を示す．
+
+<P>
+ 
+<PRE>
+
+       f()                -- 返り値は捨てられる
+       g(f(), x)          -- f() の返り値は１個に調整される
+       g(x, f())          -- g は x と f() の全ての返り値を受け取る
+       a,b,c = f(), x     -- f() の返り値は１個に調整される (c には nil が代入される)
+       a,b,c = x, f()     -- f() の返り値は２個に調整される
+       a,b,c = f()        -- f() の返り値は３個に調整される
+       return f()         -- f() の返り値すべてを返す
+       return x,y,f()     -- x と y と f() の返り値全てを返す
+</PRE>
+
+<P>
+ 
+<A NAME="4.5.9"></A>
+<H3><A NAME="SECTION00045900000000000000">
+4.5.9 関数の定義</A>
+</H3>
+
+<P>
+ 
+関数の定義の構文を以下に示す．
+
+<P>
+ 
+<PRE>
+
+       function ::= function `(' [parlist1] `)' block end
+       stat ::= function funcname `(' [parlist1] `)' block end
+       funcname ::= name | name `.' name | name `:' name
+</PRE>
+
+<P>
+ 
+以下の形式は，
+
+<P>
+ 
+<PRE>
+
+       function f () ... end
+</PRE>
+
+<P>
+ 
+以下と等価である．
+
+<P>
+ 
+<PRE>
+
+       f = function () ... end
+</PRE>
+
+<P>
+ 
+また，以下の形式は，
+
+<P>
+ 
+<PRE>
+
+       function v.f () ... end
+</PRE>
+
+<P>
+ 
+以下と等価である．
+
+<P>
+ 
+<PRE>
+
+       v.f = function () ... end
+</PRE>
+
+<P>
+ 
+関数の定義は実行可能な式であり，<I> 関数</I>型の値を返す．Lua の事前コン
+パイラがチャンクを処理する際に，関数の本体も事前コンパイルされる．Lua 
+が関数の定義を行う時には，常に上位値 (upvalue) が固定され(<A HREF="#4.6">4.5.9</A>節
+参照)，関数が<I> 実体化される</I>(または<I> 閉じられる</I>)．この関数の実体
+(または<I> 閉包</I>)が式の最終的な値である．同じ関数の異なる実体は，異な
+る上位値を持つことがある．
+
+<P>
+ 
+関数の仮引数は局所変数として扱われ，実引数で初期化される．
+
+<P>
+ 
+<PRE>
+
+       parlist1 ::= `...'
+       parlist1 ::= name {`,' name} [`,' `...']
+</PRE>
+
+<P>
+ 
+関数が呼ばれると，引数のリストは仮引数のリストの長さに合わせて調整
+される(<A HREF="#4.3">4.2</A>節参照)．ただし，関数の仮引数のリストの最後に (`...')
+がある場合は，<I> 可変の引数リストを持つ関数 (vararg function)</I> となる．
+可変の引数リストを持つ関数では調整は行われず，余分な引数は <TT> arg</TT> 
+という暗黙のパラメータに代入される．<TT> arg</TT> の値はテーブルであり，長
+さは余分な引数の個数<TT> n</TT>であり，位置 1,2,...n に各引数を要素として
+持つ．
+
+<P>
+ 
+以下の例では，
+
+<P>
+ 
+<PRE>
+
+       function f(a, b) end
+       function g(a, b, ...) end
+       function r() return 1,2,3 end
+</PRE>
+
+<P>
+ 
+引数とパラメータの対応は以下のようになる．
+
+<P>
+ 
+<PRE>
+
+       関数呼び出し     パラメータ
+
+       f(3)             a=3, b=nil
+       f(3, 4)          a=3, b=4
+       f(3, 4, 5)       a=3, b=4
+       f(r(), 10)       a=1, b=10
+       f(r())           a=1, b=2
+
+       g(3)             a=3, b=nil, arg={n=0}
+       g(3, 4)          a=3, b=4, arg={n=0}
+       g(3, 4, 5, 8)    a=3, b=4, arg={5, 8; n=2}
+       g(5, r())        a=5, b=1, arg={2, 3; n=2}
+</PRE>
+
+<P>
+ 
+返り値は <B> return</B> 文を用いて返される(<A HREF="#4.4.3">4.4.2</A>節参照)．
+関数の最後に来ても <B> return</B> 文が無い場合には，関数は値を返さない．
+
+<P>
+ 
+以下の形式は，
+
+<P>
+ 
+<PRE>
+
+       funcname ::= name `:' name
+</PRE>
+
+<P>
+ 
+<TT> self</TT> という暗黙の追加の引数を持つ関数を定義する．
+したがって，以下の形式は，
+
+<P>
+ 
+<PRE>
+
+       function v:f (...) ... end
+</PRE>
+
+<P>
+ 
+次と等価である．
+
+<P>
+ 
+<PRE>
+
+       v.f = function (self, ...) ... end
+</PRE>
+
+<P>
+ 
+関数は <TT> self</TT> という名前の追加の引数を受け取る．
+
+<P>
+ 
+<A NAME="4.6"></A>
+<H2><A NAME="SECTION00046000000000000000">
+4.6 可視性と上位値</A>
+</H2>
+
+<P>
+ 
+関数の内部では，仮引数を含む局所変数および大域変数を参照できる．
+ただし，大域変数が上位の関数
+<A NAME="tex2html2"
+ HREF="footnode.html#foot453"><SUP>2</SUP></A>の中で同名の局所変数によって
+<I> 隠されている</I>場合には参照することができない．関数が呼ばれたときに
+は上位の関数の局所変数は存在しないため，それらの変数を参照することもで
+きない．
+しかし，上位の関数の局所変数の<I> 値</I>を参照することはできる．これは
+<I> 上位値 (upvalue)</I>と呼ばれる形式で行われる．上位値の形式は，
+
+<P>
+ 
+<PRE>
+
+       upvalue ::= `%' name
+</PRE>
+
+<P>
+ 
+となる．上位値は変数と似ているが，上位値の出現する関数が実体化された時に
+上位値の値は<I> 固定される</I>．上位値の名前は，現在の関数が定義されてい
+る位置で参照できる変数の名前，すなわち大域変数または１つ上位の関数の局
+所変数の名前でなければならない．
+上位値がテーブルの場合には，テーブル自体への参照(参照が上位値の値とな
+る)のみが固定され，テーブルの中身は変更することができる．テーブルを上
+位値として用いることで，関数に局所的だが書き換えの出来る状態を持たせる
+ことができる．
+
+<P>
+ 
+<PRE>
+
+       a,b,c = 1,2,3   -- 大域変数
+       local d
+       function f (x)
+         local b = {}  -- x, b は f の局所変数であり，b は 大域変数 b を隠す．
+         local g = function (a)
+           local y     -- a, y は f の局所変数
+           p = a       -- OK, 局所変数 a 
+           p = c       -- OK, 大域変数 a 
+           p = b       -- エラー，有効範囲 (scope) の外
+           p = %b      -- OK, 固定された変数 b (f の局所変数) 
+           %b = 3      -- ERROR: 上位値は変更できない
+           %b.x = 3    -- OK, テーブルの中身を変更
+           p = %c      -- OK, 固定された大域変数 c
+           p = %y      -- ERROR: g が定義されている環境から y は見えない
+           p = %d      -- ERROR: g が定義されている環境から d は見えない
+         end           -- g
+       end             -- f
+</PRE>
+
+<P>
+ 
+<A NAME="4.7"></A>
+<H2><A NAME="SECTION00047000000000000000">
+4.7 エラー処理</A>
+</H2>
+
+<P>
+Lua は拡張言語なので，Lua のすべての実行はC 言語で記述された Lua を組
+み込んでいる プログラム が Lua のライブラリを実行することにより行われ
+る．Lua のプログラムのコンパイル中または実行中にエラーが起こった場合に
+は，<TT> _ERRORMESSAGE</TT> が <B> nil</B> でない場合は
+<TT> _ERRORMESSAGE</TT> 関数が呼ばれ，対応する Lua ライブラリの関数
+(<TT> lua_dofile</TT>，<TT> lua_dostring</TT>，<TT> lua_dobuffer</TT>，
+<TT> lua_callfunction</TT>)が終了し，エラーの状況を返す．
+
+<P>
+ 
+メモリの割り付けの失敗によるエラーはこの規則には従わない．メモリの割り
+付けが失敗した時には <TT> _ERRORMESSAGE</TT> 関数を実行することができない
+場合がある．その時は対応する Lua ライブラリの関数はただちに終了し，
+<TT> LUA_ERRMEM</TT> という特別の値を返す．これらのエラー値は <TT> lua.h</TT>
+で定義されている(<A HREF="#5.8">5.7</A>節参照)．
+
+<P>
+ 
+<TT> _ERRORMESSAGE</TT> 関数はエラーの説明となる文字列を引数とする．
+<TT> _ERRORMESSAGE</TT> は通常 <TT> _ALERT</TT> 関数を実行し，エラーメッ
+セージが標準エラー出力に出力される(<A HREF="#6.1">6</A>節参照)．標準入出力ライブ
+ラリはスタックの履歴等の情報を表示するため，<TT> _ERRORMESSAGE</TT> を再
+定義しデバッグ機能(<A HREF="#7">6.5</A>節参照)を利用している．
+
+<P>
+ 
+プログラム中で <TT> error</TT> 関数を呼ぶことで，エラーを明示的に生成する
+ことができる(<A HREF="#6.1">6</A>節参照)．また，<TT> call</TT> 関数を用いることで，
+エラーを<B> 補足する (catch)</B>ことができる(<A HREF="#6.1">6</A>節参照)．
+
+<P>
+ 
+<A NAME="4.8"></A>
+<H2><A NAME="SECTION00048000000000000000">
+4.8 タグ関数</A>
+</H2>
+
+<P>
+Lua は言語機能を拡張する<I> タグ関数</I>という強力な方法を提供している．
+タグ関数はプログラマが定義できる関数であり，プログラムの実行中のある特
+定の時点で実行され，Lua の通常の振舞いを変更することができる．この特定
+の時点は<I> イベント</I>と呼ばれる．
+
+<P>
+ 
+イベントが生じたときに実行されるタグ関数は，イベントに関わる値のタグに
+基づいて決められる．<TT> settagmethod</TT> 関数を使うと，
+(<I> タグ</I>, <I> イベント</I>)対に関連づけられたタグ関数を変更することがで
+きる．<TT> settagmethod</TT> 関数の１つ目の引数はタグ，２番目の引数はイベン
+トの名前(文字列．以下を参照)，３番目の引数は登録する関数である．関数と
+して  <B> nil</B> を指定した場合には，指定された(タグ，イベント)の振舞い
+は初期状態に戻る．<TT> settagmethod</TT> 関数は，以前に登録されていた関数
+を返す．<TT> gettagmethod</TT> 関数は，タグとイベント名を引数とし，現在登
+録されている関数を返す．
+
+<P>
+ 
+タグ関数は以下に挙げる名前を持つイベントにおいて実行される．タグ関数の
+機能は，各イベントでのインタプリタの振舞いを表す関数で記述した．
+この関数はタグ関数が実行される時点に加え，引数，結果，初期状態での
+振舞いを示す．この関数の記述は<I> 説明のため</I>のものであり，実際はより
+効率的に実行される形で，インタプリタに組み込まれている．以下で使われる
+<TT> rawget</TT>, <TT> tonumber</TT>, <TT> call</TT>等の関数は，<A HREF="#6.1">6</A>節を参照せよ．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR><B> ``add''</B>
+</DIV>:
+<TT> +</TT> 演算子が数値でない引数に適用されたとき呼ばれる．
+
+<P>
+ 
+以下に示す <TT> getbinmethod</TT> 関数は，Lua が２項演算に対してタグ関数を
+選ぶ手順を定義している．まず１つ目の引数に対して，適切なタグ関数を探す．
+見つからない場合には，２つ目の引数に対して同様に試みる．両方に失敗した
+場合には，タグ 0 からタグ関数を得る．
+
+<P>
+ 
+<PRE>
+
+           function getbinmethod (op1, op2, event)
+             return gettagmethod(tag(op1), event) or
+                    gettagmethod(tag(op2), event) or
+                    gettagmethod(0, event)
+           end
+</PRE>
+
+<P>
+ 
+この関数を用いることで，``add'' イベントに対するタグ関数は，以下のようになる．
+
+<P>
+ 
+<PRE>
+
+           function add_event (op1, op2)
+             local o1, o2 = tonumber(op1), tonumber(op2)
+             if o1 and o2 then  -- 両方の引数は数値
+               return o1+o2  -- ここでの `+' は基本の `add'
+             else  -- 少なくとも１つの引数は数値ではない
+               local tm = getbinmethod(op1, op2, "add")
+               if tm then
+                 -- ２つの引数とイベント名を追加の引数として関数を呼ぶ
+                 return tm(op1, op2, "add")
+               else  -- 利用可能なタグ関数がない: 初期設定時の処理
+                 error("unexpected type at arithmetic operation")
+               end
+             end
+           end
+</PRE>
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR><B> ``sub''</B>
+</DIV>:
+<TT> -</TT> 演算子が数値でない引数に適用されたとき呼ばれる．
+処理は``add'' イベントと同様である．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR><B> ``mul''</B>
+</DIV>:
+<TT> *</TT> 演算子が数値でない引数に適用されたとき呼ばれる．
+処理は``add'' イベントと同様である．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR><B> ``div''</B>
+</DIV>:
+<TT> /</TT> 演算子が数値でない引数に適用されたとき呼ばれる．
+処理は``add'' イベントと同様である．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR><B> ``pow''</B>
+</DIV>:
+<TT><code>^</code></TT> 演算子(べき乗)が適用されたとき呼ばれる．引数が数値であっても
+同様に呼ばれる．
+
+<P>
+ 
+<PRE>
+
+           function pow_event (op1, op2)
+             local tm = getbinmethod(op1, op2, "pow")
+             if tm then
+               -- ２つの引数とイベント名を追加の引数として関数を呼ぶ
+               return tm(op1, op2, "pow")
+             else  -- 利用可能なタグ関数がない: 初期設定時の処理
+               error("unexpected type at arithmetic operation")
+             end
+           end
+</PRE>
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR><B> ``unm''</B>
+</DIV>:
+単項演算子の <TT> -</TT> が数値でない引数に対して適用されたときに呼ばれる．
+
+<P>
+ 
+<PRE>
+
+           function unm_event (op)
+             local o = tonumber(op)
+             if o then  -- 数値引数
+               return -o  -- ここでの `-' 基本の `unm'
+             else  -- 引数は数値でない
+               -- 引数のタグ関数の取得を試みる
+               -- 無ければ，"大域的な" タグ関数取得を試みる (タグ 0)
+               local tm = gettagmethod(tag(op), "unm") or
+                          gettagmethod(0, "unm")
+               if tm then
+                 --引数，nil とイベント名を追加の引数として関数を呼ぶ
+                 return tm(op, nil, "unm")
+               else  -- 利用可能なタグ関数がない: 初期設定時の処理
+                 error("unexpected type at arithmetic operation")
+               end
+             end
+           end
+</PRE>
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR><B> ``lt''</B>
+</DIV>:
+順序演算子が数値でない対象に対して適用されたとき呼ばれる．
+<TT><code><</code></TT> 演算子に対応する．
+
+<P>
+ 
+<PRE>
+
+           function lt_event (op1, op2)
+             if type(op1) == "number" and type(op2) == "number" then
+               return op1 &lt; op2   -- 数値として比較
+             elseif type(op1) == "string" and type(op2) == "string" then
+               return op1 &lt; op2   -- 辞書順で比較
+             else
+               local tm = getbinmethod(op1, op2, "lt")
+               if tm then
+                 return tm(op1, op2, "lt")
+               else
+                 error("unexpected type at comparison");
+               end
+             end
+           end
+</PRE>
+
+<P>
+ 
+他の順序演算子は，通常の等値変換にしたがってこのタグ関数を用いる．
+
+<P>
+ 
+<PRE>
+
+           a&gt;b    &lt;=&gt;  b&lt;a
+           a&lt;=b   &lt;=&gt;  not (b&lt;a)
+           a&gt;=b   &lt;=&gt;  not (a&lt;b)
+</PRE>
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR><B> ``concat''</B>
+</DIV>:
+連結演算子か文字列以外の対象に適用されたとき呼ばれる．
+
+<P>
+ 
+<PRE>
+
+           function concat_event (op1, op2)
+             if (type(op1) == "string" or type(op1) == "number") and
+                (type(op2) == "string" or type(op2) == "number") then
+               return op1..op2  -- 基本的な文字連結
+             else
+               local tm = getbinmethod(op1, op2, "concat")
+               if tm then
+                 return tm(op1, op2, "concat")
+               else
+                 error("unexpected type for concatenation")
+               end
+             end
+           end
+</PRE>
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR><B> ``index''</B>
+</DIV>:
+テーブル中に無いインデクスに対する値を探す時に呼ばれる．
+``gettable'' イベントを参照せよ．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR><B> ``getglobal''</B>
+</DIV>:
+大域変数の値が参照されるときに呼ばれる．このタグ関数は <B> nil</B> およ
+び <TT> newtag</TT> 関数によって新たに作られるタグに対してのみ設定できる．
+タグは大域変数の<I> 現在の値</I>のものである．
+
+<P>
+ 
+<PRE>
+
+           function getglobal (varname)
+             -- 大域変数のテーブルを参照
+             local value = rawget(globals(), varname)
+             local tm = gettagmethod(tag(value), "getglobal")
+             if not tm then
+               return value
+             else
+               return tm(varname, value)
+             end
+           end
+</PRE>
+
+<P>
+ 
+<TT> getglobal</TT> 関数は，標準ライブラリ関数中で定義されている(<A HREF="#6.1">6</A>節
+参照)．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR><B> ``setglobal''</B>
+</DIV>:
+大域変数へ値を代入するときに呼ばれる．このタグ関数は数値，文字列，テー
+ブル，初期設定時のタグを持つユーザデータには設定することができない．
+
+<P>
+ 
+<PRE>
+
+           function setglobal (varname, newvalue)
+             local oldvalue = rawget(globals(), varname)
+             local tm = gettagmethod(tag(oldvalue), "setglobal")
+             if not tm then
+               rawset(globals(), varname, newvalue)
+             else
+               tm(varname, oldvalue, newvalue)
+             end
+           end
+</PRE>
+
+<P>
+ 
+<TT> setglobal</TT> 関数は，標準ライブラリ関数中で定義されている(<A HREF="#6.1">6</A>節
+参照)．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR><B> ``gettable''</B>
+</DIV>:
+インデクスを持つ変数を参照するときに呼ばれる．このタグ関数は，
+初期設定時のタグを持つテーブルに対しては設定できない．
+
+<P>
+ 
+<PRE>
+
+           function gettable_event (table, index)
+             local tm = gettagmethod(tag(table), "gettable")
+             if tm then
+               return tm(table, index)
+             elseif type(table) ~= "table" then
+               error("indexed expression not a table");
+             else
+               local v = rawget(table, index)
+               tm = gettagmethod(tag(table), "index")
+               if v == nil and tm then
+                 return tm(table, index)
+               else
+                 return v
+               end
+             end
+           end
+</PRE>
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR><B> ``settable''</B>
+</DIV>:
+インデクスを持つ変数に値を代入するときに呼ばれる．このタグ関数は，
+初期値のタグを持つテーブルに対しては設定できない．
+
+<P>
+ 
+<PRE>
+
+           function settable_event (table, index, value)
+             local tm = gettagmethod(tag(table), "settable")
+             if tm then
+               tm(table, index, value)
+             elseif type(table) ~= "table" then
+               error("indexed expression not a table")
+             else
+               rawset(table, index, value)
+             end
+           end
+</PRE>
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR><B> ``function''</B>
+</DIV>:
+関数でない対象に対して関数呼び出しを行ったときに呼ばれる．
+
+<P>
+ 
+<PRE>
+
+           function function_event (func, ...)
+             if type(func) == "function" then
+               return call(func, arg)
+             else
+               local tm = gettagmethod(tag(func), "function")
+               if tm then
+                 for i=arg.n,1,-1 do
+                   arg[i+1] = arg[i]
+                 end
+                 arg.n = arg.n+1
+                 arg[1] = func
+                 return call(tm, arg)
+               else
+                 error("call expression not a function")
+               end
+             end
+           end
+</PRE>
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR><B> ``gc''</B>
+</DIV>:
+Luaがユーザデータのガーベジコレクションをするときに呼ばれる．このタグ
+関数は C 言語からのみ設定でき，初期設定時のタグを持つテーブルに対して
+は設定できない．ガーベジコレクションの対象となるユーザデータ毎に，以下
+の関数と等価な処理が行われる．
+
+<P>
+ 
+<PRE>
+
+           function gc_event (obj)
+             local tm = gettagmethod(tag(obj), "gc")
+             if tm then
+               tm(obj)
+             end
+           end
+</PRE>
+
+<P>
+ 
+ガーベジコレクション時には，ユーザデータのタグ関数はタグが作られた順番
+と逆順に呼ばれる．すなわち，はじめに呼ばれるのはプログラムで最後に作ら
+れたタグである．さらに，ガーベジコレクションの処理の最後に，Luaは 
+<TT> gc_event(nil)</TT> の呼び出しと等価な処理を行う．
+<A NAME="5"></A>
+<H1><A NAME="SECTION00050000000000000000">
+5. プログラムインターフェイス</A>
+</H1>
+
+<P>
+ 
+この章では Lua の API について説明する．API は，Lua を組み込むプログラ
+ムが Lua を操作するのに用いる C 言語の関数の集合である．API の関数，関
+連する型や定数の定義は，ヘッダファイル <TT> lua.h</TT> に記述されている．
+
+<P>
+ 
+注意: 「関数」という語を用いた場合でも，実装は<I> マクロ</I>で行われてい
+る場合がある．これらのマクロ中では引数は必ず一度のみ評価され，隠れた副
+作用が起こることはない．
+
+<P>
+ 
+<A NAME="5.1"></A>
+<H2><A NAME="SECTION00051000000000000000">
+5.1 状態</A>
+</H2>
+
+<P>
+Luaのライブラリは完全に再入可能 (reentrant) であり，大域変数を持たない．
+Lua のインタプリタの状態 (大域変数，スタック，タグ関数等) は動的に割り
+当てられた <TT> lua_State</TT> 型の領域中に保持される．全てのライブラリ関
+数の１つめのの引数として，状態を渡す必要がある(<TT> lua_open</TT>を除
+く．以下参照)．
+
+<P>
+API 関数を呼ぶ前に，Lua インタプリタの状態を生成するため，以下を実行する．
+
+<P>
+ 
+<PRE>
+
+       lua_State *lua_open (int stacksize);
+</PRE>
+
+<P>
+ 
+<TT> lua_open</TT> の唯一の引数は，インタプリタのスタックの大きさである．
+(関数呼び出しは引数ごとにスタック上の領域を１使用する．局所変数や一時
+的な値は，管理のため領域を２使用する．スタックは20の余分の領域を持って
+いる必要がある．再帰呼び出し無しの小規模の実装であれば，スタックのサイ
+ズは100で十分である)．<TT> stacksize</TT> が 0 の場合には，初期設定時の大
+きさ(1024)が用いられる．
+
+<P>
+ 
+<TT> lua_open</TT> で生成された状態を解放するには，以下を実行する．
+
+<P>
+ 
+<PRE>
+
+       void lua_close (lua_State *L);
+</PRE>
+
+<P>
+ 
+この関数は，指定された Lua 環境中の全てのオブジェクトを破棄し(対応する
+ガーベジコレクションタグ関数を呼ぶ)，状態によって動的に割り当てられて
+いた領域を解放する．プログラムが終了したときにはすべての資源は解放され
+るので，通常はこの関数を呼ぶ必要はない．デーモンやウェブサーバ等長い間
+動き続けるプログラムでは肥大化を防ぐため，必要のなくなった状態は解放す
+る必要があるだろう．
+
+<P>
+ 
+<TT> lua_open</TT>を除き，全てのライブラリ関数は状態を１つめの引数として
+渡す必要がある．
+
+<P>
+ 
+<A NAME="5.2"></A>
+<H2><A NAME="SECTION00052000000000000000">
+5.2 スタックとインデクス</A>
+</H2>
+
+<P>
+Lua は C 言語との間で値を受け渡す際に<I> スタック</I>を用いる．スタック中
+の各要素は Lua の値 (nil, 数値，文字列など)を表す．
+
+<P>
+ 
+簡単のため，ほとんどの問い合わせ操作は厳密なスタック操作の方法には従っ
+ていない．スタック中の全ての要素を<I> インデクス</I>で参照できる．
+正のインデクスはスタック中の<I> 絶対位置</I>を表す
+(インデクスは 1 から始まり，Cのように0からではない)．
+負のインデクスはスタックの一番上からの<I> 差分</I>を表す．
+詳しく言うと，スタック中の要素の数を <I> n</I> とすると，
+インデクス 1 は最初の要素 (はじめにスタックに入れられた要素)
+を表し，インデクス <I> n</I> は最後の要素を表す．
+-1 もまた最後の要素を表し(これはスタックの一番上の要素である)，
+インデクス <I> -n</I> は最初の要素を表す．
+インデクスが 1 以上でスタックの要素数以下であるとき
+(<TT> 1 &lt;= abs(インデクス) &lt;= top</TT>)，
+インデクスは<I> 有効である</I>という．
+
+<P>
+ 
+スタックの一番上の要素のインデクスは，次の関数を実行することで得られる．
+
+<P>
+ 
+<PRE>
+
+       int lua_gettop (lua_State *L);
+</PRE>
+
+<P>
+ 
+インデクスは 1 から始まるので，<TT> lua_gettop</TT> の返り値はスタック中の
+要素数と同じになる(スタックが空の時 0 となる)．
+
+<P>
+Lua の API を扱う際は，<I> スタックのあふれを自分で管理する</I>必要があ
+る．次の関数は，スタックの空き容量を返す．
+
+<P>
+ 
+<PRE>
+
+       int lua_stackspace (lua_State *L);
+</PRE>
+
+<P>
+Lua が C 言語を呼ぶ際には，少なくとも <TT> LUA_MINSTACK</TT> の空き容量が
+ある必要がある．<TT> LUA_MINSTACK</TT> は <TT> lua.h</TT> 中で定義されており，
+少なくとも 16 である．プログラムがスタックに要素を繰り返し入れる際には，
+スタックの残り容量を考える必要がある．
+
+<P>
+ 
+ほとんどの問い合わせ関数は，インデクスの値がスタックの最大の大きさ以下
+の値であれば受理する．このインデクスは<I> 受理可能なインデクス</I>と呼
+ばれる．受理可能なインデクスは以下のように定義される．
+
+<P>
+ 
+<PRE>
+
+(インデクス &lt; 0 &amp;&amp; abs(インデクス) &lt;= スタック中の要素数) ||
+(インデクス &gt; 0 &amp;&amp; インデクス &lt;=  スタック中の要素数 + スタックの空き容量)
+</PRE>
+
+<P>
+0 は 受理可能なインデクスではないことに注意せよ．
+
+<P>
+ 
+<A NAME="5.3"></A>
+<H2><A NAME="SECTION00053000000000000000">
+5.3 スタックの操作</A>
+</H2>
+
+<P>
+ 
+スタック操作に関する API 関数は次のものがある．
+
+<P>
+ 
+<PRE>
+
+       void lua_settop    (lua_State *L, int index);
+       void lua_pushvalue (lua_State *L, int index);
+       void lua_remove    (lua_State *L, int index);
+       void lua_insert    (lua_State *L, int index);
+</PRE>
+
+<P>
+ 
+<TT> lua_settop</TT> は受理可能なインデクスまたは 0 を受け取り，スタック
+の一番上を指定されたインデクスに設定する．指定されたインデクスが現在の
+スタックの一番上よりも大きい場合には，追加される要素は <B> nil</B> で初
+期化される．<TT> index</TT> として 0 が指定されると，スタック中の要素はす
+べて捨てられる．API では以下の有用なマクロが定義されている．
+
+<P>
+ 
+<PRE>
+
+       #define lua_pop(L,n) lua_settop(L, -(n)-1)
+</PRE>
+
+<P>
+ 
+これは先頭の n 個の要素をスタックから取り除く．
+
+<P>
+ 
+<TT> lua_pushvalue</TT> はインデクスで指定された要素の複製をスタックの先
+頭に入れる．
+<TT> lua_remove</TT> は指定された位置の要素を取り除き，スタックの上方向に
+ある要素をずらして空白を埋める．
+<TT> lua_insert</TT> は一番上の要素を指定される位置に移動し，空きを作るた
+め移動先の位置よりも上にある要素を上方向にずらす．これらの関数に対して
+は有効なインデクスを指定する必要がある．
+例えば，スタックの初期値が <TT> 10 20 30 40 50</TT> (下から上の順) である
+時，以下の関数呼び出しを行った際のスタックの様子を示す．
+
+<P>
+ 
+<PRE>
+
+       lua_pushvalue(L, 3)    --&gt; 10 20 30 40 50 30
+       lua_pushvalue(L, -1)   --&gt; 10 20 30 40 50 30 30
+       lua_remove(L, -3)      --&gt; 10 20 30 40 30 30
+       lua_remove(L,  6)      --&gt; 10 20 30 40 30
+       lua_insert(L,  1)      --&gt; 30 10 20 30 40
+       lua_insert(L, -1)      --&gt; 30 10 20 30 40  (変化無し)
+       lua_settop(L, -3)      --&gt; 30 10 20
+       lua_settop(L, 6)       --&gt; 30 10 20 nil nil nil
+</PRE>
+
+<P>
+ 
+<A NAME="5.4"></A>
+<H2><A NAME="SECTION00054000000000000000">
+5.4 スタック への 問い合わせ</A>
+</H2>
+
+<P>
+ 
+次の関数を用いて，スタック中の要素の型を調べることができる．
+
+<P>
+ 
+<PRE>
+
+       int         lua_type        (lua_State *L, int index);
+       int         lua_tag         (lua_State *L, int index);
+       int         lua_isnil       (lua_State *L, int index);
+       int         lua_isnumber    (lua_State *L, int index);
+       int         lua_isstring    (lua_State *L, int index);
+       int         lua_istable     (lua_State *L, int index);
+       int         lua_isfunction  (lua_State *L, int index);
+       int         lua_iscfunction (lua_State *L, int index);
+       int         lua_isuserdata  (lua_State *L, int index);
+</PRE>
+
+<P>
+ 
+これらの関数に対しては受理可能なインデクスを指定する．
+<TT> lua_type</TT> は指定された要素の型に応じて，
+<TT> LUA_TNIL</TT>, <TT> LUA_TNUMBER</TT>，<TT> LUA_TSTRING</TT>，
+<TT> LUA_TTABLE</TT>，<TT> LUA_TFUNCTION</TT>，<TT> LUA_TUSERDATA</TT>
+のいずれかの定数を返す．
+指定されたインデクスが有効で無い場合には(指定されたスタック上
+の位置が空の場合)，<TT> lua_type</TT> は <TT> LUA_TNONE</TT> を返す．
+これらの定数は次の関数を用いて，文字列に変換できる．
+
+<P>
+ 
+<PRE>
+
+       const char *lua_typename (lua_State *L, int t);
+</PRE>
+
+<P>
+ 
+<TT> t</TT> は <TT> lua_type</TT> の返り値である．<TT> lua_typename</TT> で
+返される文字列は
+<TT> "nil"</TT>，<TT> "number"</TT>， <TT> "string"</TT>， <TT> "table"</TT>， 
+<TT> "function"</TT>，<TT> "userdata"</TT>，<TT> "no value"</TT>
+のいずれかである．
+
+<P>
+ 
+<TT> lua_tag</TT> はスタック中の要素のタグを返す．有効でないインデクスに対
+しては，<TT> LUA_NOTAG</TT> を返す．
+<TT> lua_is*</TT> 関数は，要素が指定された型と互換性のある場合は 1 を返し，
+そうでなければ 0 を返す．有効でないインデクスに対しては 0 を返す．
+<TT> lua_isnumber</TT> 関数は要素が数値または数を表す文字列の場合，
+<TT> lua_isstring</TT> 関数は要素が文字列または数値の場合(<A HREF="#4.2">4.1</A>節参照)，
+<TT> lua_isfunction</TT> 関数は要素が Lua または C 言語の関数の場合，それ
+ぞれ 1 を返す．
+Lua の関数と C 言語の関数を区別するためには，<TT> lua_iscfunction</TT> を
+用いる．数値と数を記述した文字列を区別するためには，<TT> lua_type</TT> を
+用いる．
+
+<P>
+ 
+スタック中の２つの要素を比較するため，次の関数を用いることができる．
+
+<P>
+ 
+<PRE>
+
+       int lua_equal    (lua_State *L, int index1, int index2);
+       int lua_lessthan (lua_State *L, int index1, int index2);
+</PRE>
+
+<P>
+ 
+これらの関数は Lua での対応する関数と等価である．
+<TT> lua_lessthan</TT> は<A HREF="#4.8">4.7</A>節で説明した <TT> lt_event</TT> と等価であ
+る．どちらの関数も，指定されたインデクスのどちらかが有効でない場合は 0
+を返す．
+
+<P>
+ 
+スタック中の要素の値を特定の C 言語の型に変換したい場合には，以下の関
+数を用いることができる．
+
+<P>
+ 
+<PRE>
+
+       double         lua_tonumber    (lua_State *L, int index);
+       const char    *lua_tostring    (lua_State *L, int index);
+       size_t         lua_strlen      (lua_State *L, int index);
+       lua_CFunction  lua_tocfunction (lua_State *L, int index);
+       void          *lua_touserdata  (lua_State *L, int index);
+</PRE>
+
+<P>
+ 
+これらの関数に対しては，受理可能なインデクスを指定する．有効でないイン
+デクスが指定された場合には，指定された値が正しくない型である場合と同様
+に振舞う．
+
+<P>
+ 
+<TT> lua_tonumber</TT> 関数は指定されたインデクスの要素を浮動小数点に変換
+する．要素は数値または数値に変換可能な文字列でなければならない
+(<A HREF="#4.2">4.1</A>節参照)．そうでない場合，<TT> lua_tonumber</TT> は 0 を返す．
+
+<P>
+ 
+<TT> lua_tostring</TT> 関数は Lua の要素を文字列 (<TT> const char*</TT>) に変
+換する．要素は文字列または数値でなければならず，そうでなければ <TT> 
+  NULL</TT>  が返される．この関数は Lua 環境中にある文字列へのポインタを返
+す．文字列の最後の文字の後にはゼロ (<code>`\0'</code>) が入れられる(C と同様
+である)が，文字列自体がゼロを含む可能性がある．文字列がゼロを含むかど
+うか確かめるには，<TT> lua_strlen</TT> を使う必要がある．Lua はガーベジコ
+レクションの機能を持つため，対応する要素がスタックから除かれた後でも 
+<TT> lua_tostring</TT> で返された値が有効である保証はない．
+
+<P>
+ 
+<TT> lua_tocfunction</TT> はスタック中の要素を C の関数に変換する．要素は
+C の関数でなければならず，そうでなければ <TT> NULL</TT> が返される．
+<TT> lua_toCFunction</TT> 型は，<A HREF="#5.13">5.12</A>節で説明する．
+
+<P>
+ 
+<TT> lua_touserdata</TT> 関数は要素を <TT> void*</TT> 型に変換する．値は 
+<I> ユーザデータ</I>型でなければならず，そうでなければ <TT> NULL</TT> が返さ
+れる．
+
+<P>
+ 
+<A NAME="5.5"></A>
+<H2><A NAME="SECTION00055000000000000000">
+5.5 値をスタックへ入れる</A>
+</H2>
+
+<P>
+ 
+次の関数を用いて，C 言語の値をスタックに入れることができる．
+
+<P>
+ 
+<PRE>
+
+       void lua_pushnumber    (lua_State *L, double n);
+       void lua_pushlstring   (lua_State *L, const char *s, size_t len);
+       void lua_pushstring    (lua_State *L, const char *s);
+       void lua_pushusertag   (lua_State *L, void *u, int tag);
+       void lua_pushnil       (lua_State *L);
+       void lua_pushcfunction (lua_State *L, lua_CFunction f);
+</PRE>
+
+<P>
+ 
+これらの関数は受け取った C 言語の値を，対応する Lua の値に変換してスタッ
+クに入れる．
+特に <TT> lua_pushlstring</TT> および <TT> lua_pushstring</TT> は，引数の文字
+列の<I> 内部的な複製</I>を生成する．
+<TT> lua_pushstring</TT> は C 言語の正しい文字列のみ扱うことができる
+(正しい文字列とは，ゼロで終わり，埋め込まれたゼロを含まない文字列である)．
+<TT> lua_pushlstring</TT> はより汎用の関数で，文字列の長さを明示的に指定す
+ることで，埋め込まれたゼロを含む場合も扱うことができる．
+
+<P>
+ 
+<A NAME="5.6"></A>
+<H2><A NAME="SECTION00056000000000000000">
+5.6 ガーベジコレクション</A>
+</H2>
+
+<P>
+Lua ではガーベジコレクションを制御するために２つの値を用いる．１つ目の
+値は Lua が使用している動的メモリのバイト数で，２つ目の値はしきい値で
+ある(Lua が管理しているこのバイト数は完全に正確ではない．これは単なる
+下限であり，正確な値との差は通常は 10% 以内である)．このバイト数がし
+きい値を上回ったら，Lua はガーベジコレクションを開始し，「死んだ」オブ
+ジェクト(Lua から参照できないオブジェクト)のメモリ領域を回収する．
+使用メモリのバイト数は修正され，しきい値はこのバイト数の２倍に設定される．
+
+<P>
+ 
+次の関数を用いることで，これらの値を参照できる．
+
+<P>
+ 
+<PRE>
+
+       int  lua_getgccount (lua_State *L);
+       int  lua_getgcthreshold (lua_State *L);
+</PRE>
+
+<P>
+ 
+返り値の単位はキロバイトである．次の関数を用いて，しきい値を変更するこ
+とができる．
+
+<P>
+ 
+<PRE>
+
+       void  lua_setgcthreshold (lua_State *L, int newthreshold);
+</PRE>
+
+<P>
+ 
+<TT> newthreshold</TT> の単位もキロバイトである．この関数を呼ぶと，新しい
+しきい値を設定して，使用メモリのバイト数と比較される．指定したしきい値が
+このバイト数以下の場合にはガーベジコレクションがすぐに実行される．
+実行後に，前述の方法で再びしきい値が設定される．
+
+<P>
+ 
+ガーベジコレクションが使用メモリ量に対して適応的に行われるのを止めたい
+場合には，ガーベジコレクションタグ関数を <B> nil</B> に設定し，自分の指
+定するしきい値を設定すれば良い(このタグ関数は Lua がしきい値を設定する
+際に呼ばれる)．
+
+<P>
+ 
+<A NAME="5.7"></A>
+<H2><A NAME="SECTION00057000000000000000">
+5.7 ユーザデータとタグ</A>
+</H2>
+
+<P>
+ 
+ユーザデータはオブジェクトなので，<TT> lua_pushusertag</TT> 関数は新しい
+ユーザデータを作ることがある．
+
+<P>
+Lua 中に <TT> void *</TT> 型の指定された値とタグを持つユーザデータがあるな
+らば，そのユーザデータがスタックに入れられる．そうでなければ，与えられ
+た値とタグで新しいユーザデータが作られる．<TT> tag</TT> として <TT> 
+  LUA_ANYTAG</TT> が指定された場合は，タグは無視して，指定された値を持つ
+ユーザデータを探す．そのようなユーザデータが無い場合には，タグを 0 と
+して新しいユーザデータが作られる．
+
+<P>
+ 
+ユーザデータは，タグの機能が Lua を組み込んでいるプログラムにしか分か
+らない別のタグを持つことがある．タグは以下の関数で作られる．
+
+<P>
+ 
+<PRE>
+
+       int lua_newtag (lua_State *L);
+</PRE>
+
+<P>
+ 
+<TT> lua_settag</TT> 関数はスタックの一番上のオブジェクトのタグを変更する
+(スタックから取り出さない)．
+
+<P>
+ 
+<PRE>
+
+       void lua_settag (lua_State *L, int tag);
+</PRE>
+
+<P>
+ 
+オブジェクトはユーザデータかテーブルである必要がある．指定された <TT> tag</TT>
+は <TT> lua_newtag</TT> を用いて作られる．
+
+<P>
+ 
+<A NAME="5.8"></A>
+<H2><A NAME="SECTION00058000000000000000">
+5.8 Luaプログラムの実行</A>
+</H2>
+
+<P>
+Lua を組み込んでいるプログラムは，以下の関数を用いてファイルまたは文字
+列の形式の Lua チャンクを実行できる．
+
+<P>
+ 
+<PRE>
+
+       int lua_dofile   (lua_State *L, const char *filename);
+       int lua_dostring (lua_State *L, const char *string);
+       int lua_dobuffer (lua_State *L, const char *buff,
+                         size_t size, const char *name);
+</PRE>
+
+<P>
+ 
+これらの関数は成功した場合は 0 を返し，失敗した場合は以下のエラーコー
+ドの１つを返す(<TT> lua.h</TT> 中で定義されている)．
+
+<P>
+
+<UL>
+<LI><TT> LUA_ERRUN</TT>     - チャンクの実行中のエラー</LI>
+<LI><TT> LUA_ERRSYNTAX</TT> - 事前コンパイル中における構文エラー</LI>
+<LI><TT> LUA_ERRMEM</TT>    - メモリの割付けエラー．これらのエラーにつ
+  いては，<TT> _ERRORMESSAGE</TT> 関数は呼ばれない(<A HREF="#4.7">4.6</A>節参照)．</LI>
+<LI><TT> LUA_ERRFILE</TT>   - ファイルの読み込みエラー(<TT> lua_dofile</TT>
+  のみ)．詳しい原因を調べるには，<TT> errno</TT>を調べるか，<TT> strerror</TT>
+  関数や <TT> perror</TT> 関数を呼ぶ必要がある．</LI>
+</UL>
+
+<P>
+ 
+<TT> lua_dofile</TT> 関数の引数として <TT> NULL</TT> が与えられた場合には，
+標準入力から入力される内容を実行する．
+<TT> lua_dofile</TT> 関数と <TT> lua_dobuffer</TT> 関数は，事前にコンパイルさ
+れたチャンクを実行できる．これらの関数は，チャンクがテキスト形式かバイ
+ナリ形式かを自動的に判別して読み込む(<TT> luac</TT>プログラム参照)．
+<TT> lua_dostring</TT> はテキスト形式のソースプログラムのみを実行できる．
+
+<P>
+ 
+<TT> lua_dobuffer</TT> 関数の３番目の引数には，チャンクの名前を指定する．
+これはエラーメッセージやデバッグ時の情報として用いられる．
+<TT> NULL</TT> が指定された場合には，省略時の名前が用いられる．
+
+<P>
+ 
+これらの関数はチャンクの実行結果の値をスタックに入れる．チャンクは複数
+の値を返す可能性がある．そのような場合はスタックの空きにあうように処理
+されるが，自分の責任で用いるべきである．これらの関数の実行後にスタック
+に他の値を入れる場合は，<TT> lua_stackspace</TT> 関数を用いてスタックの空
+きを調べるか，スタックに入れられた返り値が不要な場合は取り除くのが安全
+である．例えば，以下のプログラムはファイル中のプログラムを読み込んで実
+行し，返り値をすべて取り除き，スタックをプログラムの実行前に戻す．
+
+<P>
+ 
+<PRE>
+
+      {
+       int oldtop = lua_gettop(L);
+       lua_dofile(L, filename);
+       lua_settop(L, oldtop);
+      }
+</PRE>
+
+<P>
+ 
+<A NAME="5.9"></A>
+<H2><A NAME="SECTION00059000000000000000">
+5.9 Luaでの大域変数の扱い</A>
+</H2>
+
+<P>
+ 
+次の関数を用いて，Lua の大域変数の値を得ることができる．
+
+<P>
+ 
+<PRE>
+
+       void lua_getglobal (lua_State *L, const char *varname);
+</PRE>
+
+<P>
+ 
+この関数は，引数で指定された変数の値をスタックに入れる．
+Luaと同様に，この関数は getglobal イベントのタグ関数を呼ぶ
+(<A HREF="#4.8">4.7</A>節参照)．
+タグ関数を呼ぶこと無しに，大域変数の値を知るには，大域変数のテーブルに
+対して <TT> lua_rawget</TT> 関数を用いる(以下参照)．
+
+<P>
+ 
+大域変数に値を設定するには，次の関数を用いる．
+
+<P>
+ 
+<PRE>
+
+       void lua_setglobal (lua_State *L, const char *varname);
+</PRE>
+
+<P>
+ 
+この関数はスタックから値を取り出し，それを大域変数の値に設定する．
+Luaと同様に，この関数は setglobal イベントのタグ関数を呼ぶ(<A HREF="#4.8">4.7</A>節参照)．
+タグ関数を呼ぶこと無しに，大域変数の値を設定するには，大域変数のテーブルに
+対して <TT> lua_rawget</TT> 関数を用いる．
+
+<P>
+ 
+大域変数は全て Lua の通常のテーブルとして保持されており，
+そのテーブルは次の関数で得ることができる．
+
+<P>
+ 
+<PRE>
+
+       void lua_getglobals (lua_State *L);
+</PRE>
+
+<P>
+ 
+この関数は現在の大域変数のテーブルをスタックに入れる．
+大域変数のテーブルを指定のテーブルで置き換えるには，以下の関数を用いる．
+
+<P>
+ 
+<PRE>
+
+       void lua_setglobals (lua_State *L);
+</PRE>
+
+<P>
+ 
+この関数はスタックからテーブルを取り出し，新しい大域変数のテーブルとして
+設定する．
+
+<P>
+ 
+<A NAME="5.10"></A>
+<H2><A NAME="SECTION000510000000000000000">
+5.10 Luaでのテーブルの扱い</A>
+</H2>
+
+<P>
+Lua のテーブルも，APIを通して扱うことができる．
+
+<P>
+ 
+テーブル中の値を読むためには，スタック中にテーブルを置いて次の関数を呼ぶ．
+ここで <TT> index</TT> はテーブルを参照する変数である．
+
+<P>
+ 
+<PRE>
+
+       void lua_gettable (lua_State *L, int index);
+</PRE>
+
+<P>
+ 
+<TT> lua_gettable</TT> はスタックからキーを取り出し，キーで参照されるテー
+ブルの中身をスタックに入れる．
+Lua と同様に，この操作は gettable イベントのタグ関数を呼ぶ．
+タグ関数を呼ぶこと無しにキーで参照されるテーブル中の値を知るには，
+以下の ``raw'' の関数を用いる．
+
+<P>
+ 
+<PRE>
+
+       void lua_rawget (lua_State *L, int index);
+</PRE>
+
+<P>
+ 
+スタック中に存在するテーブルに値を格納するには，キーと値を(この順に)ス
+タックに入れ，以下の関数を実行する．
+
+<P>
+ 
+<PRE>
+
+       void lua_settable (lua_State *L, int index);
+</PRE>
+
+<P>
+ 
+ここで <TT> index</TT> はスタック中のテーブルの位置を示す．
+<TT> lua_settable</TT> はスタックからキーと値を取り出す．
+Lua と同様に，この操作は settable イベントのタグ関数を呼ぶ．
+タグ関数を呼ぶこと無しにテーブル中のキーで示される位置に値を代入する
+には，以下の ``raw'' の関数を用いる．
+
+<P>
+ 
+<PRE>
+
+       void lua_rawset (lua_State *L, int index);
+</PRE>
+
+<P>
+ 
+最後に，以下の関数は新しく空のテーブルを作り，スタックに入れる．
+
+<P>
+ 
+<PRE>
+
+       void lua_newtable (lua_State *L);
+</PRE>
+
+<P>
+ 
+<A NAME="5.11"></A>
+<H2><A NAME="SECTION000511000000000000000">
+5.11 テーブルを配列として用いる</A>
+</H2>
+
+<P>
+ 
+以下の関数を用いることで，Lua のテーブルを配列として扱うことができる．
+配列とは数値のみで索引づけされるテーブルである．
+
+<P>
+ 
+<PRE>
+
+       void lua_rawgeti (lua_State *L, int index, int n);
+       void lua_rawseti (lua_State *L, int index, int n);
+       int  lua_getn    (lua_State *L, int index);
+</PRE>
+
+<P>
+ 
+<TT> lua_rawgeti</TT> 関数は，<TT> index</TT> で示される位置にあるテーブルの
+<I> n</I> 番目の要素を取り出す．
+
+<P>
+ 
+<TT> lua_rawseti</TT> 関数は，<TT> index</TT> で示される位置にあるテーブルの
+<I> n</I> 番目に，スタックの一番上の値を入れる．
+
+<P>
+ 
+<TT> lua_getn</TT> は <TT> index</TT> で示される位置にあるテーブルの要素の数
+を返す．この要素数は，テーブルのフィールド <TT> n</TT> の値(数値の値を持つ
+場合)である．そうでないときは，テーブル中で nil でない値を持つ最も大き
+い数値のインデクスである．
+
+<P>
+ 
+<A NAME="5.12"></A>
+<H2><A NAME="SECTION000512000000000000000">
+5.12 Luaの関数を呼ぶ</A>
+</H2>
+
+<P>
+Lua 中で定義された関数(および Lua中で登録された C 言語の関数)は，以下
+の手順で Lua を組み込んだプログラムからも呼ぶことができる．はじめに，
+呼びたい関数をスタックに入れる．次に，関数への引数を<I> 順番</I>に(１つ目
+の引数を１番最初に)スタックへ入れる(<A HREF="#5.5">5.4</A>節参照)．最後に，以下の関数
+を実行する．
+
+<P>
+ 
+<PRE>
+
+       int lua_call (lua_State *L, int nargs, int nresults);
+</PRE>
+
+<P>
+ 
+この関数は <TT> lua_dostring</TT> と同じエラー番号を返す(<A HREF="#5.8">5.7</A>節参照)．
+エラー番号を返すのではなくエラーを伝搬させたい場合は，次の関数を呼ぶ．
+
+<P>
+ 
+<PRE>
+
+       void lua_rawcall (lua_State *L, int nargs, int nresults);
+</PRE>
+
+<P>
+ 
+これらの関数で，<TT> nargs</TT> はスタックに入れた引数の数である．すべての
+引数と関数はスタックから降ろされ，実行結果がスタックに入れられる．実行
+結果の数は <TT> nresults</TT> に調整される(<A HREF="#4.3">4.2</A>節参照)．ただし，
+<TT> nresults</TT> が <TT> LUA_MULTRET</TT>に等しい場合は，<I> すべて</I>の実行結果
+がスタックに入れられる．実行結果は順番に(１つ目の結果が１番最初に)スタッ
+クに入れられ，最終的には最後の結果がスタックの一番上となる．
+
+<P>
+Lua を組み込むプログラムで以下の Lua の関数呼び出しと等価の処理を行う例を示す．
+
+<P>
+ 
+<PRE>
+
+      a,b = f("how", t.x, 4)
+</PRE>
+
+<P>
+C では，以下のようになる．
+
+<P>
+ 
+<PRE>
+
+    lua_getglobal(L, "t");                /* 大域変数 t (後で用いる) */
+    lua_getglobal(L, "f");                           /* 実行する関数 */
+    lua_pushstring(L, "how");                        /* １番目の引数 */
+    lua_pushstring(L, "x");                     /* 文字列 `x' を積む */
+    lua_gettable(L, -4);        /* t.x の実行結果を積む(2番目の引数) */
+    lua_pushnumber(L, 4);                            /* ３番目の引数 */
+    lua_call(L, 3, 2);       /* 引数が３つ，返り値が２つの関数を実行 */
+    lua_setglobal(L, "b");                      /* 大域変数 b を設定 */
+    lua_setglobal(L, "a");                      /* 大域変数 a を設定 */
+    lua_pop(L, 1);                         /* t をスタックから降ろす */
+</PRE>
+
+<P>
+ 
+注意: このプログラムは，実行後のスタックの状態は実行前の状態と同じであ
+り，「収支があっている」と言われる．これは良いプログラムの例である．
+
+<P>
+Lua のいくつかの関数は，独自の C 言語インタフェースを持つ．次の関数を 
+C のプログラム中で実行すると，Lua でのエラーが発生する．
+
+<P>
+ 
+<PRE>
+
+      void lua_error (lua_State *L, const char *message);
+</PRE>
+
+<P>
+ 
+この関数を実行しても処理は戻らない．Lua から実行された C のプログラム
+中で <TT> lua_error</TT> が実行された場合は，Lua のプログラム中でエラーが
+起こった場合と同様に Lua の実行が終了する．そうでなければ，
+<TT> ext(EXIT_FAILURE)</TT> が呼びだされ，プログラムは終了する．終了する
+前に，<TT> message</TT> はエラー処理関数 <TT> _ERRORMESSAGE</TT> に渡される
+(<A HREF="#4.7">4.6</A>節参照)．<TT> message</TT> が NULL の場合は，<TT> _ERRORMESSAGE</TT> 
+は実行されない．
+
+<P>
+ 
+タグ関数は，以下の関数で変更することができる．
+
+<P>
+ 
+<PRE>
+
+      void lua_settagmethod (lua_State *L, int tag, const char *event);
+</PRE>
+
+<P>
+ 
+２番目の引数はタグを指定し，３番目の引数ではイベント名(<A HREF="#4.8">4.7</A>節参照)
+を指定する．新しいタグ関数がスタックから降ろされ，古いタグ関数が入れら
+れる．現在のタグ関数を得たい場合には，以下の関数を用いる．
+
+<P>
+ 
+<PRE>
+
+      void lua_gettagmethod (lua_State *L, int tag, const char *event);
+</PRE>
+
+<P>
+ 
+タグの間ですべてのタグ関数を複製するには，以下の関数を用いる．
+
+<P>
+ 
+<PRE>
+
+      int lua_copytagmethods (lua_State *L, int tagto, int tagfrom);
+</PRE>
+
+<P>
+ 
+この関数は <TT> tagto</TT> を返す．
+
+<P>
+ 
+テーブルの要素を順に見るには，以下の関数を用いる．
+
+<P>
+ 
+<PRE>
+
+       int lua_next (lua_State *L, int index);
+</PRE>
+
+<P>
+ 
+<TT> index</TT> は対象となるテーブルの位置を示す．この関数はスタックからキー
+を取り出し，次のキーと値の対をスタックに入れる．テーブルの要素が尽きる
+と，この関数は 0 を返す(スタックには何も入れない)．例えば以下のように
+用いる．
+
+<P>
+ 
+<PRE>
+
+       /* テーブルはスタック中のインデクス t で示される位置にある */
+       lua_pushnil(L);  /* １つ目のキー */
+       while (lua_next(L, t) != 0) {
+         /* key は位置 -2 にあり，value は位置 -1 にある */
+         printf("%s - %s\n",
+           lua_typename(L, lua_type(L, -2)), lua_typename(L, lua_type(L, -1)));
+         lua_pop(L, 1);  /* value を取り除く．次回の繰り返しのため，index はそのまま */
+       
+       }
+</PRE>
+
+<P>
+ 
+以下の関数はスタックのはじめの <TT> n</TT> 個を取り出し，接続した結果をス
+タックに入れる．
+
+<P>
+ 
+<PRE>
+
+       void lua_concat (lua_State *L, int n);
+</PRE>
+
+<P>
+ 
+<TT> n</TT> は少なくとも 2 でなければならない．
+接続は Lua の通常の方法で行われる(<A HREF="#4.5.5">4.5.4</A>節参照)．
+
+<P>
+ 
+<A NAME="5.13"></A>
+<H2><A NAME="SECTION000513000000000000000">
+5.13 Cの関数を定義する</A>
+</H2>
+
+<P>
+C 言語の関数を Lua に登録するには，以下のマクロが便利である．
+
+<P>
+ 
+<PRE>
+
+       #define lua_register(L, n, f) (lua_pushcfunction(L, f), lua_setglobal(L, n))
+       /* const char *n;   */
+       /* lua_CFunction f; */
+</PRE>
+
+<P>
+Lua 中でのその関数の名前と，関数へのポインタを引数に指定する．
+このポインタは <TT> lua_CFunction</TT> 型である必要がある．
+<TT> lua_CFunction</TT> 型は以下のように定義される．
+
+<P>
+ 
+<PRE>
+
+       typedef int (*lua_CFunction) (lua_State *L);
+</PRE>
+
+<P>
+ 
+これは Lua 環境を引数とし，返り値が整数であるような関数へのポインタで
+ある．
+
+<P>
+Lua の操作を正しく行うためには，C の関数は次の規則に従って引数と
+結果を扱う必要がある．C の関数がスタック上で Lua から引数を受け取る際
+には，引数の順にスタックに入れられる(１番目の引数が１番最初に)入れられ
+る．Lua に値を返す際には，値を順にスタックに入れ，値の数を返り値とする．
+Lua の関数と同様に，Lua から呼ばれた C の関数も複数の値を返すことがで
+きる．
+
+<P>
+ 
+例として，以下の関数は可変の数の数値を引数として，それらの平均と合計を
+返す．
+
+<P>
+ 
+<PRE>
+
+       static int foo (lua_State *L) {
+         int n = lua_gettop(L);    /* 引数の数 */
+         double sum = 0;
+         int i;
+         for (i = 1; i &lt;= n; i++) {
+           if (!lua_isnumber(L, i))
+             lua_error(L, "incorrect argument to function `average'");
+           sum += lua_tonumber(L, i);
+         }
+         lua_pushnumber(L, sum/n);        /* １番目の結果 */
+         lua_pushnumber(L, sum);          /* ２番目の結果 */
+         return 2;                            /* 結果の数 */
+       }
+</PRE>
+
+<P>
+ 
+この関数を `<TT> average</TT>' という名前の Lua の関数として登録するには，
+次のようにする．
+
+<P>
+ 
+<PRE>
+
+       lua_register(L, "average", foo);
+</PRE>
+
+<P>
+C の関数が作られたとき，<I> 上位値</I>を対応づけることができ(<A HREF="#4.7">4.6</A>節参
+照)， C <I> 閉包</I> を形成する．それらの値は関数が呼ばれる際に，共通の引
+数として関数に渡される．upvalue を C の関数に対応づけるには，それらの
+値をスタックに入れ，次の関数を用いて C の関数をスタックに入れる．
+
+<P>
+ 
+<PRE>
+
+       void lua_pushcclosure (lua_State *L, lua_CFunction fn, int n);
+</PRE>
+
+<P>
+ 
+ここで <TT> n</TT> は対応づけられる上位値の数である．<TT> n</TT> 個の値がスタッ
+クから取り出される．<TT> lua_pushcfunction</TT> は  <TT> 
+  lua_pushcclosure</TT> で <TT> n</TT> を 0 にすることで定義している．実際に 
+C の関数が呼ばれたときには，呼び出し時に与えられた引数の後に，対応づけ
+られた upvalue が<I> 最後</I>の引数として挿入される．これにより，関数は上
+位値を受け取る際に，引数の数を気にする必要がなくなる(Lua の関数は任意
+の数の引数を受け取れることに注意)．<I> i</I> 番目の上位値は，<I> n</I> を
+上位値の数として，スタックの位置 <I> i-n+1</I> にある．
+
+<P>
+C の関数と閉包の例は，Lua が配布された際に含まれるファイル 
+<TT> baselib.c</TT>，<TT> liolib.c</TT>，<TT> lmathlib.c</TT>，<TT> lstrlib.c</TT> を
+参照せよ．
+
+<P>
+ 
+<A NAME="5.14"></A>
+<H2><A NAME="SECTION000514000000000000000">
+5.14 Lua オブジェクトの参照</A>
+</H2>
+
+<P>
+C 言語のプログラム中で，Lua の値を関数の生存期間を越えて保持する必要が
+ある場合は，値への<I> 参照</I>を作る必要がある．参照を扱う関数としては，
+次のものがある．
+
+<P>
+ 
+<PRE>
+
+       int   lua_ref    (lua_State *L, int lock);
+       int   lua_getref (lua_State *L, int ref);
+       void  lua_unref  (lua_State *L, int ref);
+</PRE>
+
+<P>
+ 
+<TT> lua_ref</TT>はスタックから値を取り出し，その値への参照を生成して返す．
+<B> nil</B> という値への参照は常に <TT> LUA_REFNIL</TT> である．定数  <TT> 
+  LUA_NOREF</TT>は正しい参照のどれとも異なる．<TT> lock</TT> が true であれば，
+そのオブジェクトは<I> 固定され</I>，ガーベジコレクションの対象にはならな
+い．<I> 固定されていない参照はガーベジコレクションの対象となる</I>．
+
+<P>
+C 言語中で参照されるオブジェクトが必要になったときは，<TT> 
+  lua_getref</TT> 関数を実行すればオブジェクトがスタックに入れられる．オ
+ブジェクトがガーベジコレクトされた場合には，<TT> lua_getref</TT> は 0  を
+返し，スタックには何も入れられない．
+
+<P>
+ 
+参照が不要になった時には，<TT> lua_unref</TT> で解放する必要がある．
+
+<P>
+
+<H2><A NAME="SECTION000515000000000000000">
+レジストリ</A>
+</H2>
+
+<P>
+Lua が起動したときには，<TT> LUA_REFREGISTRY</TT> で示される位置にテーブ
+ルを登録する．このテーブルを操作するには次のマクロを用いる．
+
+<P>
+ 
+<PRE>
+
+       #define lua_getregistry(L)      lua_getref(L, LUA_REFREGISTRY)
+</PRE>
+
+<P>
+ 
+このテーブルは一般的なレジストリ操作の方法で C ライブラリによって操作
+できる．どの C ライブラリもこのテーブルにデータを保存できる．ただし
+他のライブラリとキーが異なる必要がある．
+
+<P>
+ 
+<A NAME="6"></A>
+<H1><A NAME="SECTION00060000000000000000">
+6. 標準ライブラリ</A>
+</H1>
+
+<P>
+ 
+標準ライブラリが提供するのは，標準 API を直接用いて実装された有用な関
+数群である．従って言語そのものにとって必須ではなく，独立した C のモジュー
+ルとして提供される．現在，Lua には以下の標準ライブラリがある．
+
+<P>
+
+<UL>
+<LI>基本ライブラリ</LI>
+<LI>文字列操作</LI>
+<LI>数学関数 (sin, log など)</LI>
+<LI>入出力 (およびシステム関係の機能).</LI>
+</UL>
+
+<P>
+ 
+これらのライブラリを利用するためには，C のプログラムは初めに
+<TT> lua_baselibopen</TT>，<TT> lua_strlibopen</TT>，<TT> lua_mathlibopen</TT>，
+<TT> lua_iolibopen</TT> を実行する必要がある．これらの関数は 
+<TT> lualib.h</TT> 中で定義されている．
+
+<P>
+ 
+<A NAME="6.1"></A>
+<H2><A NAME="SECTION00061000000000000000">
+6.1 基本関数</A>
+</H2>
+
+<P>
+ 
+基本ライブラリは Lua にいくつかの重要な機能を提供する．従って基本ライ
+ブラリを利用しない応用ソフトウェアを作成する場合は，これらの機能の代用
+を何らかの形で提供する必要がないか，注意する必要がある
+(例えば <TT> _ERRORMESSAGE</TT>関数が無ければ，Lua は エラーメッセージを
+表示できない)．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> _ALERT (message)</TT>
+</DIV>
+
+<P>
+ 
+引数の文字列を標準エラー出力に出力する．Lua のすべてのエラーメッセーは
+この大域変数 <TT> _ALERT</TT> に代入された関数を通して出力される
+(<A HREF="#4.7">4.6</A>節参照)．
+この変数に他の関数を対応づけることにより，メッセージの出力方法を変える
+ことができる(例えば標準エラー出力が無いシステム等)．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> assert (v [, message])</TT>
+</DIV>
+
+<P>
+ 
+<TT> v</TT> が <B> nil</B> の場合には，"assertion failed" のエラーを生じる．
+この関数は以下の Lua 関数と等価である．
+
+<P>
+ 
+<PRE>
+
+      function assert (v, m)
+         if not v then
+           m = m or ""
+           error("assertion failed!  " .. m)
+         end
+       end
+</PRE>
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> call (func, arg [, mode [, errhandler]])</TT>
+</DIV>
+
+<P>
+ 
+関数 <TT> func</TT> をテーブル <TT> arg</TT> で与えられる引数で呼び出す．
+この呼び出しは以下と等価である．
+
+<P>
+ 
+<PRE>
+
+       func(arg[1], arg[2], ..., arg[n])
+</PRE>
+
+<P>
+ 
+ここで <TT> n</TT> は <TT> getn(arg)</TT> の結果である(<A HREF="#6.1">6</A>節参照)．
+<TT> call</TT> は <TT> func</TT> のすべての実行結果を返す．
+
+<P>
+ 
+初期設定では，<TT> func</TT> の呼び出しにエラーが生じた場合には，エラーは
+伝搬する．文字列 <TT> mode</TT> が "x" を含む場合には，この呼び出しは<I> 保護</I>されており，呼び出し中に何が起こっても  <TT> call</TT> はエラーを伝
+搬しない．代わりにエラーが起こったことを知らせるために<B> nil</B> を返す
+(適当なエラー処理関数を呼ぶ場合を除く)．
+
+<P>
+ 
+<TT> errhandler</TT> が与えられた場合には，<TT> func</TT> を実行している間は
+エラー関数 <TT> _ERRORMESSAGE</TT> が一時的に <TT> errhandler</TT> に設定され
+る．特に <TT> errhandler</TT> が <B> nil</B> の場合には，関数の呼び出し中に
+エラーメッセージは出されない．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> collectgarbage ([limit])</TT>
+</DIV>
+
+<P>
+ 
+ガーベジコレクションのしきい値を指定の値に設定し(キロバイト単位)，Lua 
+が現在使用している動的メモリのバイト数と比較される．指定したしきい値がこ
+のバイト数以下の場合にはガーベジコレクションがすぐに実行される
+(<A HREF="#5.6">5.5</A>節参照)．<TT> limit</TT> が省略された場合は 0 となり，ガーベジコレ
+クションが強制的に実行される．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> copytagmethods (tagto, tagfrom)</TT>
+</DIV>
+
+<P>
+ 
+あるタグから別のタグへすべての関数を複製する．<TT> tagto</TT> を返す．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> dofile (filename)</TT>
+</DIV>
+
+<P>
+ 
+引数で指定されるファイルを開き，Lua のプログラムかまたは事前コンパイル
+済のプログラムとして実行する．引数が与えられない場合には，標準入力
+の内容を実行する．ファイルの実行中にエラーが生じた場合には，
+<TT> dofile</TT> は <B> nil</B> を返す．エラーが無かった場合には，プログラムの
+実行結果を返す．プログラムが値を返さない場合には，<TT> nil</TT> でない値を
+返す．引数が文字列以外の場合にはエラーとなる．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> dostring (string [, chunkname])</TT>
+</DIV>
+
+<P>
+ 
+引数で指定される文字列を Lua のプログラムとして実行する．
+実行中にエラーが生じた場合には，<TT> dostring</TT> は <B> nil</B> を返す．
+エラーが無かった場合には，プログラムの実行結果を返す．プログラム
+が値を返さない場合には，<TT> nil</TT> でない値を返す．
+任意の引数 <TT> chunkname</TT> はチャンクの名前であり，エラーメッセー
+ジやデバッグ時の情報として使用される．
+<TT> dostring</TT> は API 関数 <TT> lua_dostring</TT> と等価である．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> error (message)</TT>
+</DIV>
+
+<P>
+ 
+エラー処理関数を呼び出し(<A HREF="#4.7">4.6</A>節参照)，
+最後に呼ばれた保護された関数
+(C 言語では <TT> lua_dofile</TT>，<TT> lua_dostring</TT>，
+<TT> lua_dobuffer</TT>，<TT> lua_callfunction</TT>．
+Luaでは <TT> dofile</TT>，<TT> dostring</TT>，保護モードでの <TT> call</TT>).
+を終了させる．
+<TT> message</TT> が <B> nil</B> の場合には，エラー処理関数は呼ばれない．
+関数 <TT> error</TT> を呼び出すと処理は戻らない．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> foreach (table, func)</TT>
+</DIV>
+
+<P>
+ 
+指定された関数 <TT> func</TT> を <TT> table</TT> の各要素に対して実行する．
+関数はインデクスと要素の値を引数として実行される．関数が <B> nil</B>
+でない値を返した場合は，繰り返しはそこで終了し，その値が <TT> foreach</TT>
+の返り値になる．
+
+<P>
+Lua の関数として以下のように定義することもできる．
+
+<P>
+ 
+<PRE>
+
+      function foreach (t, f)
+         for i, v in t do
+           local res = f(i, v)
+           if res then return res end
+         end
+       end
+</PRE>
+
+<P>
+ 
+テーブル <TT> _t</TT> を途中で変更した場合の <TT> foreach</TT> の振舞いは 
+<I> 未定義</I>である．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> foreachi (table, func)</TT>
+</DIV>
+
+<P>
+ 
+指定された関数 <TT> func</TT> を <TT> table</TT> の各数値のインデクスに対して
+実行する．関数はインデクスと対応する要素の値を引数として実行される．
+インデクスは 1 から <TT> n</TT> まで順番に用いられる．ここで <TT> n</TT> は
+<TT> getn(table)</TT> の返り値である(<A HREF="#6.1">6</A>節参照)．
+関数が <B> nil</B>でない値を返した場合は，繰り返しはそこで終了し，その値
+が <TT> foreachi</TT> の返り値になる．
+Lua の関数として以下のように定義することもできる．
+
+<P>
+ 
+<PRE>
+
+       function foreachi (t, f)
+         for i=1,getn(t) do
+           local res = f(i, t[i])
+           if res then return res end
+         end
+       end
+</PRE>
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> getglobal (name)</TT>
+</DIV>
+
+<P>
+ 
+大域変数の値を得るか，または getglobal タグ関数を呼び出す．
+<A HREF="#4.8">4.7</A>節で詳しく説明する．文字列 <TT> name</TT> は構文的に
+正しい変数名でなくてもよい．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> getn (table)</TT>
+</DIV>
+
+<P>
+ 
+テーブルをリストと見なしたときの大きさを返す．
+テーブルの <TT> n</TT> フィールドが数値の場合，その値が返される．そうでな
+ければ，テーブル中で nil 以外の要素に対応する最大の数値インデクスが
+返される．Lua の関数として以下のように定義することも可能である．
+
+<P>
+ 
+<PRE>
+
+       function getn (t)
+         if type(t.n) == "number" then return t.n end
+         local max = 0
+         for i, _ in t do
+           if type(i) == "number" and i&gt;max then max=i end
+         end
+         return max
+       end
+</PRE>
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> gettagmethod (tag, event)</TT>
+</DIV>
+
+<P>
+ 
+引数で指定される (タグ，イベント) に対応するタグ関数を返す．
+この関数は gc イベントに対応するタグ関数を得るために用いることはできな
+い(それらのタグ関数は C 言語からのみ操作できる)．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> globals ([table])</TT>
+</DIV>
+
+<P>
+ 
+現在の大域変数のテーブルを返す．引数 <TT> table</TT> を指定した場合は，
+さらにそのテーブルを大域変数のテーブルに設定する．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> newtag ()</TT>
+</DIV>
+
+<P>
+ 
+新しいタグを返す．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> next (table, [index])</TT>
+</DIV>
+
+<P>
+ 
+指定されたテーブルのフィールドを順番に得る．１番目の引数はテーブル，２
+番目の引数はそのテーブルのインデクスを指定する．<TT> next</TT> はテーブル
+の次のインデクスと対応する要素を返す．２番目の引数として <B> nil</B> が
+指定された場合には，テーブルの最初のインデクスと対応する要素を返す．テー
+ブルの最後のインデクスが指定された場合や空のテーブルで <B> nil</B> が
+指定された場合には，<B> nil</B> を返す．２番目の引数が指定されない場合は
+<B> nil</B> とされる
+
+<P>
+Lua にはフィールドの宣言が無く，テーブル中に存在しないフィールドと
+<B> nil</B> を値として持つフィールドは同様に扱われる．したがって，
+<TT> next</TT> は <B> nil</B> でない値を持つフィールドのみ扱うことができる．
+インデクスを取り出す順序は規定されていない．これは
+<I> インデクスが数値であっても同様である</I>
+(数値順に取り出したい場合には，数値用の <B> for</B> または 
+<TT> foreachi</TT> 関数を用いよ)．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> print (e1, e2, ...)</TT>
+</DIV>
+
+<P>
+ 
+任意個の引数について，<TT> tostring</TT> で返される値を表示する．
+この関数は形式を指定した表示ではなく，デバッグ等のために素早く値を表示
+するための関数である．表示形式の指定については<A HREF="#6.4">6.3</A>節を参照せよ．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> rawget (table, index)</TT>
+</DIV>
+
+<P>
+ 
+タグ関数を呼ぶこと無しに <TT> table[index]</TT> の値を得る．
+<TT> table</TT> はテーブル，<TT> index</TT> は <B> nil</B> 以外の値を指
+定する．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> rawset (table, index, value)</TT>
+</DIV>
+
+<P>
+ 
+タグ関数を呼ぶこと無しに，<TT> table[index]</TT> の値を <TT> value</TT> に設定
+する．<TT> table</TT> はテーブル，<TT> index</TT> は <B> nil</B> 以外の値，
+<TT> value</TT> は任意の Lua における値を指定する．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> setglobal (name, value)</TT>
+</DIV>
+
+<P>
+ 
+指定された名前の大域変数を指定された値に設定するか，setglobal タグ関数
+が呼ばれる．詳しい説明は <A HREF="#4.8">4.7</A>節 で述べる．
+文字列 <TT> name</TT> は構文的に正しい変数名でなくてもよい．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> settag (t, tag)</TT>
+</DIV>
+
+<P>
+ 
+指定されたテーブルのタグを設定する(<A HREF="#3">2</A>節参照)．
+<TT> tag</TT> は <TT> newtag</TT> 関数で生成された値を指定する
+(<A HREF="#6.1">6</A>節参照)．この関数は１番目の引数(テーブル)の値を返す．
+Lua を組み込むプログラムの安全のため，Lua 中のユーザデータのタグを
+変更することはできない．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> settagmethod (tag, event, newmethod)</TT>
+</DIV>
+
+<P>
+ 
+指定された (タグ，イベント) に対して新しいタグ関数を設定し，古いタグ関
+数を返す．<TT> newmethod</TT> が <B> nil</B> の場合には，指定されたイベント
+に対する初期設定時の振舞いに戻す．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> sort (table [, comp])</TT>
+</DIV>
+
+<P>
+ 
+テーブル中の要素を <TT> table[1]</TT> から <TT> table[n]</TT> まで指定された順
+序に<TT> その場で</TT>並べかえる． 
+ここで <TT> n</TT> は <TT> getn(table)</TT> の返り値である(<A HREF="#6.1">6</A>節参照)
+<TT> comp</TT> を指定する場合には，テーブル中の２つの要素を引数とし，
+１つ目の要素が２つ目より小さいとき真(<B> nil</B> 以外の値)を返す関数とす
+る(よって並べかえ後には <TT> not comp(a[i+1], a[i])</TT> が真となる)．
+<TT> comp</TT> が指定されない場合には，Lua の演算子 <TT><code><</code></TT> が用いられる．
+
+<P>
+ 
+並べかえのアルゴリズムは安定ではない(指定された順序で等しいとされた要
+素の前後関係は，並べかえ後に保存されない)．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> tag (v)</TT>
+</DIV>
+
+<P>
+ 
+値のタグを得る(<A HREF="#3">2</A>節参照)．１つの引数を指定し，タグ(１つの数値)を
+返す．<TT> tag</TT> は API 関数の <TT> lua_tag</TT> と等価である．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> tonumber (e [, base])</TT>
+</DIV>
+
+<P>
+ 
+指定された引数の数値への変換を試みる．引数が数値または数値と互換性のあ
+る文字列の場合は，その数値を返す．そうでなければ <B> nil</B>を返す．
+
+<P>
+ 
+任意の引数 <TT> base</TT> は，数値の基数を指定する．
+基数は 2 以上 36 以下の任意の整数である．
+10 以上の基数の場合には，A (大文字，小文字どちらも可)が 10 を表し，
+B が 11 を表し，以下同様である．Z は 35 を表す．
+
+<P>
+ 
+基数が 10 の場合(<TT> base</TT> を省略した場合)には，指数部があっても良い
+(<A HREF="#4.2">4.1</A>節参照)．他の基数の場合には，符合無し整数のみを扱うことができる．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> tostring (e)</TT>
+</DIV>
+
+<P>
+ 
+任意の型の引数を指定し，通常の方法で文字列に変換する．
+数値を文字列に変換する方法を細かく指定する場合には，<TT> format</TT> 関数
+を用いよ．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> tinsert (table [, pos] , value)</TT>
+</DIV>
+
+<P>
+ 
+要素 <TT> value</TT> をテーブルの位置 <TT> pos</TT> に挿入する．必要に応じて
+他の要素を空いている位置へずらす．
+<TT> n</TT> を <TT> getn(table)</TT> の返り値としたとき，
+指定されない場合の <TT> pos</TT> は <TT> n+1</TT> とされ(<A HREF="#6.1">6</A>節参照)，
+<TT> tinsert(t,x)</TT> は <TT> x</TT> をテーブル <TT> t</TT> の最後に挿入する．
+この関数はテーブルの <TT> n</TT> フィールドを <TT> n+1</TT> に設定する．
+テーブルの要素の参照が <TT> raw</TT> (タグ関数が呼ばれない) ことを除き，
+<TT> tinsert</TT> は以下の Lua 関数と等価である．
+
+<P>
+ 
+<PRE>
+
+       function tinsert (t, ...)
+         local pos, value
+         local n = getn(t)
+         if arg.n == 1 then
+           pos, value = n+1, arg[1]
+         else
+           pos, value = arg[1], arg[2]
+         end
+         t.n = n+1;
+         for i=n,pos,-1 do
+           t[i+1] = t[i]
+         end
+         t[pos] = value
+       end
+</PRE>
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> tremove (table [, pos])</TT>
+</DIV>
+
+<P>
+ 
+テーブル <TT> table</TT> から位置 <TT> pos</TT> の要素を除く．
+必要に応じて他の要素を空いた位置へずらす．
+<TT> n</TT> を <TT> getn(table)</TT> の返り値としたとき，
+指定されない場合の <TT> pos</TT> は <TT> n+1</TT> とされ(<A HREF="#6.1">6</A>節参照)，
+<TT> tremove(t)</TT> はテーブル <TT> t</TT> の最後の要素を削除する．
+この関数はテーブルの <TT> n</TT> フィールドを <TT> n-1</TT> に設定する．
+
+<P>
+ 
+テーブルの要素の参照が <TT> raw</TT> (タグ関数が呼ばれない) ことを除き，
+<TT> tremove</TT> は以下の Lua 関数と等価である．
+
+<P>
+ 
+<PRE>
+
+       function tremove (t, pos)
+         local n = getn(t)
+         if n&lt;=0 then return end
+         pos = pos or n
+         local value = t[pos]
+         for i=pos,n-1 do
+           t[i] = t[i+1]
+         end
+         t[n] = nil
+         t.n = n-1
+         return value
+       end
+</PRE>
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> type (v)</TT>
+</DIV>
+
+<P>
+ 
+値 <TT> v</TT> の型を文字列として返す．
+この関数の返り値は，
+<TT> "nil"</TT>(<B> nil</B> という値ではなく文字列),
+<TT> "number"</TT>，<TT> "string"</TT>， <TT> "table"</TT>， <TT> "function"</TT>，
+<TT> "userdata"</TT>のいずれかである．
+
+<P>
+ 
+<A NAME="6.2"></A>
+<H2><A NAME="SECTION00062000000000000000">
+6.2 文字列の操作</A>
+</H2>
+
+<P>
+ 
+このライブラリは，部分文字列の発見や抽出やパターンマッチ等，文字列の一
+般的な操作を提供する．文字列のインデクスは C 言語とは異なり，はじめの
+文字のインデクスは 1 である．またインデクスが負の場合は文字列の最後か
+ら逆方向に数える．インデクス -1 は最後の文字を表す．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> strbyte (s [, i])</TT>
+</DIV>
+
+<P>
+ 
+文字 <TT> s</TT> の <I> i</I> 番目の文字の内部数値コードを返す．
+<TT> i</TT> が指定されないときには 1 とされる．
+<TT> i</TT> は負でもよい．
+
+<P>
+ 
+注意: 内部数値コードは処理系に依存して異なる場合がある．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> strchar (i1, i2, ...)</TT>
+</DIV>
+
+<P>
+0 以上の個数の整数を引数に指定し，各引数を内部数値コードとする文字から
+なる文字列を返す．
+
+<P>
+ 
+注意: 内部数値コードは処理系に依存して異なる場合がある．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> strfind (s, pattern [, init [, plain]])</TT>
+</DIV>
+
+<P>
+ 
+<TT> s</TT> 中で <TT> pattern</TT> に最初に<I> マッチ</I>する部分文字列を検索する．
+見つかった場合には，<TT> s</TT> 中の開始位置と終了位置を返す．見つからなけ
+れば <B> nil</B> を返す．パターンがキャプチャ(以下の <TT> gsub</TT> 関数を参
+照)を含む場合には，キャプチャにマッチした文字列も返り値に追加される．
+３番目の引数 <TT> init</TT> は検索をどの位置から始めるか指定する．
+<TT> init</TT> は負であってもよく，指定がない場合は 1 が用いられる．
+４番目の引数に 1 を指定すると，パターンマッチを行わず，単なる部分文字
+列の検索を行う．その際には <TT> pattern</TT> 中のどの文字も特殊文字として
+扱われない．<TT> plain</TT> を指定する時には <TT> init</TT> は省略できないこと
+に注意．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> strlen (s)</TT>
+</DIV>
+
+<P>
+ 
+指定された文字列の長さを返す．空文字列 "" の長さは 0 である．文字列中
+の埋め込まれたゼロも長さに数えられ，<TT><code>"a\\000b\\000c"</code></TT> の長
+さは 5 になる．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> strlower (s)</TT>
+</DIV>
+
+<P>
+ 
+指定された文字列中を複製し，文字列中の大文字を小文字に変換して返す．
+その他の文字は変更されない．大文字の定義はロカールに依存する．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> strrep (s, n)</TT>
+</DIV>
+
+<P>
+ 
+文字列 s の複製を n 個接続した文字列を返す．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> strsub (s, i [, j])</TT>
+</DIV>
+
+<P>
+ 
+文字列 <TT> s</TT> の位置 <TT> i</TT> から <TT> j</TT> までの部分文字列の複製を返
+す．<TT> i</TT> および <TT> j</TT> は負でもよい．<TT> j</TT> が指定されない場合は，
+-1 とされる(文字列の長さが指定されたのと同じ)．特に，
+<TT> strsub(s,1,j)</TT> は文字列 <TT> s</TT> の先頭の <TT> j</TT> 文字を返し，
+<TT> strsub(s,-i)</TT> は末尾 <TT> i</TT> 文字を返す．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> strupper (s)</TT>
+</DIV>
+
+<P>
+ 
+指定された文字列中を複製し，文字列中の小文字を大文字に変換して返す．
+その他の文字は変更されない．小文字の定義はロカールに依存する．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> format (formatstring, e1, e2, ...)</TT>
+</DIV>
+
+<P>
+ 
+１番目の引数(文字列)に従って，残りの任意の個数の引数を整形して返す．
+<TT> formatstring</TT> は C 言語の <TT> printf</TT> 族の関数に従う．異なる点は
+<TT> *, l, L, n, p</TT> の変換には対応しておらず，<TT> q</TT> 変換
+が導入されたことである．<TT> q</TT> 変換は文字列を Lua インタプリタ
+が安全に扱える形式に変換する．二重引用符の間にある文字や二重引用符や改
+行やバックスラッシュは，すべて書かれたとき正しくなるようにエスケープさ
+れる．例えば，以下の呼び出しは，
+
+<P>
+ 
+<PRE>
+
+       format('%q', 'a string with "quotes" and \n new line')
+</PRE>
+
+<P>
+ 
+以下を生成する．
+
+<P>
+ 
+<PRE>
+
+"a string with \"quotes\" and \
+new line"
+</PRE>
+
+<P>
+ 
+引数の順番に従って整形するのではなく，整形の際に明示的に引数の位置を指
+定することもできる．その際には，変換を表す文字 <TT> %</TT> の代わりに 
+<TT><code></code></TT> が用いられる．ここで <TT> d</TT> は [1,9] の範囲の整数で
+あり，引数の位置を表す．例えば，
+<TT><code>format("%2$d -> %1$03d", 1,34)</code></TT> は
+<TT><code>"34 -> 001"</code></TT> となる．同一の引数を何回も用いることもできる．
+
+<P>
+ 
+<TT> c, d, E, e, f, g, G, i, o, u, X, x</TT> の変換は数値引数を取り，
+<TT> q, s</TT> は文字列を引数に取る．<TT> *</TT> 修飾子は適切な書式を作ること
+で同様な変換を行うことができる．例えば
+<TT><code>"%*g"</code></TT> は <TT><code>"%"..width.."g"</code></TT> と同等である．
+
+<P>
+ 
+注意: <TT> formatstring</TT> や <TT> %s</TT> で整形される文字列引数に
+埋め込まれたゼロが含まれていてはならない．<TT> %q</TT> はそのような
+文字列を扱うことができる．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> gsub (s, pat, repl [, n])</TT>
+</DIV>
+
+<P>
+ 
+文字列 <TT> s</TT> を複製し，<TT> pat</TT> の出現を全て <TT> repl</TT> で置き換
+えたものを返す．この関数は２つ目の返り値として，行った置換の数を返す．
+
+<P>
+ 
+<TT> repl</TT> が文字列の場合には，その文字列で置換を行う．<TT> repl</TT>中の
+<TT> %n</TT> (<TT> n</TT> は 1 から 9 の数値) は <I> n</I> 番目のキャプチャを表す．
+
+<P>
+ 
+<TT> repl</TT> が関数の場合には，マッチングが起こるたびに関数が呼ばれ，
+マッチした文字列が順に引数として渡される(以下参照)．関数の返り値が
+文字列の場合には，その文字列で置換を行う．他の場合には，空文字列で置換
+が行われる．
+
+<P>
+ 
+最後に，任意指定の引数 <TT> n</TT> は最大の置換回数を指定する．例えば，
+<TT> n</TT> が 1 の時は <TT> pat</TT> の最初の出現のみ置換される．
+
+<P>
+ 
+<PRE>
+
+   x = gsub("hello world", "(%w+)", "%1 %1")
+   --&gt; x="hello hello world world"
+
+   x = gsub("hello world", "(%w+)", "%1 %1", 1)
+   --&gt; x="hello hello world"
+
+   x = gsub("hello world from Lua", "(%w+)%s*(%w+)", "%2 %1")
+   --&gt; x="world hello Lua from"
+
+   x = gsub("home = $HOME, user = $USER", "%$(%w+)", getenv)
+   --&gt; x="home = /home/roberto, user = roberto"  (for instance)
+
+   x = gsub("4+5 = $return 4+5$", "%$(.-)%$", dostring)
+   --&gt; x="4+5 = 9"
+
+   local t = {name="lua", version="4.0"}
+   x = gsub("$name - $version", "%$(%w+)", function (v) return %t[v] end)
+   --&gt; x="lua - 4.0"
+
+   t = {n=0}
+   gsub("first second word", "(%w+)", function (w) tinsert(%t, w) end)
+   --&gt; t={"first", "second", "word"; n=3}
+</PRE>
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR><B> パターン</B>
+</DIV>
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR><B> 文字クラス:</B>
+</DIV>
+<I> 文字クラス</I>は文字の集合を表すのに用いられる．
+文字の種類を表現するために，以下の記述を用いる．
+
+<P>
+ 
+<PRE>
+
+x    (x が ^$()%.[]*+-? のどの文字でもない場合) 文字 x そのものを表す
+.    (ピリオド)任意の文字を表す．
+%a   全てのアルファベット文字を表す．
+%c   制御文字を表す．
+%d   数値を表す．
+%l   小文字を表す．
+%p   句読点を表す．
+%s   空白文字を表す．
+%u   大文字を表す．
+%w   アルファベットまたは数値を表す．
+%x   16進数の数値を表す．
+%z   ゼロで表現される文字を表す．
+%x   (x はアルファベットや数でない文字) x そのものを表す．これは特殊文字
+     をエスケープする標準的な手法である．パターン中のすべての句読点は(特
+     殊文字でなくても)，% をつけるべきである．
+
+[文字の集合]   文字集合に含まれる全ての文字の和集合を表す．文字の範囲指定
+     は，最初の文字と最後の文字を - でつなぐことで表す．上記の %x の形式の
+     記述はすべて文字集合の要素として用いることができる．他の全ての文字は，
+     文字そのものを表す．例えば， [%w_] (または  [_%w]) は，全てのアルファ
+     ベットまたは数値文字を表し，[0-7] は８進数の数字を表し，[0-7%l%-] は
+     ８進数の数値と小文字と - を表す．
+     範囲指定と文字クラスの組み合わせは定義されていない．よって，[%a-z] や
+     [a-%%] は意味を持たない．
+
+[^文字集合]   文字集合の補集合を表す．文字集合は上記と同様に解釈される．
+</PRE>
+
+<P>
+ 
+<TT><code>%a, %c</code></TT> 等の英字１文字で表される文字集合では，対応する文字
+の大文字はその補集合を表す．例えば，<TT> %S</TT> は空白でない文字を表す．
+
+<P>
+ 
+アルファベット，空白，等の定義はロカールに依存する．とりわけ，<TT> [a-z]</TT>
+は <TT> %l</TT> に一致するとは限らない．移植性を考えると，後者を用いるべきで
+ある．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR><B> パターン要素:</B>
+</DIV>
+パターン要素は，
+
+<P>
+
+<UL>
+<LI>単一の文字クラス．クラス中の文字のどれかにマッチする．</LI>
+<LI>単一の文字クラスの後に <TT> *</TT> をつけたもの．クラス中の文字の 0
+  回以上の繰り返しにマッチする．マッチする範囲ができるだけ長い文字列に
+  なるようにする．</LI>
+<LI>単一の文字クラスの後に <TT> +</TT> をつけたもの．クラス中の文字の 1
+  回以上の繰り返しにマッチする．マッチする範囲ができるだけ長い文字列に
+  なるようにする．</LI>
+<LI>単一の文字クラスの後に <TT> -</TT> をつけたもの．クラス中の文字の 0
+  回以上の繰り返しにマッチする．<TT> *</TT> とは異なり，マッチする範囲がで
+  きるだけ短い文字列になるようにする．</LI>
+<LI>単一の文字クラスの後に <TT> ?</TT> をつけたもの．クラス中の文字の 1
+  回または 0 回の出現にマッチする．</LI>
+<LI><TT> %</TT><I> n</I>．ここで <I> n</I> は 1 から 9 までの数値とする．</LI>
+<LI><I> n</I> 番目のキャプチャとマッチした部分文字列とマッチする(以下
+  参照)．<TT> %b</TT><I> xy</I>．ここで，<I> x</I> と <I> y</I> は異なる文字であ
+  る．<I> x</I> で始まり <I> y</I> で終わる平衡のとれた (<I> balanced</I>) 
+  文字列にマッチする．文字列を左から右に読んで行く際，<I> x</I> の出現に
+  対して+1，<I> y</I> の出現に対して -1 を行うと，0 に達するのが最後の 
+  <I> y</I>であるとき，その文字列は平衡が取れているという．例えば，
+  <TT> %b()</TT> は括弧の対応が正しく取れた文字列にマッチする．</LI>
+</UL>
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR><B> パターン:</B>
+</DIV>
+<I> パターン</I>はパターン要素の系列である．パターン先頭の <TT><code>^</code></TT> 
+は対象文字列の先頭にマッチする．パターン最後の <TT> $</TT> は対象文字列の
+最後にマッチする．パターン中の他の位置に置かれた場合は，<TT><code>^</code></TT> や 
+<TT> $</TT> は特別な意味を持たず，それ自身を表す．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR><B> キャプチャ:</B>
+</DIV>
+パターン中には括弧で囲まれたパターンが含まれていてもよい．これは
+<I> キャプチャ</I>と呼ばれる．マッチングが起こった場合には，キャプチャの
+部分にマッチした文字列は保存され，後で用いることができる．キャプチャは
+左括弧に対応する番号がつけられる．例えば，
+<TT><code>"(a*(.)%w(%s*))"</code></TT> というパターン中で，
+<TT><code>"a*(.)%w(%s*)"</code></TT> にマッチする文字列は１番目のキャプチャ
+(番号１で表される)であり，<TT> .</TT> にマッチする文字は番号２で表される．
+同様に <TT><code>%s*</code></TT> にマッチする文字列は番号３となる．
+
+<P>
+ 
+注意: パターンは埋め込まれたゼロを含んではならない．代わりに 
+<TT> %z</TT> を用いよ．
+
+<P>
+ 
+<A NAME="6.3"></A>
+<H2><A NAME="SECTION00063000000000000000">
+6.3 数学関数</A>
+</H2>
+
+<P>
+ 
+このライブラリは C 言語の標準的な数学関数のインタフェースである．ただ
+し，２項演算子 <TT><code></code></TT> にタグ関数が追加されている．数値
+<TT> x<code>^</code> y</TT>に適用されると <I> x<code>^</code>y</I> を返す．
+
+<P>
+ 
+このライブラリは以下の関数と大域変数 <TT> PI</TT> を提供する．
+
+<P>
+ 
+<PRE>
+
+       abs  acos  asin  atan  atan2  ceil  cos  deg    floor  log     log10
+       max  min   mod   rad   sin    sqrt  tan  frexp  ldexp  random  randomseed
+</PRE>
+
+<P>
+ 
+ほとんどの関数は C の数学ライブラリの同名の関数のインタフェースであ
+る．例外は三角関数で，引数はラジアンではなく<I> 度</I>で表す．
+<TT> deg</TT> 関数と <TT> rad</TT> 関数を用いてラジアンと度の間の変換をするこ
+とができる．
+
+<P>
+ 
+<TT> max</TT> 関数は数値引数に対して最大値を返す．同様に <TT> min</TT> 関数は
+最小値を返す．両方とも 1 個，２個，またはそれ以上の引数を取ることがで
+きる．
+
+<P>
+ 
+<TT> random</TT> 関数と <TT> randomseed</TT> 関数は，ANSI C で提供される単純な
+乱数生成関数 <TT> rand</TT> と <TT> srand</TT> へのインタフェースである
+(乱数の統計的性質に関しては保証はされない)．引数無しでよばれた時，
+<TT> random</TT> 関数は [0,1) の間の疑似乱数を返す．引数として
+数値 <I> n</I> が与えられた時，[1,<I> n</I>] の間の疑似乱数を返す．
+引数として２つの数値 <I> l</I> と <I> u</I> が与えられた時，
+[<I> l,u</I>] の間の疑似乱数を返す．
+
+<P>
+ 
+<A NAME="6.4"></A>
+<H2><A NAME="SECTION00064000000000000000">
+6.4 入出力関数</A>
+</H2>
+
+<P>
+ 
+初期設定時には Lua のすべての入出力は，読み込みと書き出しに対応する２つ
+の<I> ファイルハンドラ</I>を通じて行われる．ファイルハンドラは Lua の大
+域変数 <TT> _INPUT</TT> と <TT> _OUTPUT</TT> に保持されている．
+また大域変数 <TT> _STDIN, _STDOUT, _STDERR</TT> はそれぞれ
+ファイル記述子 <TT> stdin, stdout, stderr</TT> で初期化されている．
+初期設定では，<TT> _INPUT = _STDIN</TT>，<TT> _OUTPUT=_STDOUT</TT> である．
+
+<P>
+ 
+ファイルハンドラは <TT> FILE *</TT> ストリームを含むユーザデータであり，
+入出力関数によって特別なタグ関数が付与される．
+
+<P>
+ 
+特に明記されない場合には，入出力関数は失敗したとき <B> nil</B> を返し
+そうでなければ <B> nil</B> 以外の値を返す．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> openfile (filename, mode)</TT>
+</DIV>
+
+<P>
+ 
+文字列 <TT> mode</TT> で指定されるモードでファイルを開き，ファイルハンドラ
+を返す．失敗した場合には <B> nil</B> に加えエラーの説明を記述した文字列
+を返す．<TT> _INPUT</TT> や <TT> _OUTPUT</TT> を変更しない．
+
+<P>
+ 
+文字列 <TT> mode</TT> は以下の１つを指定する．
+
+<P>
+ 
+<BR>
+<TABLE CELLPADDING=3>
+<TR><TD ALIGN="LEFT"><B> ``r''</B></TD>
+<TD ALIGN="LEFT">読み込みを行う．</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><B> ``w''</B></TD>
+<TD ALIGN="LEFT">書き出しを行う．</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><B> ``a''</B></TD>
+<TD ALIGN="LEFT">追加を行う．</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><B> ``r+''</B></TD>
+<TD ALIGN="LEFT">更新を行う．以前のデータは残される．</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><B> ``w+''</B></TD>
+<TD ALIGN="LEFT">更新を行う．以前のデータは消去される．</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><B> ``a+''</B></TD>
+<TD ALIGN="LEFT">追加更新を行う．以前のデータは残される．書き込みはファイル
+の最後からのみ可能である．</TD>
+</TR>
+</TABLE>
+<BR>
+
+<P>
+ 
+<TT> mode</TT> の最後に <TT> b</TT> を加えてもよい．システムによってはバイ
+ナリファイルを開く際に必要となる．<TT> mode</TT> は C の標準的な関数
+<TT> fopen</TT> で用いられるものと完全に同一である．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> closefile (handle)</TT>
+</DIV>
+
+<P>
+ 
+指定されたファイルを閉じる．<TT> _INPUT</TT> や <TT> _OUTPUT</TT> を変更しない．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> readfrom (filename)</TT>
+</DIV>
+
+<P>
+ 
+この関数は２通りの方法で用いられる．引数にファイル名が指定された時は
+そのファイルを開き，ファイルハンドラを <TT> _INPUT</TT> に対応づけてファイ
+ルハンドラを返す．その際，入力ファイルが閉じられることはない．
+引数が指定されないときは <TT> _INPUT</TT> で開かれているファイルを閉じ，
+再び <TT> stdin</TT> を対応づける．
+失敗した場合には <B> nil</B> およびエラーの説明を記述した文字列を返す．
+
+<P>
+ 
+注意: 
+<TT> filename</TT> が <TT> |</TT> で始まる場合には，<TT> popen</TT> 関数を用いて
+パイプを介した入力が開かれる．すべてのシステムでパイプが実装されている
+わけではない．また，同時に開くことのできるファイル数には通常上限があり，
+その数はシステムによって異なる．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> writeto (filename)</TT>
+</DIV>
+
+<P>
+ 
+この関数は２通りの方法で用いられる．引数にファイル名が指定された時は
+そのファイルを開き，ファイルハンドラを <TT> _OUTPUT</TT> に対応づけてファ
+イルハンドラを返す．その際，出力ファイルが閉じられることはない．
+引数が指定されないときは <TT> _OUTPUT</TT> で開かれているファイルを閉じ，
+再び <TT> stdout</TT> を対応づける．
+失敗した場合には <B> nil</B> およびエラーの説明を記述した文字列を返す．
+
+<P>
+ 
+注意:
+<TT> filename</TT> が <TT> |</TT> で始まる場合には，<TT> popen</TT> 関数を用いて
+パイプを介した入力が開かれる．すべてのシステムでパイプが実装されている
+わけではない．また，同時に開くことのできるファイル数には通常上限があり，
+その数はシステムによって異なる．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> appendto (filename)</TT>
+</DIV>
+
+<P>
+ 
+<TT> filename</TT> で指定されるファイルを開き，<TT> _OUTPUT</TT> に対応づける．
+<TT> writeto</TT> とは異なり，以前のファイルの内容を消すことはない．
+書かれた内容はファイルの最後に追加される．
+失敗した場合には，<B> nil</B> およびエラーの説明を記述した文字列を返す．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> remove (filename)</TT>
+</DIV>
+
+<P>
+ 
+<TT> filename</TT> で指定されるファイルを消去する．
+失敗した場合には，<B> nil</B> およびエラーの説明を記述した文字列を返す．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> rename (name1, name2)</TT>
+</DIV>
+
+<P>
+ 
+<TT> name1</TT> というファイルの名前を <TT> name2</TT> に変更する．
+失敗した場合には，<B> nil</B> およびエラーの説明を記述した文字列を返す．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> flush ([filehandle])</TT>
+</DIV>
+
+<P>
+ 
+書かれたデータを指定されたファイルに実際に書き出す．<TT> filehandle</TT>
+が指定されないときは，<TT> flush</TT> は開かれている全てのファイルに対して
+行われる．失敗した場合には，<B> nil</B> およびエラーの説明を記述した文字
+列を返す．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> seek (filehandle [, whence] [, offset])</TT>
+</DIV>
+
+<P>
+ 
+ファイル中での位置(バイト単位)を得たり変更したりする．
+ファイルの先頭からの位置を <TT> offset</TT> と， <TT> whence</TT> で指定される
+基準位置との和で指定する．<TT> whence</TT> の値には以下のような物が指定できる．
+
+<P>
+ 
+<BR>
+<TABLE CELLPADDING=3>
+<TR><TD ALIGN="LEFT"><B> ``set''</B></TD>
+<TD ALIGN="LEFT">ファイルの先頭(0)を基準にする．</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><B> ``cur''</B></TD>
+<TD ALIGN="LEFT">現在の位置を基準にする．</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><B> ``end''</B></TD>
+<TD ALIGN="LEFT">ファイルの終端を基準にする．</TD>
+</TR>
+</TABLE>
+<BR>
+
+<P>
+ 
+<TT> seek</TT> はファイル中の最終的な位置をファイルの先頭からバイト単位
+で返す．失敗した場合には，<B> nil</B> およびエラーの説明を記述した文字
+列を返す．
+
+<P>
+ 
+<TT> whence</TT> が指定されない場合は <TT> "cur"</TT> が選択され，<TT> offset</TT>
+が指定されない場合は 0 とされる．よって <TT> seek(file)</TT> はファイ
+ル中の現在位置を返し，位置の変更は行わない．<TT> seek(file, "set")</TT> は
+位置をファイルの先頭に設定する(そして 0 を返す)．<TT> seek(file, "end")</TT>
+は位置をファイルの最後に設定する(ファイルの大きさを返す)．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> tmpname ()</TT>
+</DIV>
+
+<P>
+ 
+一時的なファイルとして安全に利用できるファイル名を返す．
+ファイルを使用前に開く操作や使用後に消す操作は明示的に行う必要がある．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> read ([filehandle,] format1, ...)</TT>
+</DIV>
+
+<P>
+ 
+指定された書式で <TT> filehandle</TT> (指定されない場合は <TT> _INPUT</TT>) から
+読み込む．各フォーマットに対して，読まれた文字列または数値を返す．指定
+された書式で読むことができなかった場合は <B> nil</B> を返す．フォーマッ
+トが指定されない時には，次の一行を読むフォーマットが選択される(以下参
+照)．
+
+<P>
+ 
+フォーマットには以下の物が指定できる．
+
+<P>
+ 
+<BR>
+<TABLE CELLPADDING=3>
+<TR><TD ALIGN="LEFT"><B> ``*n''</B></TD>
+<TD ALIGN="LEFT">数値を１つ読む．数値を返す唯一のフォーマットである．</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><B> ``*l''</B></TD>
+<TD ALIGN="LEFT">次の１行を読む(改行は読み飛ばされる)．ファイルの終端の
+               場合には <B> nil</B> が返される．</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">フォーマットが指定されない場合にこれが選択される．</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><B> ``*a''</B></TD>
+<TD ALIGN="LEFT">現在位置から始めてファイル全体を読み込む．ファイルの
+               終端の場合には空文字列が</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">返される．</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><B> ``*w''</B></TD>
+<TD ALIGN="LEFT">次の単語が返される．単語は空白文字以外の繰り返しで最
+               大長のものである．必要に</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">応じて空白は読み飛ばされる．ファイルの終端の場合には 
+               <B> nil</B> が返される．</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><B> number</B></TD>
+<TD ALIGN="LEFT">最大で指定される数の文字数の文字列を読み込む．
+               ファイルの終端の場合には</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT"><B> nil</B> が返される．</TD>
+</TR>
+</TABLE>
+<BR>
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> write ([filehandle, ] value1, ...)</TT>
+</DIV>
+
+<P>
+ 
+各引数の値を  <TT> filehandle</TT> (指定されない場合は  <TT> _OUTPUT</TT>) に
+書き出す．引数は文字列または数値である必要があり，他の型の値を書く場合
+には事前に <TT> tostring</TT> や format を使用する．失敗した場合には，
+<B> nil</B> およびエラーの説明を記述した文字列を返す．
+
+<P>
+ 
+<A NAME="6.5"></A>
+<H2><A NAME="SECTION00065000000000000000">
+6.5 システム関数</A>
+</H2>
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> clock ()</TT>
+</DIV>
+
+<P>
+ 
+プログラムによって使われた CPU 時間の合計の推定値を秒単位で返す．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> date ([format])</TT>
+</DIV>
+
+<P>
+ 
+<TT> format</TT> で指定される書式に従い，日付と時間を文字列にして返す．
+<TT> format</TT> は ANSI C の関数 <TT> strftime</TT> と同一の規則に従う．
+引数が指定されない場合には，日付と時間をシステムとロカールに応じて
+適切な表現にして返す．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> execute (command)</TT>
+</DIV>
+
+<P>
+C 言語の関数 <TT> system</TT> と等価である．<TT> command</TT> は OS のシェルに
+よって実行される．実行後の終了ステータスを返す(値はシステムに依存する)．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> exit ([code])</TT>
+</DIV>
+
+<P>
+C 言語の関数 <TT> exit</TT> を呼びプログラムを終了する．
+<TT> code</TT> か指定された場合には <TT> code</TT> が <TT> exit</TT> の引数となり，
+指定されない場合には正常終了を示す値が引数となる．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> getenv (varname)</TT>
+</DIV>
+
+<P>
+ 
+実行環境での環境変数 <TT> varname</TT> の値を返す．<TT> varname</TT> が未定義
+の場合には <B> nil</B> を返す．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR>・<TT> setlocale (locale [, category])</TT>
+</DIV>
+
+<P>
+ANSI C の <TT> setlocale</TT> 関数のインタフェースである．
+<TT> locale</TT> はロカールを指定する文字列である．
+<TT> category</TT> はどのロカールを変更するかを示し，
+<TT> "all", "collate", "ctype", "monetary", "numeric", "time"</TT> を指定
+する．指定されない場合は <TT> "all"</TT> が選択される．新しいロカールの名
+前が返される．失敗した場合には <B> nil</B> が返される．
+<A NAME="7"></A>
+<H1><A NAME="SECTION00070000000000000000">
+7. デバッガインターフェイス</A>
+</H1>
+
+<P>
+Luaはデバッグを行う機能を直接には提供していない．代わりに関数や<I> フッ
+  ク</I>を用いた特別なインタフェースを提供している．これらのインタフェー
+スを用いてインタプリタ内部の情報を得て，様々なデバッガやプロファイラ等
+必要なツールを作ることができる．このインタフェースは <TT> luadebug.h</TT> 
+中で定義されている．
+
+<P>
+ 
+<A NAME="7.1"></A>
+<H2><A NAME="SECTION00071000000000000000">
+7.1 スタックと関数の情報</A>
+</H2>
+
+<P>
+ 
+以下の関数を用いて，インタプリタのスタックの情報を得ることができる．
+
+<P>
+ 
+<PRE>
+
+      int lua_getstack (lua_State *L, int level, lua_Debug *ar);
+</PRE>
+
+<P>
+ 
+この関数は，指定されたレベルで実行されている関数の駆動レコード
+(activation record) と同一のものを <TT> lua_Debug</TT> に代入する．レベル 0 
+は現在実行されている関数であり，レベル <I> n+1</I> はレベル <I> n</I> の関
+数を呼び出した関数である．<TT> lua_getstack</TT> は通常は 1 を返す．現在の
+スタックの深さよりも大きなレベルが指定された場合は 0 を返す．
+
+<P>
+ 
+<TT> lua_Debug</TT> 構造体は活性化している関数に関する情報を保持する．
+
+<P>
+ 
+<PRE>
+
+      typedef struct lua_Debug {
+        const char *event;     /* "call", "return" */
+        int currentline;       /* (l) */
+        const char *name;      /* (n) */
+        const char *namewhat;  /* (n) global, tag method, local, field */
+        int nups;              /* (u) upvalues の数 */
+        int linedefined;       /* (S) */
+        const char *what;      /* (S) "Lua" function, "C" function, Lua "main" */
+        const char *source;    /* (S) */
+        char short_src[LUA_IDSIZE]; /* (S) */
+
+        /* private part */
+        ...
+      } lua_Debug;
+</PRE>
+
+<P>
+ 
+<TT> lua_getstack</TT> 関数はこの構造体の private の要素にのみ値を入れる．
+他の要素にも値を入れるには，以下の関数を用いる．
+
+<P>
+ 
+<PRE>
+
+       int lua_getinfo (lua_State *L, const char *what, lua_Debug *ar);
+</PRE>
+
+<P>
+ 
+この関数はエラーが起こると 1 を返す(<TT> what</TT> に無効な引数を指定した
+場合など)．<TT> what</TT> 文字列の各文字が <TT> ar</TT> の特定の要素を指定し，
+その要素に値が入れられる．この文字と要素の対応は，上記の <TT> lua_Debug</TT>
+構造体に示したものである．文字 `<TT> S</TT>' は要素
+<TT> source, linedefined, what</TT> を示し，
+文字 `<TT> l</TT>' は要素 <TT> currentline</TT> を示す．
+さらに，文字 `<TT> f</TT>' は指定されたレベルで実行されている関数をスタッ
+クに入れる．
+
+<P>
+ 
+駆動していない関数(スタック上にない関数)についての情報を得るには，
+関数をスタックに入れ，<TT> what</TT> の先頭の文字を <TT> &gt;</TT> とすればよい．
+例えば，関数 <TT> f</TT> が定義されている行を調べるには，以下のよ
+うにすればよい．
+
+<P>
+ 
+<PRE>
+
+       lua_Debug ar;
+       lua_getglobal(L, "f");
+       lua_getinfo(L, "&gt;S", &amp;ar);
+       printf("%d\n", ar.linedefined);
+</PRE>
+
+<P>
+ 
+<TT> lua_Debug</TT> の要素の意味は以下の通りである．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR><B> source</B>
+</DIV>
+関数が文字列の中で定義されている場合は，<TT> source</TT> はその文字列である．
+ファイル中で定義されている場合は，<TT> source</TT> はファイル名の先頭に
+<TT> @</TT> をつけたものである．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR><B> short_src</B>
+</DIV>
+<TT> source</TT> の「表示可能な」形式であり，エラーメッセージ中で用いるこ
+とができる．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR><B> linedefined</B>
+</DIV>
+関数の定義が始まる行番号である．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR><B> what</B>
+</DIV>
+Lua 関数の場合は文字列 <TT> "Lua"</TT>，C 関数の場合は文字列 <TT> "C"</TT>，
+チャンクの主部 (main part) の場合は文字列 <TT> "main"</TT> である．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR><B> currentline</B>
+</DIV>
+指定された関数が実行している行を示す．実行している行に関する情報が得ら
+れない場合には，-1 が代入される．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR><B> name</B>
+</DIV>
+指定された関数の適当な名前である．Lua の関数はファーストクラスの変数
+であるため，固定された名前を持たない．関数は大域変数の値であることもあ
+るし，テーブルの要素として保持されるだけの関数もある．<TT> lua_getinfo</TT>
+関数は指定された関数がタグ関数または大域変数の値であるかを調べる．
+タグ関数の場合には，<TT> name</TT> にはイベントの名前を指す．
+関数が大域変数の値である場合には，変数の名前を指す．
+他の場合には，<TT> name</TT> には <TT> NULL</TT> が代入される．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR><B> namewhat</B>
+</DIV>
+上記の <TT> name</TT> の説明である．関数が大域変数の場合には 
+<TT> namewhat</TT> は <TT> "global"</TT> である．タグ関数の場合には
+<TT> "tag-method"</TT> である．他の場合には <TT> ""</TT> (空文字列) である．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR><B> nups</B>
+</DIV>
+関数の上位値の数である．
+
+<P>
+ 
+<A NAME="7.2"></A>
+<H2><A NAME="SECTION00072000000000000000">
+7.2 局所変数の操作</A>
+</H2>
+
+<P>
+ 
+局所変数を操作するため，<TT> luadebug.h</TT> ではインデクスを用いている．
+１番目の局所変数のインデクスは１であり，以後は最後の駆動している局所変数
+まで順番である．
+次の関数を用いて，指定した駆動レコード中の局所変数を操作できる．
+
+<P>
+ 
+<PRE>
+
+       const char *lua_getlocal (lua_State *L, const lua_Debug *ar, int n);
+       const char *lua_setlocal (lua_State *L, const lua_Debug *ar, int n);
+</PRE>
+
+<P>
+ 
+引数 <TT> ar</TT> は有効な駆動レコードを指定し，
+<TT> lua_getstack</TT> で得られたものかフックへの引数とされたものである必
+要がある(<A HREF="#7.3">7.2</A>節参照)．
+<TT> lua_getlocal</TT> 関数は局所変数のインデクス(<TT> n</TT>)を指定すると，変
+数の値をスタックに積み，変数名を返す．
+新しい変数をスタックに積んで <TT> lua_setlocal</TT> 関数を呼ぶと，指定され
+た値を変数に代入して変数名を返す．
+駆動している変数の数より大きいインデクスを指定したときには，これらの関数
+は NULL を返す．
+
+<P>
+ 
+例として，以下の関数はスタックの指定されたレベルに対して，局所変数の名
+前の一覧を作る．
+
+<P>
+ 
+<PRE>
+
+       int listvars (lua_State *L, int level) {
+         lua_Debug ar;
+         int i = 1;
+         const char *name;
+         if (lua_getstack(L, level, &amp;ar) == 0)
+           return 0;  /* 失敗:  スタック中に無いレベルを指定した */
+         while ((name = lua_getlocal(L, &amp;ar, i++)) != NULL) {
+           printf("%s\n", name);
+           lua_pop(L, 1);  /* 変数の値を除く */
+         }
+         return 1;
+       }
+</PRE>
+
+<P>
+ 
+<A NAME="7.3"></A>
+<H2><A NAME="SECTION00073000000000000000">
+7.3 フック</A>
+</H2>
+
+<P>
+Lua のインタプリタはデバッグ用に呼び出しフック (call hook) と行フック
+(line hook) という２つのフックを提供している．これらのフックは以下の型
+である．
+
+<P>
+ 
+<PRE>
+
+       typedef void (*lua_Hook) (lua_State *L, lua_Debug *ar);
+</PRE>
+
+<P>
+ 
+フックを設定するには以下の関数を用いる．
+
+<P>
+ 
+<PRE>
+
+       lua_Hook lua_setcallhook (lua_State *L, lua_Hook func);
+       lua_Hook lua_setlinehook (lua_State *L, lua_Hook func);
+</PRE>
+
+<P>
+ 
+フックを無効にするには，値として <TT> NULL</TT> を設定する．
+両方のフックの初期値は <TT> NULL</TT> である．
+<TT> lua_setcallhook</TT> 関数と <TT> lua_setlinehook</TT> 関数は指定されたフッ
+クを設定し，以前のフックを返す．
+
+<P>
+ 
+呼び出しフックはインタプリタが関数に入る時と出る時に毎回呼ばれる．
+<TT> ar</TT> の中の <TT> event</TT> の値が対応して <TT> "call"</TT> または
+<TT> "return"</TT> に設定される．この <TT> ar</TT> の値は，
+<TT> lua_getinfo, lua_getlocal, lua_setlocal</TT> 関数の引数として用いるこ
+とができ，関数についての情報を得たり，局所変数を操作したりすることがで
+きる．
+
+<P>
+ 
+行フックはインタプリタが実行しているプログラムの行を変更した時に毎回
+呼ばれる．<TT> ar</TT> の <TT> event</TT> の値は <TT> "line"</TT> に，
+<TT> currentline</TT> の値は行番号にそれぞれ設定される．
+同様に，デバッグ用の関数に対してこの <TT> ar</TT> の値を指定することができる．
+
+<P>
+Lua は１つのフックを実行している間には他のフックを実行しない．よってフッ
+クの内部で関数やチャンクを実行するため Lua を呼び出したとしても，
+フックに対する呼び出しは行われずに実行される．
+
+<P>
+ 
+<A NAME="7.4"></A>
+<H2><A NAME="SECTION00074000000000000000">
+7.4 直接的なデバッガインターフェイス</A>
+</H2>
+
+<P>
+ 
+<TT> ldblib</TT> ライブラリは Lua プログラムにデバッグのインタフェースを提
+供する．使用する場合には，まずプログラム中で <TT> lua_dblibopen</TT> を呼
+ぶ必要がある．
+
+<P>
+ 
+このライブラリを用いる際には十分注意する必要がある．以下の関数はデバッ
+グや類似のタスク (プロファイリング等)に対して排他的に用いなければなら
+ない．また通常のプログラムの道具として使おうと考えてはならない．これら
+の関数の実行は遅く，言語の安全性をおびやかす(局所変数の隠蔽等)．もしプ
+ログラム中でこのライブラリを用いないならば，<TT> lua_dblibopen</TT>を実行
+しないこと．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR><B> getinfo (function, [what])</B>
+</DIV>
+
+<P>
+ 
+この関数は，指定された関数に関する情報のテーブルを返す．関数を直接指
+定しても良いし，<TT> function</TT> の値として数値を指定しても良い．
+<TT> function</TT> に数値を指定した場合，スタックの <TT> function</TT> レベル
+で実行されている関数を意味する．レベル 0 は現在実行されている関数 
+(<TT> getinfo</TT> そのもの)，レベル 1 は <TT> getinfo</TT> を呼び出した関数，
+等々．活性化している関数の数よりも大きな <TT> function</TT> の値を指定した
+場合には，<TT> getinfo</TT> は <B> nil</B> を返す．
+
+<P>
+ 
+返り値のテーブルは <TT> lua_getinfo</TT> で返されるすべての要素を含み，
+<TT> what</TT> によって要素を指定することができる．指定しない場合はすべて
+の要素となる．
+
+<P>
+ 
+例えば，<TT> getinfo(1,"n").name</TT> は現在の関数の名前(適当な名前が存在
+する場合)を返し，<TT> getinfo(print)</TT> は <TT> print</TT> 関数について得ら
+れる全ての情報を含むテーブルを返す．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR><B> getlocal (level, local)</B>
+</DIV>
+
+<P>
+ 
+この関数は，<TT> level</TT> で指定されるレベルの関数の <TT> local</TT> で指定
+される変数の名前と値を返す(１番目の引数のインデクスは１であり，最後の
+駆動している局所変数まで順番である)．指定されたインデクスに対応する局所
+変数が無い場合には <B> nil</B> を返す．また指定された <TT> level</TT> が範囲
+外の値の場合にはエラーとなる(<TT> getstack</TT> 関数を用いることで値が正
+しいかどうかを確かめることができる)．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR><B> setlocal (level, local, value)</B>
+</DIV>
+
+<P>
+ 
+この関数は，<TT> level</TT> で指定されるレベルの関数の <TT> local</TT> で指定
+される変数に対し，値 <TT> value</TT> を代入する．
+指定されたインデクスに対応する局所変数が無い場合には <B> nil</B> を返す．
+また指定された <TT> level</TT> が範囲外の値の場合にはエラーとなる．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR><B> setcallhook (hook)</B>
+</DIV>
+
+<P>
+ 
+関数 <TT> hook</TT> を呼び出しフックに設定する．
+このフックはインタプリタが関数に入る時と出る時に毎回呼ばれる．
+フックの引数は１つであり，イベント名(<TT> "call"</TT> または <TT> "event"</TT>)
+が与えられる．
+レベルを2として <TT> getstack</TT> 関数を呼ぶことにより，問題の関数の情報
+を得ることができる(レベル 0 は <TT> getstack</TT> 関数，レベル 1 は
+<TT> setcallhook</TT> 関数である)．
+引数を指定せずに呼んだ場合，行フックを無効にする．
+<TT> setcallhook</TT> は以前のフックを返す．
+
+<P>
+ 
+<DIV ALIGN="LEFT">
+ <BR><B> setlinehook (hook)</B>
+</DIV>
+
+<P>
+ 
+関数 <TT> hook</TT> を行フックに設定する．このフックはプログラム中のインタ
+プリタが実行している行が変わる時に毎回呼ばれる．フックの引数は１つで
+あり，インタプリタが実行しようとしている行の番号が与えられる．
+引数を指定せずに呼んだ場合，行フックを無効にする．
+<TT> setlinehook</TT> は以前のフックを返す．
+<A NAME="8"></A>
+<H1><A NAME="SECTION00080000000000000000">
+8. 単独のLuaインタプリタ</A>
+</H1>
+
+<P>
+ 
+本来 Lua は C プログラムに埋め込まれて使われる拡張言語として設計されて
+いる．しかし，独立した言語として用いられることも多い．独立した言語とし
+ての Luaのインタプリタ(単に <TT> lua</TT> と呼ばれる)は，Lua の標準的な
+配布に含まれる．<TT> lua</TT> には以下の引数を指定することができる．
+
+<P>
+ 
+<BR>
+<TABLE CELLPADDING=3>
+<TR><TD ALIGN="LEFT"><TT> -sNUM</TT></TD>
+<TD ALIGN="LEFT">スタックの大きさを <TT> NUM</TT> にする．指定する場合には引数の先頭で指定
+する必要がある．</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><TT> -</TT></TD>
+<TD ALIGN="LEFT">標準入力をファイルとして実行する．</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><TT> -c</TT></TD>
+<TD ALIGN="LEFT">すべての引数を実行し終えた後に <TT> lua_close</TT> を呼ぶ．</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><TT> -e</TT> <TT> stat</TT></TD>
+<TD ALIGN="LEFT">文字列 <TT> stat</TT> を実行する．</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><TT> -f</TT> ファイル</TD>
+<TD ALIGN="LEFT">テーブル <TT> arg</TT> 中の残りの引数でファイルを実行する．</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><TT> -i</TT></TD>
+<TD ALIGN="LEFT">プロンプトを表示する対話モードで実行する．</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><TT> -q</TT></TD>
+<TD ALIGN="LEFT">プロンプトを表示しない対話モードで実行する．</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><TT> -v</TT></TD>
+<TD ALIGN="LEFT">バージョン情報を表示する．</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><TT> var=value</TT></TD>
+<TD ALIGN="LEFT">大域変数 <TT> var</TT> を文字列 <TT> "value"</TT> に指定する．</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><TT> filename</TT></TD>
+<TD ALIGN="LEFT">ファイル <TT> filename</TT> を実行する．</TD>
+</TR>
+</TABLE>
+<BR>
+
+<P>
+ 
+引数を指定せずに実行した場合，標準入力が端末の時には <TT> lua -v -i</TT>
+となり，そうでない場合は <TT> lua -</TT> となる．
+
+<P>
+ 
+引数は順番に処理される(<TT> -c</TT> を除く)．以下の例では，
+
+<P>
+ 
+<PRE>
+
+       $ lua -i a=test prog.lua
+</PRE>
+
+<P>
+ 
+まず標準入力から <TT> EOF</TT> が入力されるまで対話的に処理を行う．次に
+<TT> a</TT> に <TT> "test"</TT> を代入する．最後にファイル <TT> prog.lua</TT> を
+実行する($ はシェルプロンプトでである．あなたのプロンプトは違うかもし
+れない)．
+
+<P>
+ 
+<TT> -f filename</TT> が指定された場合には，残りのコマンドラインの引数は
+テーブル <TT> arg</TT> としてファイル名に対応する Lua プログラムに渡される．
+テーブル <TT> arg</TT> は，<TT> n</TT> が最後の引数のインデクスであり，インデ
+クス <TT> 0</TT> によって <TT> "filename"</TT> が得られる．以下の例では，
+
+<P>
+ 
+<PRE>
+
+       $ lua a.lua -f b.lua t1 t3
+</PRE>
+
+<P>
+ 
+はじめにファイル <TT> a.lua</TT> が実行される．次に以下のテーブルが作られ
+る．
+
+<P>
+ 
+<PRE>
+
+       arg = {"t1", "t3";  n = 2, [0] = "b.lua"}
+</PRE>
+
+<P>
+ 
+最後に，ファイル <TT> b.lua</TT> が実行される．
+
+<P>
+ 
+独立した Lua インタプリタは <TT> getarg</TT> 関数を提供しており，<TT> すべ
+ての</TT> コマンドライン引数を参照することができる．以下のように Lua を呼
+び出した場合に，
+
+<P>
+ 
+<PRE>
+
+       $ lua -c a b
+</PRE>
+
+<P>
+ 
+<TT> a</TT> または <TT> b</TT> 中で <TT> getargs</TT> を実行すると，以下のようなテー
+ブルが返される．
+
+<P>
+ 
+<PRE>
+
+       {[0] = "lua", [1] = "-c", [2] = "a", [3] = "b", n = 3}
+</PRE>
+
+<P>
+ 
+対話モードで複数行に及ぶ文を入力する際，途中の行をバックスラッシュ
+(`<code>\</code>')
+で区切ることができる．大域変数 <TT> _PROMPT</TT> の値が文字列の場合には，
+その値がプロンプトとして用いられる．よって，プロンプトは以下のようにコ
+マンドラインから直接変更できる．
+
+<P>
+ 
+<PRE>
+
+       $ lua _PROMPT='myprompt&gt; ' -i
+</PRE>
+
+<P>
+ 
+また，<TT> _PROMPT</TT> に値を代入する Lua プログラムを実行することによっ
+ても変更できる．
+
+<P>
+Unix システムでは，Lua スクリプトは <TT> chmod +x</TT> コマンドと 
+<TT><code></code>#!</TT> の形式によって実行可能なプログラムになる．
+例えば <TT><code>#!/usr/local/bin/lua</code></TT> であり，他の引数を得るには
+<TT><code>#!/usr/local/bin/lua -f</code></TT> とする．
+
+<P>
+
+<H1><A NAME="SECTION00090000000000000000">
+謝辞</A>
+</H1>
+
+<P>
+CENPES/PETROBRAS に感謝する．このシステムの初期のバージョンを
+<TT> TeCGraf</TT>
+とともに使っていただき有益なコメントをいただいた．
+また Carlos Henrique Levy にも感謝する．このゲームの名前をつけていただ
+いた．Lua は ポルトガル語で「月」を意味する．
+
+<P>
+
+<H1><A NAME="SECTION000100000000000000000">
+以前のバージョンとの非互換性</A>
+</H1>
+
+<P>
+これまでに配布されたバージョンとの非互換性を除くように注意したが，
+互換性が保たれない点がいくつかある．以下にそれを示す．
+
+<P>
+<DIV ALIGN="LEFT">
+ <BR><B>Lua 3.2 との非互換性</B>
+</DIV>
+
+<P>
+<DIV ALIGN="LEFT">
+ <BR><B>言語仕様の変更</B>
+</DIV>
+
+<P>
+
+<UL>
+<LI>pragma (<TT><code>$debug, $if</code></TT> 等)はすべて廃止された．</LI>
+<LI><B> for, break, in</B> が予約語になった．</LI>
+<LI>テーブルのガーベジコレクションタグ関数が古い仕様(obsolete)になった．</LI>
+<LI>順序演算子のタグ関数は１つのみになった．</LI>
+<LI><TT> f(g(x))</TT> のような入れ子の関数呼び出しでは，<TT> g</TT> の 
+    <I>すべての</I>返り値は <TT> f</TT> の引数となる．これは <TT> g</TT> が 
+    <TT> f</TT> の唯一の引数か，または最後の引数のときに起こる．</LI>
+<LI>事前コンパイラは最適化のため，いくつかの演算子が結合則を満たす
+    ことを仮定する．その演算子が結合則を満たさないタグ関数を持つ
+    場合には問題が生じる．</LI>
+<LI>以前に事前コンパイルされたコードは用いることができない．再コンパイ
+  ルする必要がある．</LI>
+</UL>
+
+<P>
+<DIV ALIGN="LEFT">
+ <BR><B>ライブラリの変更</B>
+</DIV>
+
+<P>
+
+<UL>
+<LI><TT> next</TT> や <TT> foreach</TT> を用いてテーブルを参照する際には，テー
+  ブルを修正することはできなくなった．</LI>
+<LI>一般的な read pattern は用いることができなくなった．
+
+<P></LI>
+<LI>関数 foreachvar, nextvar, rawsetglobal, rawgetglobal
+  は廃止された．等価な処理は大域変数のテーブルに対して通常のテーブル用
+  関数を用いることで行うことができる．大域変数のテーブルは 
+  <TT> globals</TT> によって得られる．</LI>
+<LI><TT> setglobal</TT> と <TT> sort</TT> は値を返さなくなった．
+  <TT> type</TT> は２番目の返り値を返さなくなった．</LI>
+<LI>関数 <TT> call</TT> の <TT> p</TT> 引数は廃止された．</LI>
+</UL>
+
+<P>
+<DIV ALIGN="LEFT">
+ <BR><B>API の変更</B>
+</DIV>
+
+<P>
+
+<UL>
+<LI>API の完全な書き直しが行われた．完全に再入可能になり，すっきりし
+  たものになった．</LI>
+<LI>デバッグ用 API の完全な書き直しが行われた．</LI>
+</UL>
+
+<P>
+
+<H1><A NAME="SECTION000110000000000000000">
+Lua の構文一覧</A>
+</H1>
+
+<P>
+<BR> <HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"></A>
+
+<UL>
+<LI><A NAME="tex2html3"
+ HREF="#SECTION00010000000000000000">1. はじめに</A>
+<LI><A NAME="tex2html4"
+ HREF="#SECTION00020000000000000000">2. 動作環境とチャンク</A>
+<LI><A NAME="tex2html5"
+ HREF="#SECTION00030000000000000000">3. 型とタグ</A>
+<LI><A NAME="tex2html6"
+ HREF="#SECTION00040000000000000000">4. Lua 言語</A>
+<UL>
+<LI><A NAME="tex2html7"
+ HREF="#SECTION00041000000000000000">4.1 字句使用の慣習</A>
+<LI><A NAME="tex2html8"
+ HREF="#SECTION00042000000000000000">4.2 自動的な型変換</A>
+<LI><A NAME="tex2html9"
+ HREF="#SECTION00043000000000000000">4.3 調整</A>
+<LI><A NAME="tex2html10"
+ HREF="#SECTION00044000000000000000">4.4 文</A>
+<UL>
+<LI><A NAME="tex2html11"
+ HREF="#SECTION00044100000000000000">4.4.1 ブロック</A>
+<LI><A NAME="tex2html12"
+ HREF="#SECTION00044200000000000000">4.4.2 代入</A>
+<LI><A NAME="tex2html13"
+ HREF="#SECTION00044300000000000000">4.4.3 制御構造</A>
+<LI><A NAME="tex2html14"
+ HREF="#SECTION00044400000000000000">4.4.4 for文</A>
+<LI><A NAME="tex2html15"
+ HREF="#SECTION00044500000000000000">4.4.5 返り値を使わない関数呼び出し</A>
+<LI><A NAME="tex2html16"
+ HREF="#SECTION00044600000000000000">4.4.6 局所変数の定義</A>
+</UL>
+<LI><A NAME="tex2html17"
+ HREF="#SECTION00045000000000000000">4.5 式</A>
+<UL>
+<LI><A NAME="tex2html18"
+ HREF="#SECTION00045100000000000000">4.5.1 基本的な式</A>
+<LI><A NAME="tex2html19"
+ HREF="#SECTION00045200000000000000">4.5.2 算術演算子</A>
+<LI><A NAME="tex2html20"
+ HREF="#SECTION00045300000000000000">4.5.3 関係演算子</A>
+<LI><A NAME="tex2html21"
+ HREF="#SECTION00045400000000000000">4.5.4 論理演算子</A>
+<LI><A NAME="tex2html22"
+ HREF="#SECTION00045500000000000000">4.5.5 連結演算子</A>
+<LI><A NAME="tex2html23"
+ HREF="#SECTION00045600000000000000">4.5.6 演算子の優先順位</A>
+<LI><A NAME="tex2html24"
+ HREF="#SECTION00045700000000000000">4.5.7 テーブル生成子</A>
+<LI><A NAME="tex2html25"
+ HREF="#SECTION00045800000000000000">4.5.8 関数呼び出し</A>
+<LI><A NAME="tex2html26"
+ HREF="#SECTION00045900000000000000">4.5.9 関数の定義</A>
+</UL>
+<LI><A NAME="tex2html27"
+ HREF="#SECTION00046000000000000000">4.6 可視性と上位値</A>
+<LI><A NAME="tex2html28"
+ HREF="#SECTION00047000000000000000">4.7 エラー処理</A>
+<LI><A NAME="tex2html29"
+ HREF="#SECTION00048000000000000000">4.8 タグ関数</A>
+</UL>
+<LI><A NAME="tex2html30"
+ HREF="#SECTION00050000000000000000">5. プログラムインターフェイス</A>
+<UL>
+<LI><A NAME="tex2html31"
+ HREF="#SECTION00051000000000000000">5.1 状態</A>
+<LI><A NAME="tex2html32"
+ HREF="#SECTION00052000000000000000">5.2 スタックとインデクス</A>
+<LI><A NAME="tex2html33"
+ HREF="#SECTION00053000000000000000">5.3 スタックの操作</A>
+<LI><A NAME="tex2html34"
+ HREF="#SECTION00054000000000000000">5.4 スタック への 問い合わせ</A>
+<LI><A NAME="tex2html35"
+ HREF="#SECTION00055000000000000000">5.5 値をスタックへ入れる</A>
+<LI><A NAME="tex2html36"
+ HREF="#SECTION00056000000000000000">5.6 ガーベジコレクション</A>
+<LI><A NAME="tex2html37"
+ HREF="#SECTION00057000000000000000">5.7 ユーザデータとタグ</A>
+<LI><A NAME="tex2html38"
+ HREF="#SECTION00058000000000000000">5.8 Luaプログラムの実行</A>
+<LI><A NAME="tex2html39"
+ HREF="#SECTION00059000000000000000">5.9 Luaでの大域変数の扱い</A>
+<LI><A NAME="tex2html40"
+ HREF="#SECTION000510000000000000000">5.10 Luaでのテーブルの扱い</A>
+<LI><A NAME="tex2html41"
+ HREF="#SECTION000511000000000000000">5.11 テーブルを配列として用いる</A>
+<LI><A NAME="tex2html42"
+ HREF="#SECTION000512000000000000000">5.12 Luaの関数を呼ぶ</A>
+<LI><A NAME="tex2html43"
+ HREF="#SECTION000513000000000000000">5.13 Cの関数を定義する</A>
+<LI><A NAME="tex2html44"
+ HREF="#SECTION000514000000000000000">5.14 Lua オブジェクトの参照</A>
+<LI><A NAME="tex2html45"
+ HREF="#SECTION000515000000000000000">レジストリ</A>
+</UL>
+<LI><A NAME="tex2html46"
+ HREF="#SECTION00060000000000000000">6. 標準ライブラリ</A>
+<UL>
+<LI><A NAME="tex2html47"
+ HREF="#SECTION00061000000000000000">6.1 基本関数</A>
+<LI><A NAME="tex2html48"
+ HREF="#SECTION00062000000000000000">6.2 文字列の操作</A>
+<LI><A NAME="tex2html49"
+ HREF="#SECTION00063000000000000000">6.3 数学関数</A>
+<LI><A NAME="tex2html50"
+ HREF="#SECTION00064000000000000000">6.4 入出力関数</A>
+<LI><A NAME="tex2html51"
+ HREF="#SECTION00065000000000000000">6.5 システム関数</A>
+</UL>
+<LI><A NAME="tex2html52"
+ HREF="#SECTION00070000000000000000">7. デバッガインターフェイス</A>
+<UL>
+<LI><A NAME="tex2html53"
+ HREF="#SECTION00071000000000000000">7.1 スタックと関数の情報</A>
+<LI><A NAME="tex2html54"
+ HREF="#SECTION00072000000000000000">7.2 局所変数の操作</A>
+<LI><A NAME="tex2html55"
+ HREF="#SECTION00073000000000000000">7.3 フック</A>
+<LI><A NAME="tex2html56"
+ HREF="#SECTION00074000000000000000">7.4 直接的なデバッガインターフェイス</A>
+</UL>
+<LI><A NAME="tex2html57"
+ HREF="#SECTION00080000000000000000">8. 単独のLuaインタプリタ</A>
+<LI><A NAME="tex2html58"
+ HREF="#SECTION00090000000000000000">謝辞</A>
+<LI><A NAME="tex2html59"
+ HREF="#SECTION000100000000000000000">以前のバージョンとの非互換性</A>
+<LI><A NAME="tex2html60"
+ HREF="#SECTION000110000000000000000">Lua の構文一覧</A>
+</UL>
+<!--End of Table of Child-Links-->
+<BR> <HR>
+
+</BODY>
+</HTML>

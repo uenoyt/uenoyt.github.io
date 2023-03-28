@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0062)https://staff.aist.go.jp/yutaka.ueno/guppy/examples/games.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+		
+		<title>A reaction path generator sample</title>
+	</head>
+
+	<body bgcolor="#ffffff">
+		<h3>A reaction path generator sample </h3>
+
+			A simple physics simulation sample script to generate a reaction path of the molecular interaction. Please note these dynamics model is to propose hypothesis that is not supported by experimental results. Although it would be useful to consider possible model of the molecular mechanism and to propose the plans and design for the next experiment with molecular biology methods.
+			<p>
+			
+			<video src="mos2rcg/mos2rcg-demo0.mp4" autostart="false" width="650" height="430" hspace="80" controls ></video>
+		<p> a sample screen capture for the working prototype.
+
+
+		<h4>1. Files</h4>
+		<blockquote>
+					<a href="mos2rcg/ode-pep10.lua">ode-pep10.lua</a>  --- a script of this application program<br>
+					<a href="mos2rcg/ode-pep7e.lua">ode-pep7e.lua</a>  --- a script without all atom display<br>
+
+					<a href="mos2rcg/main.lua">main.lua</a> --- a project file of this program for ZeroBrane development<br>
+					
+					
+					<a href="mos2rcg/2mys-rds.lhd">2mys-rds.lhd</a>  --- a model of myosin
+					 head <br>
+					<a href="mos2rcg/2mys-pdb.lhd">2mys-pdb.lhd</a>  --- a pdb model of myosin <br>
+					<a href="mos2rcg/3b63rds.lhd">3b63rds.lhd</a>  ---a model of actin filament<br>
+					
+			</p>
+		</blockquote>
+		<a name="luxinia"></a>
+		<h4>2. Running the program code</h4>
+<p>This is a program run on the Luixinia runtime environment. Currently, only Windows systems are supported. Once you downloaded the Luxinia runtime environment, clicking the Luxinia executable icon will show a window for demo script or a script launcher. Details are
+described in the Luxinia homepage. It would be easier to begin with making a working directory with above 4 files, then the directory is added as a new
+project, which contains the project file named "main.lua". Then the script will run from the menu launcher of Luxinia. Please note this is a prototype code that may change to complete our development study.
+<p>The script also be started from the command line prompt. From a command line shell of Windows operating system, running Luxinia interpreter with argument of the location of this working directory named "thedirectory", will start the code in main.lua.
+
+		<blockquote>
+			<p>>  C:\Users\guest\Documents\zerobrane\myprograms\Users\admin\Documents\luxinia_v1400\luxinia_con  -p C:\Users\guest\Documents\thedirectory
+		</p <br>
+			</p>
+		</blockquote>
+
+
+		<h4>3. Implementation notes</h4>
+		<p>	The atomic model of myosin head will be shown if the atomic model file exist. The physics simulation and collision detection is calculated by using another coarse grained model as described in the proceedings of GIW2014 conference. Parameters for the physics simulation were obtained by many trials and errors. The code was developed based on a sample code of Luxinia project demo with a running mobile and robots on a trail. The molecules are placed in walls made by 5 simple geometry primitive "dgeomplane". Since the gravity force was not appropriate, the actin filament was fixed on a horizontal line and the binding force to the myosin was applied. Sometimes increasing joint results program stops due to error in C module of ODE.
+		<p> The molecular model data are prepared by another script for this physics simulation. These coarse grained model was made in the way described in our manuscript, and saved in a lua based data file.
+		
+		<blockquote>
+		 <br>
+				<a href="mos2rcg/pdb2lhd.lua">pdb2lhd.lua</a>  --- import PDB file<br>
+				<a href="mos2rcg/rds2.lua">rds24.lua</a>  --- make a coarse grained model<br>
+		</blockquote>
+		</p>
+
+		<blockquote>
+			<p>	% lua pdb2lhd.lua &lt; 2mys.pdb &gt; 2mys-pdb.lhd
+			<p>	% lua rds24.lua &lt; 2mys-pdb.lhd &gt; 2mys-rds.lhd</p>
+		</blockquote>
+<!--
+		<blockquote>
+			<p>	% guppy lhd_fly.gpy &lt; arm4_r3.xml &gt; <a href="https://staff.aist.go.jp/yutaka.ueno/guppy/examples/arm4_r3.cta">arm4_r3.lhd</a></p>
+		</blockquote>
+		<h4>4. Extract catalog data</h4>
+-->
+
+
+		<h4>4. Generated Raction Path Data </h4>
+		<p> Currently the reaction path data simply record the trajectory of the modeled molecules at time interval of very 10 simulation steps into the file named "traj0.lhd" in the Luxinia home directory, typically "luxinia_v1400". The coordinates are loaded by other script for a animation.
+	
+
+<p>
+<hr>
+2014 Dec,10 Yutaka Ueno, AIST
+</body></html>

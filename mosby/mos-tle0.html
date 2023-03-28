@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+		
+		<title>A time line editor prototype script</title>
+	</head>
+
+	<body bgcolor="#ffffff">
+		<h3>A time line editor prototype script</h3>
+
+			An interactive graphics program for viewing and manipulating the three dimensional model. The functions for modeling molecules are limited and stays in quite primitive ones, even though, it well demonstrates that the program with the interactive graphics are greatly facilitated by the well designed software development toolkit known as the game engine.			
+			<p>
+			
+			<video src="mos2tle/mos2tle-demo0.mp4" autostart="false" width="650" height="430" hspace="80"   controls></video>
+		<p> a sample screen capture for the working prototype.
+
+			
+		<h4><br>
+			1. Files</h4>
+		<blockquote>
+
+					<a href="mos2tle/moltled.lua">moltled.lua</a>  --- The startup with initializing and loading other modules
+ <br>
+ 					<a href="mos2tle/ctl_view.lua">ctl_view.lua</a>  --- The 3d view window
+ <br>					
+					<a href="mos2tle/Movie.lua">Movie.lua</a>  --- Movie related functions
+ <br>
+ 					<a href="mos2tle/CreateModel.lua">CreateModel.lua</a>  --- Managing animated models
+ <br>
+					<a href="mos2tle/CreateTL.lua">CreateTL.lua</a>  --- The time line window
+ <br>
+					<a href="mos2tle/odefunc.lua">odefunc.lua</a>  --- the module describing interface to ODE<br>
+					
+					<a href="mos2tle/main.lua">main.lua</a> 	 --- a project file of this program for ZeroBrane development<br>
+
+					<a href="mos2tle/test1.mos">test1.mos</a>  --- A script for the actin and myosin interaction. <br>
+
+					<a href="mos2tle/2mys-rds.lhd">2mys-rds.lhd</a>  --- a working data for the myosin model<br>
+					
+					<a href="mos2tle/traj0.lhd">traj0.lhd</a>  --- a sample trajectory of myosin model<br>
+					
+			</p>
+		</blockquote>
+		<h4>2. Running the program code</h4>
+<p>This is a program that runs on Lixinia runtime environment on Windows PCs. Please follow <a HREF="mos-rcg0.html#luxinia">another note in the previous document</A> for using Luxinia. In addition to running from the GUI launcher, the script also be started from the command line prompt of Windows operating system. With all above files saved in a directory named "thedirectory":
+		<blockquote>
+			<p>> C:\Users\guest\Documents\zerobrane\myprograms\Users\admin\Documents\luxinia_v1400\luxinia_con  -p C:\Users\guest\Documents\thedirectory
+		</p <br>
+			</p>
+		</blockquote>
+<ul>
+	<li>loading a PDB file</li>
+		<br>Select the top-left button "Open"
+	<li>loading a script file</li>
+		<br> A script file is also loaded from the same menu as the PDB file. Script files need to have file extension ".mos" that is a Lua language file.
+</ul>
+
+		<h4>3. Implementation notes</h4>
+		<p>	The graphical user interface (GUI) of the program was made by widget set included in Luxinia toolkit. It provides very ordinarily functions that is well established as a general GUI framework. Documentations for Luxinia was integrated in the source code and available in the development environment, Zerobrane. Even though, the details are left to be described right now. We should also consider to use ver 2.0 of Luxinia toolkit.
+		<p> Currently, the view angle changes by mouse movements are somewhat awkward, where the method was obtained from experimentally using the glulookat() API of the GLU toolkit included in Luxinia.. sorry about that.
+		<p> The molecular model data are prepared by another script for this physics simulation. These coarse grained model was made in the way described in our manuscript, and saved in a lua based data file.
+		
+		<!--
+		<blockquote>
+		 <br>
+				<a href="mos2rcg/pdb2lhd.lua">pdb2lhd.lua</a>  --- import PDB file<br>
+				<a href="mos2rcg/rds2.lua">rds2.lua</a>  --- make a coarse grained model<br>
+				<a href="mos2rcg/pdbmol.lua">pdbmol.lua</a>  --- utility functions<br>
+				<a href="mos2rcg/pgmsps.lua">pgmsps.lua</a>  --- utility functions<br>
+		</blockquote>
+		</p>
+
+
+
+--->
+
+		<h4>4.Additional developments </h4>
+		<p>The script editor is under major development to include our previous code for molecular simulations, and other useful functions provided by Luxinia toolkit will be applied to this program. 
+	
+
+<p>
+<hr>
+2014 Dec,10 Yutaka Ueno, AIST
+</body></html>

@@ -1,0 +1,102 @@
+<!--This file created 03.4.15 7:13 PM by Claris Home Page version 2.0J-->
+<HTML lang="ja">
+<HEAD>
+   <TITLE>docments</TITLE>
+   <META NAME=GENERATOR CONTENT="Claris Home Page 2.0J">
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html">
+   <X-SAS-WINDOW TOP=62 BOTTOM=1020 LEFT=34 RIGHT=564>
+   <X-SAS-REMOTESAVE SERVER="staff.aist.go.jp" USER="y21650"
+   DIR="guppy/" FILE="">
+</HEAD>
+<BODY>
+		<div align="left">
+			<H3>GUPPYに関する資料</H3>
+			<p><a href="descr.html">GUPPY解説書</a></p>
+			<p>Lua言語資料 <a href="http://staff.aist.go.jp/yutaka.ueno/lua/docsjp.html">lua Japanese docs</a> </p>
+			<p>よくある質問</p>
+			<hr>
+			<p>
+				guppy-FAQ　2001-Mar-09<br>
+				<br>
+				
+				Ｑ：カタログがリストに表示されない<br>
+				
+				Ａ：2つ以上のカタログがあるときは、一番始めのカタログが表示されます。一覧表示の上部にあるメニューで他のカタログを選択できます。ここに表示されていない場合は、スクリプトの中で、addcatalog()で登録する必要があります。なにも登録されていないときにも、addlaneで参照されたカタログは自動登録されます。<br>
+				<br>
+				
+				Q：カタログリストの表示を変更したい。<br>
+				
+				Ａ：カタログの中に、formatという項目を作り、ここに関数定義を文字列で記入します。これには、関数を記述して、２重の[[ ]]でかこみます。<br>
+				
+				[[ function  (rec) .... end ]]<br>
+				<br>
+				
+				Q：2つのカタログを結合するには<br>
+				
+				Ａ：mbCatalogUnion()を使います。ただし、２つのカタログに重複がない場合は、mbCatalogJoin() のほうが高速です。mbCatalogSubset()では集合の差をとることもできます。<br>
+				<br>
+				
+				Q：addlane()でレーンを追加してもなにも表示されない。<br>
+				
+				Ａ：必要なパラメータがぬけているか、selectionでの選択で、何も選択できなかったかです。selection={} とするとすべて選択されます。<br>
+				<br>
+				
+				Q：カタログはどこまで自由につくれるのか。<br>
+				
+				Ａ：各項目における属性値は　symbol,pos1,pos2は必ず必要です。label,pen,fill,sphape　が指定されていると、表示に使われます。masterは、元になったカタログを指定します。これらを他の用途に自由に使うことはできません。アンダースコアで始まる属性名は使うべきではありません。その他は制限はなく、何でも作れます。データ型は数値、文字列、テーブルなど何でもかまいません。テーブルを指定した場合は、saveでの保存はされません。<br>
+				<br>
+				
+				Q：使える色は。<br>
+				
+				Ａ：数値で1-30が使えます。32-63は、グラデーションになっています。<br>
+				
+				(1...11)	YIvBLUE	YIvRED	YIvMAGENTA 	YIvGREEN 	YIvCYAN	YIvYELLOW	YIvWHITE	YIvSILVER	YIvKARKI	YIvPINK	YIvORANGE	<br>
+				
+				(17...30)	YIvIVORY0	YIvBLACK0	YIvNAVY0	YIvGRAY0	YIvLIME0	YIvAQUA0	YIvCREAM0	YIvOAK0	YIvCURSOR0	YIvWHITE0 	YIvPERU0	YIvTEAL0	YIvMOS0	YIvMAROON0<br>
+				<br>
+				
+				Q：使えるプリミティブは。<br>
+				
+				Ａ：<br>
+				
+				&quot;GPYbox&quot;、&quot;GPYthinbox&quot;、&quot;GPYarrow&quot;、、。現在は縦の高さが変更できません。<br>
+				<br>
+				
+				Q：plotはどうするのか。<br>
+				
+				Ａ：現在はプロトタイプの状態ですが、プリミティブGPYplotとGPYcbarがあります。<br>
+				
+				カタログとして下記のようなwaveデータを用意します。xのstep は1000がデフォルトです。<br>
+				
+				mydata={ wave={1,1,2,2,1,1,2,2} }<br>
+				<br>
+				
+				レーンごとのラベルを指定したり、文字の大きさを変えたい。<br>
+				
+				細かい制御はできませんが、カタログのテーブルにlabel属性をつけるとsymbolでなくてその文字で表示します。また、カタログ全体にlabel属性をつけるとすべてその文字で表示します<br>
+				<br>
+				
+				 TODOリスト<br>
+				<br>
+				
+				・複数のシークエンスのサポート<br>
+				
+				・Findした結果をカタログにする<br>
+				
+				・Open,Importのフォーマットが少ない。<br>
+				
+				・プロット機能の拡充<br>
+				
+				・collectionカタログの機能拡充<br>
+				<br>
+				
+				バグリスト<br>
+				<br>
+				
+				・スクリプト形式で保存すると、編集作業が保存されない。<br>
+				<br>
+			</p>
+			<hr>
+		</div>
+	</BODY>
+</HTML>

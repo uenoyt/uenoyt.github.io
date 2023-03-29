@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+
+	<head>
+		<meta http-equiv="content-type" content="text/html;charset=Shift_JIS">
+		<meta name="generator" content="Adobe GoLive 6">
+		<title>BESPA -- single particle analysis</title>
+	</head>
+
+	<body bgcolor="#ffffff">
+		<h3>BESPA</h3>
+		<p>Backplane for Electromicroscopy Single Particle Analysis</p>
+		<p></p>
+		<p>BESPA is a software package for image and volume data processing in single particle analysis.  </p>
+		<h3>Overview</h3>
+		<p>Single particle analysis is a method for structural studies of protein and biological macromolecules. From observed images of the isolated molecules, the three dimensional volume can be reconstructed. The method was well demonstrated by pioneering works on ribosome, the molecular machine made of RNA and protein complex. In order to support computational analysis numbers of software systems available in both free distributions and commercial package. </p>
+		<h3></h3>
+		<p>Currently, BESPA is a set of programs for image processing and three dimensional reconstruction, and they are controled by a script interpreter. There are still development of programs, refinementm and packaging project underway. We think that our sotware would contiribute some of scientific activities, if the development continues through discussions and collaboration although the release code is prerilimary. The code is a free software but its copyright is reserved by our laboratory. Questions and comments are welcome to 
+		: uenoyt(at)ni.aist.go.jp</p>
+		<p>Our first report describes a basic concept and motivation of this software development.</p>
+		<p>Yutaka Ueno, Katsutoshi Takahashi, Kiyoshi Asai and Chikara Sato (1999) <br>
+			BESPA: Software Tools for Three-dimensional Structure Reconstruction From Single Particle Images of Proteins.  <br>
+			Genome Informatics 10, 241-242</p>
+		<p><a href="bespa-GIW99P11.pdf">PDF file</a></p>
+
+	<h3>Spectral Clustering</h3>
+		<p>Recently, we have nice results on application of the &quot;spectral clustering&quot; to the classification of single particle images. The paper was accepted on a workshop on September, Barcelona. Our code is going to be evaluated and tested for further improvements in application to variety of images.</p>
+		<p>Yutaka Ueno, Masaaki Kawata and Shinji Umeyama (2005)<br>
+			&quot;Intrinsic Classification of Single Particle Images by Spectral Clustering&quot;<br>
+			Proc. Biosignal Processing and Classification. ( INSTICC Press, Portugal) 60-67.</p>
+		<p><a href="bpc05ueno.pdf">PDF file</a><br>
+		</p>
+		
+	<h3>Angular Reconstitution</h3>
+		<p>From projection images in random orientation of the same molecules, the angular reconstituion method tries to reconstruct volume consistent to observed images. Following to the leteratures, this implementation is to automate this task using around 20 projection images. So far, it is ok for an ideal case with fairly good signal to noise ratio.
+		</p>
+	<h3>Separating Projection Images in the Different Conformations </h3>
+	<p>Projection images from the same object at the same conformation
+	are required for this statistical reconstruction technique.
+	However, some molecules exhibit different conformations that probably reflect their activity.
+	A method is proposed to separate single particle images in the different conformations.
+	Recently, we have studied method using common line matchng score to separarte particle images in the different conformations. 
+
+		</p>
+<br>
+		</p>
+	<hr>
+	<h3>Scripting Language</h3>
+		<p>In order to support various tasks of image processing and volume reconstrucitons, a scrpit interpreter is provided. Lua language was employed because its extensibility  nicely fits to our original software development. 
+		</p>
+	<h3>Visualization of Volume and Images</h3>
+		<p> To support comparisons and examination of image processing, variations of density maps, volume rendering and isosurface display for multiple data are supported. Preliminary GUI controls are also available on Linux, Windows and MacOS(X11) platforms. 
+		</p>
+	<h3>Parallel Processing</h3>
+		<p> Image and volume data are ideal targets of the parallel computing methods. Our code also offer parallel computing based on our original parallel computing library. CPEL, Comprehensive Parallel  Excution Library.
+		</p>
+
+	<hr>
+			
+		<h3>Source Code</h3>
+		<p>Our programs are extensively tested, but may still contains some programing miss.
+		Your bug reports for our distribution code are wellcome. </p>
+		<UL>
+		<LI> Linux  --- Provided makefile should work to build the BESPA </LI>
+		<LI> SGI    --- once used, but not well tested. </LI>
+		<LI> Windows   --- take MINGU and use make</LI>
+		<LI> MacOS  --- with XCODE installed, use makefile. A prototype for Carbon platform is also provided, but need substantial works. X11 code is as stable as linux, and useful on remote excution.</LI>
+	
+		</UL>
+
+		<p>
+		<A href="lag0383a.tgz" >source code tar ball (ver 0.9 release 383) lua version 5.1 fixes on 2012 Jul 25 </A>
+		</p>
+		<p>
+		<A href="lag0353f.tgz" >source code tar ball (ver 0.9 release 353) lua version 4.1  fixes on 2012 Jul </A>
+		</p>
+	<hr>
+			
+		<h3>Documentation</h3>
+		<p>Please excuse us for our documentation is under construction.
+		But please find following write-up will help you to evaluate
+		our code. 
+		</p>
+		<UL>
+		<LI> <A HREF="bespaug06.pdf"> BESPA Manual </A> --- the first write up </LI>
+		<LI> A scripting guide  --- plase refer to Lua programming language </LI>
+	
+		</UL>
+
+	<hr>
+
+		
+		<h3>Copyright</h3>
+		<p>The code and documentation of our software is copyrighted by AIST.</p>
+		<p>Authors : Yutaka Ueno, Kiyoshi Asai, Katsutoshi Takahashi, Shinji Umeyama.</p>
+		<h3>Acknowledgments</h3>
+		<p>
+		A software development of BESPA was first started in 1998 in AIST (Electro technical Laboratory) and then programs and code are improved and tested through a collaboration works between CNRS and AIST.
+In particular, we wish to thank to Dr.Patrick Schultz, Dr. Bruno Klahols, and members of their laboratory at CNRS/ IGBMC for testing the code. Current development of this works are supported by the Strategic International Cooperative Program, Japan Science and Technology Agency (JST). Previous supports were from the Grant-in-Aid (08283101: "Genome Science") for Scientific Research on Priority Areas from the Ministry of Education, Science, Sports and Culture of Japan, and from Real World Computing Project of the Ministry of International Trade and Industry.
+</p>
+		<p></p>
+		<p>---- Yutaka Ueno , AIST west japan 18 Apr 2012.</p>
+	</body>
+
+</html>

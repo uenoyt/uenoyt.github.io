@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<!-- saved from url=(0045)https://staff.aist.go.jp/yutaka.ueno/molskin/ -->
+<!-- -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
 		
 		<title>Skeletal Animation for Molecular Models</title>
@@ -9,7 +9,9 @@
 		<h2>Skeletal Animation for Molecular Models</h2>
 
 			Skeletal animation allows polygon models of the 3DCG object animate 
-			by means of skeletal bones superimposed into the structure.			
+			by means of skeletal bones superimposed into the structure. The method was
+			applied for animationg molecular models to support right understanding for molecular mechanisms in particular life science.
+				
 			<p>
 
 		</p><h3><br>
@@ -56,8 +58,8 @@
 		
 		</p><p> Following movies demonstrate how the models are animated.
 			The method is described in a manuscript:
-			"Skeletal animation for visualizing dynamic molecular shapes of macromolecules" by Yutaka Ueno, Shinya Muraoka and Tetsuo Sato.
-
+Yutaka Ueno, Shinya Muraoka and Tetsuo Sato. "Skeletal animation for visualizing dynamic shapes of macromolecules" Journal of Integrative Bioinformatics, vol.17, no.4 (2020) pp. 20180098. https://doi.org/10.1515/jib-2018-0098
+	
 			
 		</p><h3><br>
 			1. A normal mode superposition animation</h3>
@@ -182,9 +184,9 @@ molecular shape depicted in polygon mesh, various kind of the molecular
 					</video>
 		<p> An ordinary movie for a trajectory data of a molecular dynamics simulation.
 			The movie was made by UCSF Chimera from GROMACS simulation. This fluctuation motion was used in the previous section, In this movie high frequency vibrational components are included that are not described in the normal mode motions.
-		</p><h4>The simulation data files</h4>
+		</p><h4>A sample data set of dynamics simulation result</h4>
 		<p>	A typical molecular dynamics for a Brownian motion with explicit water
-		molecules were followed according to the GROMACS documentation.
+		molecules were tested for PDB data 1AMY following GROMACS documentation.
 		</p><blockquote>
 				<a href="/skelmol/src/donvt.sh">donvt.sh</a>  --- GROMACS a typical preparation for a MD simulation found in the official tutorial, <br>
 				where nvt300.mdp and npt300.mdp are identical to the original tutorial.<br>
@@ -192,16 +194,23 @@ molecular shape depicted in polygon mesh, various kind of the molecular
 				  % gmx grompp -f md300f05.mdp -c 1amy0_npt300.gro -t 1amy0_npt300.cpt -p 1amy0.top -o 1amy0_md300.tpr <br>
 				  % gmx mdrun -v -deffnm 1amy0_md300 -deffnm 1amy0_md300 <br>
 
-				The result files are very large, and available at our institute URL.
-				https://staff.aist.go.jp/yutaka.ueno/molskin <br>
-				<a href="https://staff.aist.go.jp/yutaka.ueno/molskin/1amy0_md300.trr">1amy0_md300.trr</a>  --- 343MBytes, output trajectory file<br>
-				<a href="https://staff.aist.go.jp/yutaka.ueno/molskin/1amy0_md300.tpr">1amy0_md300.tpr</a>  --- the corresponding topology file required to read the trajectory file<br>
-				
+				<br>Please note that output trajectory data is very large.
+				<br>
+				1amy0_md300.trr 
+				<a href="/skelmol/data/1amy0_md300.7z.001"> part1</a>
+				<a href="/skelmol/data/1amy0_md300.7z.002"> part2</a>
+				<a href="/skelmol/data/1amy0_md300.7z.003"> part3</a>
+				<a href="/skelmol/data/1amy0_md300.7z.004"> part4</a>
+				<a href="/skelmol/data/1amy0_md300.7z.005"> part5</a>
+				<a href="/skelmol/data/1amy0_md300.7z.006"> part6</a>
+				  --- 343MBytes,  an single output trajectory data is obtained by 7zip program from these separated files. <br>
+				<a href="https://lua.tokyo/uenoyt/1amy0_md300.tpr">
+				1amy0_md300.tpr </a>  --- the corresponding topology file required to read the trajectory file<br>
 				<br>		
 		</blockquote>
 
 		</p><h4><br>
-<!--- pscdb fix 
+
 			4. A demonstration of protein structural change on binding the ligand</h4>
 
 					<video src="/skelmol/pscdb-481t72.mp4" autostart="false" controls="">
@@ -213,8 +222,8 @@ molecular shape depicted in polygon mesh, various kind of the molecular
 		<p> An example of the structural change of Lysyl-tRNA synthetase based on PDB database 1BBU.
 			Using the database for protein structural change collected from PDB protein structure database, 
 			an animation for the structural change on ligand binding is demonstrated as a database code 
-			entry code 481 in
-			Protein Structural Change Database (PSCDB) developed at  <a href="https://idp1.force.cs.is.nagoya-u.ac.jp/pscdb/">https://idp1.force.cs.is.nagoya-u.ac.jp/pscdb/</a>
+			entry code PSCID=ID.2 in
+			Protein Structural Change Database (PSCDB) <a href="https://www.ideal-db.org/pscdb/">https://www.ideal-db.org/pscdb/</a> developed in a research project at Nagoya University.
 
 
 		</p><h4>The Data processing</h4>
@@ -224,9 +233,9 @@ molecular shape depicted in polygon mesh, various kind of the molecular
 			to fit the atomic model of the proteins at different amino acid sequence.
 			Let us focus on the ligand bound state of the protein, that will release the ligand and conformation will be changed
 			that should fit to the ligand free state of the protein. While PSCDB provides morphing coordinates for the ligand free
-			state, we here obtained that for ligand bound state. Therefore, we renumber the sequence of PDBs for the morphing and ligand free stats that meet to the
+			state, we here obtained motions based on the ligand bound state in order to minimize crashes of side chains. Therefore, we renumbered the sequence of amino acid residues in morphing PDBs that match to the
 			ligand bound state. Among 50 morpihng models
-			calculated on the server, files for models at indices 1,10,20,30,40,49 was used. The chain names are renamed as A and B for the biological unit, 
+			calculated on the server, files for models at the time frame indices 1,10,20,30,40,49 were used. The chain names are renamed as A and B for the biological unit, 
 			and L for the ligand molecules.
 		</p><blockquote>
 				<a href="/skelmol/src/mofpsc2.lua">mofpsc2.lua</a>  --- fix residue numbers for the morphing motion results <br>
@@ -234,25 +243,28 @@ molecular shape depicted in polygon mesh, various kind of the molecular
 				<a href="/skelmol/data/pb0481m.zip">pb0481m.zip</a>  --- converted PDB files<br>
 
 				<a href="/skelmol/src/propdb2bvh7e7.lua">propdb2bvh7e7.lua</a>  --- make a BVH file from the sequence of PDB files <br>
-				<br>
+		
 				<a href="/skelmol/data/pr7e7-1bbu.bvh">pr7e7-1bbu.bvh</a>  --- generated BVH file<br>
 
 				<a href="/skelmol/blend279/pscdb-481-t72.zip">pscdb-481-t72.blend</a>  --- a sample blender script for this movie (zip compressed)<br>	
 				
 				<br>		
 		</blockquote>
- pscdb fix --->
 
 
 <!--- --->
 
 <h3>Related developments </h3>
 <p>We are studying the animation method using Blender for molecular biology. Some of the examples are provided from our site.
-                  <a href="https://uenoyt.github.io/blendmb" target="_blank">Blender fo Molecular Biology</a>
+                  <a href="https://uenoyt.github.io/blendmb" target="_blank">Blender for Molecular Biology</a>
+</p>
+<h3>Acknowledgments </h3>
+<p>This work was supported by JSPS KAKENHI Grant Number 20K12072 and 24104004. The software was developed at
+a research institute, National Institute of Advanced Industrial Science and Technology (AIST)</p>
+Questions and comments are welcome using web-based GitHub Issue report.
+<br>
+repository https://github.com/uenoyt/skelmol
+<hr>
+2023 Dec 22, Yutaka Ueno, Tsukuba, Japan
 
-</p><p>
-Questions and comments are welcome to yutaka.ueno@aist.go.jp
-</p><hr>
-2022 Sep,26 Yutaka Ueno, AIST
-</body></html>
 

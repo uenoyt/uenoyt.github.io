@@ -1,0 +1,969 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<X3D version='3.0' profile='Interchange'
+ xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance'
+ xsd:noNamespaceSchemaLocation='http://www.web3d.org/specifications/x3d-3.0.xsd'
+ xmlns:chimera='http://www.cgl.ucsf.edu/chimera/'>
+ <!-- X3D profile limits on number of elements/colors/etc. were ignored -->
+ <head>
+  <meta content='UCSF Chimera 1.16_b42360, http://www.cgl.ucsf.edu/chimera/' name='generator'/>
+  <meta content='2023-05-27T10:10:18Z' name='created'/>
+ </head>
+ <Scene>
+  <NavigationInfo type='"EXAMINE" "ANY"' headlight='false'/>
+  <Background skyColor='0 0 0'/>
+  <chimera:WindowSize width='1096' height='845'/>
+  <Viewpoint description='view 0' position='-27.5742 -42.1642 94.1559' centerOfRotation='-27.5742 -42.1642 -15.8249' fieldOfView='0.559182'/>
+  <chimera:DepthCue range='104.994 149.237' color='0 0 0'/>
+
+  <DirectionalLight color='1 1 1' ambientIntensity='0' intensity='0.745888' direction='0.357407 -0.660402 -0.660402'/>
+  <DirectionalLight color='1 1 1' ambientIntensity='0' intensity='0.432344' direction='-0.250563 -0.250563 -0.935113'/>
+  <DirectionalLight color='1 1 1' ambientIntensity='0.1972' intensity='0.0'/>
+  <Group>
+   <Transform>
+   </Transform>
+   <Transform>
+    <Transform rotation='0 0 1 0' translation='0 0 0'>
+    </Transform>
+   </Transform>
+   <Transform>
+   </Transform>
+   <Transform>
+   </Transform>
+   <Transform>
+   </Transform>
+   <Transform rotation='0 0 1 0' translation='0 0 0' bboxCenter='-26.6895 -42.7415 -8.9595' bboxSize='50.185 54.633 39.325'>
+    <MetadataString value='"1msw.pdb"' name='model name'/>
+    <Transform translation='-45.4 -67.958 -12.011'>
+     <Shape>
+      <Appearance DEF='l0'>
+       <Material ambientIntensity='1' diffuseColor='1 1 0' specularColor='0.85 0.85 0.85' shininess='0.234375'/>
+      </Appearance>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-40.438 -67.598 -16.881'>
+     <Shape>
+      <Appearance USE='l0'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-37.596 -64.981 -23.051'>
+     <Shape>
+      <Appearance USE='l0'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-34.361 -59.137 -25.388'>
+     <Shape>
+      <Appearance USE='l0'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-36.341 -53.004 -26.522'>
+     <Shape>
+      <Appearance USE='l0'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-34.545 -48.497 -22.776'>
+     <Shape>
+      <Appearance USE='l0'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-34.019 -45.373 -16.914'>
+     <Shape>
+      <Appearance USE='l0'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-32.045 -44.398 -10.424'>
+     <Shape>
+      <Appearance USE='l0'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-26.529 -45.641 -7.25'>
+     <Shape>
+      <Appearance USE='l0'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-19.993 -48.223 -6.218'>
+     <Shape>
+      <Appearance USE='l0'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-22.587 -43.914 -1.698'>
+     <Shape>
+      <Appearance USE='l0'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-24.244 -40.454 2.544'>
+     <Shape>
+      <Appearance USE='l0'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-23.372 -35.543 6.215'>
+     <Shape>
+      <Appearance USE='l0'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-20.907 -30.588 7.563'>
+     <Shape>
+      <Appearance USE='l0'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-17.186 -25.801 5.458'>
+     <Shape>
+      <Appearance USE='l0'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-13.874 -21.794 2.082'>
+     <Shape>
+      <Appearance USE='l0'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-11.93 -19.608 -3.79'>
+     <Shape>
+      <Appearance USE='l0'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-10.971 -18.672 -9.98'>
+     <Shape>
+      <Appearance USE='l0'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-10.734 -17.525 -15.171'>
+     <Shape>
+      <Appearance USE='l0'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-6.556 -20.397 -24.586'>
+     <Shape>
+      <Appearance DEF='l1'>
+       <Material ambientIntensity='1' diffuseColor='0 1 1' specularColor='0.85 0.85 0.85' shininess='0.234375'/>
+      </Appearance>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-3.697 -27.018 -24.86'>
+     <Shape>
+      <Appearance USE='l1'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-6.294 -34.093 -24.316'>
+     <Shape>
+      <Appearance USE='l1'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-9.435 -38.44 -20.198'>
+     <Shape>
+      <Appearance USE='l1'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-11.929 -42.208 -23.237'>
+     <Shape>
+      <Appearance USE='l1'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-12.915 -48.46 -22.39'>
+     <Shape>
+      <Appearance USE='l1'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-17.959 -52.415 -21.92'>
+     <Shape>
+      <Appearance USE='l1'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-19.12 -57.965 -18.162'>
+     <Shape>
+      <Appearance USE='l1'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-24.34 -60.787 -14.426'>
+     <Shape>
+      <Appearance USE='l1'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-27.855 -59.84 -8.721'>
+     <Shape>
+      <Appearance USE='l1'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-33.706 -57.088 -6.702'>
+     <Shape>
+      <Appearance USE='l1'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-39.267 -53.046 -7.222'>
+     <Shape>
+      <Appearance USE='l1'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-43.527 -50.567 -11.734'>
+     <Shape>
+      <Appearance USE='l1'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-46.022 -50.965 -18.381'>
+     <Shape>
+      <Appearance USE='l1'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-49.682 -55.245 -22.296'>
+     <Shape>
+      <Appearance USE='l1'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-49.55 -60.029 -26.159'>
+     <Shape>
+      <Appearance USE='l1'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-28.833 -32.516 -0.804'>
+     <Shape>
+      <Appearance DEF='l2'>
+       <Material ambientIntensity='1' diffuseColor='0 0 1' specularColor='0.85 0.85 0.85' shininess='0.234375'/>
+      </Appearance>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-24.718 -31.059 -5.324'>
+     <Shape>
+      <Appearance USE='l2'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-23.511 -32.568 -9.993'>
+     <Shape>
+      <Appearance USE='l2'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-17.122 -33.721 -12.034'>
+     <Shape>
+      <Appearance USE='l2'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-11.879 -33.384 -10.522'>
+     <Shape>
+      <Appearance USE='l2'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-7.86 -33.385 -6.409'>
+     <Shape>
+      <Appearance USE='l2'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-5.722 -34.121 -1.084'>
+     <Shape>
+      <Appearance USE='l2'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-6.181 -36.223 4.455'>
+     <Shape>
+      <Appearance USE='l2'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-7.619 -39.498 8.603'>
+     <Shape>
+      <Appearance USE='l2'/>
+      <Sphere radius='0.525'/>
+     </Shape>
+    </Transform>
+   </Transform>
+   <Transform rotation='0 0 1 0' translation='0 0 0' bboxCenter='-26.6895 -42.7415 -8.9595' bboxSize='45.985 50.433 35.125'>
+    <Transform translation='-42.919 -67.778 -14.446' rotation='-0.70046 0 -0.713692 1.51906'>
+     <Shape>
+      <Appearance USE='l0'/>
+      <Cylinder radius='0.2' height='5.99107' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-39.017 -66.2895 -19.966' rotation='-0.908278 0 -0.418368 1.20307'>
+     <Shape>
+      <Appearance USE='l0'/>
+      <Cylinder radius='0.2' height='6.30891' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-35.9785 -62.059 -24.2195' rotation='-0.585592 0 -0.810606 0.599154'>
+     <Shape>
+      <Appearance USE='l0'/>
+      <Cylinder radius='0.2' height='6.10583' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-35.351 -56.0705 -25.955' rotation='-0.496989 0 0.867757 0.356176'>
+     <Shape>
+      <Appearance USE='l0'/>
+      <Cylinder radius='0.2' height='5.57288' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-35.443 -50.7505 -24.649' rotation='0.901718 0 -0.432325 0.744698'>
+     <Shape>
+      <Appearance USE='l0'/>
+      <Cylinder radius='0.2' height='5.15871' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-34.282 -46.935 -19.845' rotation='0.995998 0 -0.0893708 1.08282'>
+     <Shape>
+      <Appearance USE='l0'/>
+      <Cylinder radius='0.2' height='5.69244' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-33.032 -44.8855 -13.669' rotation='0.956724 0 -0.290997 1.42804'>
+     <Shape>
+      <Appearance USE='l0'/>
+      <Cylinder radius='0.2' height='5.88245' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-29.287 -45.0195 -8.837' rotation='0.498743 0 -0.86675 1.76369'>
+     <Shape>
+      <Appearance USE='l0'/>
+      <Cylinder radius='0.2' height='5.51343' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-23.261 -46.932 -6.734' rotation='0.155963 0 -0.987763 1.94283'>
+     <Shape>
+      <Appearance USE='l0'/>
+      <Cylinder radius='0.2' height='6.13207' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-21.29 -46.0685 -3.958' rotation='0.867321 -0 0.49775 0.879907'>
+     <Shape>
+      <Appearance USE='l0'/>
+      <Cylinder radius='0.2' height='5.79133' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-23.4155 -42.184 0.423' rotation='0.93146 -0 0.363845 0.921086'>
+     <Shape>
+      <Appearance USE='l0'/>
+      <Cylinder radius='0.2' height='4.7486' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-23.808 -37.9985 4.3795' rotation='0.972928 0 -0.231107 0.655113'>
+     <Shape>
+      <Appearance USE='l0'/>
+      <Cylinder radius='0.2' height='5.22228' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-22.1395 -33.0655 6.889' rotation='0.4798 0 -0.877378 0.515804'>
+     <Shape>
+      <Appearance USE='l0'/>
+      <Cylinder radius='0.2' height='4.72526' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-19.0465 -28.1945 6.5105' rotation='-0.492381 0 -0.87038 0.728975'>
+     <Shape>
+      <Appearance USE='l0'/>
+      <Cylinder radius='0.2' height='5.44729' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-15.53 -23.7975 3.77' rotation='-0.713841 0 -0.700308 0.867893'>
+     <Shape>
+      <Appearance USE='l0'/>
+      <Cylinder radius='0.2' height='5.22779' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-12.902 -20.701 -0.854' rotation='-0.949328 0 -0.314287 1.23109'>
+     <Shape>
+      <Appearance USE='l0'/>
+      <Cylinder radius='0.2' height='5.58952' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-11.4505 -19.14 -6.885' rotation='-0.988211 0 -0.153101 1.42246'>
+     <Shape>
+      <Appearance USE='l0'/>
+      <Cylinder radius='0.2' height='5.36257' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-10.8525 -18.0985 -12.5755' rotation='-0.998959 0 -0.0456086 1.35355'>
+     <Shape>
+      <Appearance USE='l0'/>
+      <Cylinder radius='0.2' height='4.35067' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-5.1265 -23.7075 -24.723' rotation='-0.0954007 0 -0.995439 2.7323'>
+     <Shape>
+      <Appearance USE='l1'/>
+      <Cylinder radius='0.2' height='6.24628' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-4.9955 -30.5555 -24.588' rotation='0.205023 -0 0.978757 2.78279'>
+     <Shape>
+      <Appearance USE='l1'/>
+      <Cylinder radius='0.2' height='6.58536' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-7.8645 -36.2665 -22.257' rotation='0.795108 -0 0.606468 2.26906'>
+     <Shape>
+      <Appearance USE='l1'/>
+      <Cylinder radius='0.2' height='5.79085' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-10.682 -40.324 -21.7175' rotation='-0.773016 0 0.634387 2.33498'>
+     <Shape>
+      <Appearance USE='l1'/>
+      <Cylinder radius='0.2' height='4.47467' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-12.422 -45.334 -22.8135' rotation='0.651614 -0 0.758551 2.9366'>
+     <Shape>
+      <Appearance USE='l1'/>
+      <Cylinder radius='0.2' height='5.41487' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-15.437 -50.4375 -22.155' rotation='0.0927783 -0 0.995687 2.23367'>
+     <Shape>
+      <Appearance USE='l1'/>
+      <Cylinder radius='0.2' height='5.45606' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-18.5395 -55.19 -20.041' rotation='0.955443 -0 0.295176 2.52506'>
+     <Shape>
+      <Appearance USE='l1'/>
+      <Cylinder radius='0.2' height='5.8316' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-21.73 -59.376 -16.294' rotation='0.582004 -0 0.813186 1.98498'>
+     <Shape>
+      <Appearance USE='l1'/>
+      <Cylinder radius='0.2' height='6.04129' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-26.0975 -60.3135 -11.5735' rotation='0.851376 -0 0.524555 1.4304'>
+     <Shape>
+      <Appearance USE='l1'/>
+      <Cylinder radius='0.2' height='5.79668' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-30.7805 -58.464 -7.7115' rotation='0.326195 -0 0.945302 1.15242'>
+     <Shape>
+      <Appearance USE='l1'/>
+      <Cylinder radius='0.2' height='5.80295' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-36.4865 -55.067 -6.962' rotation='-0.0931022 0 0.995657 0.944347'>
+     <Shape>
+      <Appearance USE='l1'/>
+      <Cylinder radius='0.2' height='5.92359' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-41.397 -51.8065 -9.478' rotation='-0.72712 0 0.68651 1.19072'>
+     <Shape>
+      <Appearance USE='l1'/>
+      <Cylinder radius='0.2' height='5.71133' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-44.7745 -50.766 -15.0575' rotation='-0.936219 0 0.351416 1.6268'>
+     <Shape>
+      <Appearance USE='l1'/>
+      <Cylinder radius='0.2' height='6.14015' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-47.852 -53.105 -20.3385' rotation='-0.730496 0 0.682916 2.24468'>
+     <Shape>
+      <Appearance USE='l1'/>
+      <Cylinder radius='0.2' height='5.88784' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-49.616 -57.637 -24.2275' rotation='-0.999417 0 -0.0341504 2.46202'>
+     <Shape>
+      <Appearance USE='l1'/>
+      <Cylinder radius='0.2' height='5.17953' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-26.7755 -31.7875 -3.064' rotation='-0.739459 0 -0.673202 1.3368'>
+     <Shape>
+      <Appearance USE='l2'/>
+      <Cylinder radius='0.2' height='5.313' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-24.1145 -31.8135 -7.6585' rotation='-0.968172 0 -0.250286 1.87405'>
+     <Shape>
+      <Appearance USE='l2'/>
+      <Cylinder radius='0.2' height='4.08224' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-20.3165 -33.1445 -11.0135' rotation='-0.304305 0 -0.952575 1.74104'>
+     <Shape>
+      <Appearance USE='l2'/>
+      <Cylinder radius='0.2' height='5.83465' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-14.5005 -33.5525 -11.278' rotation='0.277092 0 -0.960843 1.50912'>
+     <Shape>
+      <Appearance USE='l2'/>
+      <Cylinder radius='0.2' height='4.49624' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-9.8695 -33.3845 -8.4655' rotation='0.715233 0 -0.698886 1.57097'>
+     <Shape>
+      <Appearance USE='l2'/>
+      <Cylinder radius='0.2' height='4.77975' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-6.791 -33.753 -3.7465' rotation='0.927995 0 -0.372592 1.69836'>
+     <Shape>
+      <Appearance USE='l2'/>
+      <Cylinder radius='0.2' height='4.81436' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-5.9515 -35.172 1.6855' rotation='0.996584 -0 0.0825839 1.93236'>
+     <Shape>
+      <Appearance USE='l2'/>
+      <Cylinder radius='0.2' height='4.97136' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+    <Transform translation='-6.9 -37.8605 6.529' rotation='0.944834 -0 0.327549 2.21172'>
+     <Shape>
+      <Appearance USE='l2'/>
+      <Cylinder radius='0.2' height='4.50635' bottom='false' top='false'/>
+     </Shape>
+    </Transform>
+   </Transform>
+   <Transform rotation='0 0 1 0' translation='0 0 0' bboxCenter='-26.6145 -40.3734 -11.3755' bboxSize='49.1308 56.3338 42.0074'>
+    <MetadataString value='"1msw.pdb - Nucleotides"' name='model name'/>
+ <Transform rotation='0.955889 -0 0.293726 0.971412' translation='-19.2258 -53.9294 -16.6647'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='0 1 1' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='5.63897' radius='0.45' top='FALSE'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='-0.95589 0 -0.293726 2.17018' translation='-20.9753 -49.8599 -10.9712'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='1 1 0' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='8.78844' radius='0.45' top='FALSE'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='0.820226 -0 0.572039 0.577612' translation='-24.7725 -55.222 -14.0961'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='0 1 1' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='9.48004' radius='0.45' top='FALSE'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='-0.820225 0 -0.572041 2.56398' translation='-27.203 -48.703 -10.6111'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='1 1 0' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='6.08273' radius='0.45' top='FALSE'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='-0.268148 0 0.963378 0.453242' translation='-27.6612 -56.6837 -11.2021'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='0 1 1' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='6.03167' radius='0.45' top='FALSE'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='0.268148 0 -0.963378 2.68835' translation='-30.9162 -49.7467 -12.1081'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='1 1 0' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='9.40048' radius='0.45' top='FALSE'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='-0.965842 0 0.259133 0.808577' translation='-32.5478 -54.3515 -11.5127'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='0 1 1' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='8.98292' radius='0.45' top='FALSE'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='0.965842 0 -0.259132 2.33302' translation='-33.9298 -49.26 -16.6637'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='1 1 0' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='5.76375' radius='0.45' top='FALSE'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='-0.948774 0 -0.315957 2.09171' translation='-35.79 -55.977 -10.53'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='0 1 1' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='7.65557' radius='0.45'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='-0.947601 0 -0.319457 1.79291' translation='-39.8922 -53.1164 -15.669'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='0 1 1' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='9.79967' radius='0.45' top='FALSE'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='0.947601 -0 0.319457 1.34868' translation='-37.3857 -54.8884 -23.104'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='1 1 0' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='6.28781' radius='0.45' top='FALSE'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='0.348206 0 -0.937418 2.59263' translation='-43.7485 -54.9085 -15.183'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='0 1 1' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='7.56213' radius='0.45'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='0.69202 0 -0.721879 2.33794' translation='-46.7785 -56.9885 -17.9785'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='0 1 1' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='8.18778' radius='0.45'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='0.820284 0 -0.571957 2.27394' translation='-46.8617 -61.3279 -21.5062'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='0 1 1' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='8.33524' radius='0.45' top='FALSE'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='-0.820284 0 0.571956 0.867648' translation='-43.8767 -65.7519 -17.2252'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='1 1 0' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='5.34818' radius='0.45' top='FALSE'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='0.993622 -0 0.112767 1.33676' translation='-50.044 -63.9355 -23.9715'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='0 1 1' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='7.58484' radius='0.45'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='0.673365 -0 0.73931 0.273389' translation='-31.9675 -28.649 0.8125'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='0 0 1' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='7.18899' radius='0.45'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='0.818743 -0 0.57416 0.353181' translation='-27.5585 -26.0075 -3.396'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='0 0 1' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='7.78981' radius='0.45'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='-0.381842 0 -0.924228 0.595576' translation='-22.4265 -27.173 -10.5205'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='0 0 1' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='6.89517' radius='0.45'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='0.493182 0 -0.869926 0.614587' translation='-16.7892 -28.2795 -10.7681'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='0 0 1' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='8.81874' radius='0.45' top='FALSE'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='-0.493181 0 0.869927 2.52701' translation='-13.1582 -22.3655 -8.70957'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='1 1 0' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='5.65841' radius='0.45' top='FALSE'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='0.990481 0 -0.137652 0.761582' translation='-13.1472 -29.4399 -9.47764'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='0 0 1' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='5.55485' radius='0.45' top='FALSE'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='-0.990481 0 0.137652 2.38001' translation='-12.4722 -24.2969 -4.62064'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='1 1 0' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='8.65733' radius='0.45' top='FALSE'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='0.907998 -0 0.418975 1.0207' translation='-10.6773 -29.1599 -4.19424'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='0 0 1' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='8.68103' radius='0.45' top='FALSE'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='-0.907998 0 -0.418974 2.12089' translation='-13.2223 -25.4349 1.32126'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='1 1 0' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='5.57006' radius='0.45' top='FALSE'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='0.616537 -0 0.787326 0.851826' translation='-9.12927 -29.6349 -0.507093'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='0 0 1' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='7.52221' radius='0.45' top='FALSE'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='-0.616538 0 -0.787325 2.28977' translation='-12.7873 -25.5684 2.35741'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='1 1 0' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='4.82651' radius='0.45' top='FALSE'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='0.617809 -0 0.786328 1.29837' translation='-10.1484 -30.9583 0.29942'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='0 0 1' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='8.57584' radius='0.45' top='FALSE'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='-0.617808 0 -0.786329 1.84322' translation='-15.4794 -29.0643 4.48792'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='1 1 0' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='5.50256' radius='0.45' top='FALSE'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='0.312441 -0 0.949937 1.50738' translation='-9.65092 -33.925 4.05878'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='0 0 1' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='5.64945' radius='0.45' top='FALSE'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='-0.31244 0 -0.949938 1.63421' translation='-16.5024 -33.467 6.31228'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='1 1 0' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='8.80477' radius='0.45' top='FALSE'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='-0.145466 0 0.989363 1.62793' translation='-13.1006 -37.4905 7.12304'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='0 0 1' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='8.95084' radius='0.45' top='FALSE'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='0.145467 0 -0.989363 1.51367' translation='-20.3576 -37.91 6.05604'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='1 1 0' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='5.74317' radius='0.45' top='FALSE'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='-0.534955 0 0.844881 1.6039' translation='-14.6412 -42.3839 7.3752'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='0 0 1' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='8.81603' radius='0.45' top='FALSE'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='0.534956 0 -0.84488 1.53769' translation='-20.7517 -42.6234 3.5062'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='1 1 0' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='5.65667' radius='0.45' top='FALSE'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='-0.316321 0 0.948652 1.25945' translation='-14.6577 -40.9698 8.48538'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='0 0 1' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='8.2801' radius='0.45' top='FALSE'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='0.31632 0 -0.948653 1.88214' translation='-20.7952 -38.8878 6.43888'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='1 1 0' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='5.3128' radius='0.45' top='FALSE'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='-0.76036 0 0.649502 1.09086' translation='-49.863 -64.448 -14.781'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='1 1 0' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='8.21699' radius='0.45'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='0.920963 -0 0.38965 1.00094' translation='-39.552 -62.737 -17.586'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='1 1 0' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='7.59577' radius='0.45'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='0.576821 -0 0.816871 1.34717' translation='-38.8115 -60.564 -22.744'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='1 1 0' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='8.20684' radius='0.45'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='0.987423 0 -0.158099 2.29952' translation='-35.2905 -53.4675 -20.363'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='1 1 0' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='8.21569' radius='0.45'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='-0.24194 0 -0.970291 1.5275' translation='-17.5805 -45.6945 -3.7015'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='1 1 0' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='7.50891' radius='0.45'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='0.421743 0 -0.906715 1.73792' translation='-5.3665 -19.648 -12.2775'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='1 1 0' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='7.9713' radius='0.45'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='0.452939 0 -0.891541 1.49118' translation='-5.529 -16.1895 -15.924'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='1 1 0' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='7.55696' radius='0.45'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='0.671286 -0 0.741198 0.668763' translation='-9.559 -15.6675 -24.5445'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='0 1 1' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='7.58996' radius='0.45'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='-0.84113 0 0.540833 1.40321' translation='-7.0805 -24.395 -28.9785'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='0 1 1' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='7.51797' radius='0.45'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='0.925686 -0 0.378292 0.866672' translation='-6.9735 -29.114 -21.241'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='0 1 1' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='7.49498' radius='0.45'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='0.709124 -0 0.705084 0.242934' translation='-10.267 -32.0205 -20.532'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='0 1 1' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='8.23068' radius='0.45'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='0.218506 0 -0.975836 1.90928' translation='-6.297 -41.9915 -22.0275'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='0 1 1' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='7.62222' radius='0.45'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='0.576765 0 -0.81691 1.05646' translation='-8.846 -44.1475 -19.6215'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='0 1 1' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='8.25066' radius='0.45'/>
+  </Shape>
+ </Transform>
+ <Transform rotation='-0.999544 0 0.0301816 0.0749104' translation='-16.6125 -46.4315 -21.8275'>
+  <Shape>
+   <Appearance>
+    <Material ambientIntensity='1' diffuseColor='0 1 1' shininess='0.234375' specularColor='0.85 0.85 0.85' transparency='0'/>
+   </Appearance>
+   <Cylinder height='7.52611' radius='0.45'/>
+  </Shape>
+ </Transform>
+   </Transform>
+  </Group>
+ </Scene>
+</X3D>
